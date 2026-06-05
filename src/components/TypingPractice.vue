@@ -1,7 +1,7 @@
 <template>
   <div
     id="view-typing"
-    class="flex-grow flex flex-col md:flex-row overflow-hidden relative transition-colors duration-300"
+    class="grow flex flex-col md:flex-row overflow-hidden relative transition-colors duration-300"
   >
     <!-- LEFT SIDEBAR (COMPLETED LIST) -->
     <Transition name="sidebar">
@@ -204,6 +204,41 @@
         </div>
 
         <div class="flex items-center gap-2">
+          <!-- Modo Escucha / Dictado Toggle -->
+          <button
+            id="btn-listening-mode"
+            @click="isListeningMode = !isListeningMode"
+            class="p-2 rounded-lg transition-colors flex items-center justify-center gap-1.5 text-xs font-bold cursor-pointer select-none border"
+            :class="
+              isListeningMode
+                ? 'bg-amber-50 border-amber-200/60 text-amber-650 dark:bg-amber-950/30 dark:border-amber-900/20 dark:text-amber-400'
+                : 'bg-slate-100 border-slate-200/50 text-slate-500 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-900/60'
+            "
+            :title="
+              isListeningMode
+                ? 'Modo Escucha Activo'
+                : 'Activar Modo Escucha (Dictado)'
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2.5"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 9a3 3 0 1 1 6 0M3 12a9 9 0 0 1 18 0M3 12h3.75M20.25 12h-3.75M6.75 12v3.75a3 3 0 0 0 6 0V12m-6 0h6m0 0v3.75a3 3 0 0 0 6 0V12"
+              />
+            </svg>
+            <span class="hidden sm:inline">{{
+              isListeningMode ? "Dictado activo" : "Modo Escucha"
+            }}</span>
+          </button>
+
           <!-- Replay voice -->
           <button
             id="btn-replay-audio"
@@ -433,14 +468,23 @@
           <!-- Text to type -->
           <div
             id="target-phrase-letters"
-            class="text-6xl md:text-7xl font-bold tracking-normal font-mono text-center leading-relaxed mb-4 select-none"
+            class="text-6xl md:text-7xl font-bold tracking-normal font-mono text-center leading-relaxed mb-4 select-none flex flex-wrap justify-center gap-x-4"
           >
             <span
-              v-for="(letterObj, idx) in letterSpans"
-              :key="idx"
-              :class="letterObj.class"
+              v-for="(wordObj, wIdx) in wordSpans"
+              :key="wIdx"
+              class="word-span-interactive hover:text-primary-600 dark:hover:text-primary-400 hover:underline decoration-primary-400/60 dark:decoration-primary-650/50 decoration-wavy decoration-3 transition-all cursor-help relative inline-block"
+              @mouseenter="onWordHoverPronounce(wordObj.wordText)"
+              @mouseleave="onWordLeavePronounce"
+              @click.stop="lookupWord(wordObj.wordText, activePhrase!.text)"
             >
-              {{ letterObj.char }}
+              <span
+                v-for="(letterObj, lIdx) in wordObj.letters"
+                :key="lIdx"
+                :class="letterObj.class"
+              >
+                {{ letterObj.char }}
+              </span>
             </span>
           </div>
 
@@ -451,6 +495,92 @@
           >
             {{ activeTranslation }}
           </div>
+
+          <!-- Word Dictionary Hover Card -->
+          <Transition name="dropdown">
+            <div
+              v-if="activeWordDefinition"
+              id="word-dictionary-card"
+              class="absolute bottom-4 z-35 w-full max-w-sm bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 shadow-xl rounded-2xl p-4 flex flex-col gap-1.5 backdrop-blur-md text-left select-text relative"
+            >
+              <!-- Botón de Cerrar (x) -->
+              <button
+                @click.stop="closeDictionary"
+                class="absolute top-3 right-3 text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-350 transition-colors cursor-pointer select-none p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
+                title="Cerrar Diccionario"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2.5"
+                  stroke="currentColor"
+                  class="w-3.5 h-3.5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M6 18 18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+
+              <div class="flex justify-between items-center pr-6">
+                <span
+                  class="text-xs font-black text-slate-800 dark:text-slate-100 flex items-center gap-1.5"
+                >
+                  {{ activeWordDefinition.word }}
+                  <span
+                    v-if="activeWordDefinition.partOfSpeech"
+                    class="text-4xs font-mono font-bold text-primary-500 uppercase tracking-widest bg-primary-50 dark:bg-primary-950/40 border border-primary-100/30 dark:border-primary-900/20 px-1.5 py-0.5 rounded-md"
+                  >
+                    {{ activeWordDefinition.partOfSpeech }}
+                  </span>
+                </span>
+                <svg
+                  v-if="isLoadingDefinition"
+                  class="animate-spin h-3.5 w-3.5 text-primary-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+              </div>
+              <p
+                class="text-2xs text-slate-600 dark:text-slate-350 font-medium"
+              >
+                {{ activeWordDefinition.definition }}
+              </p>
+              <p
+                v-if="activeWordDefinition.translation"
+                class="text-2xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  class="w-3.5 h-3.5"
+                >
+                  <path
+                    d="M3.105 2.289a.75.75 0 0 0-.826.95l1.414 4.925A1.5 1.5 0 0 0 5.135 9.25h6.115a.75.75 0 0 1 0 1.5H5.135a1.5 1.5 0 0 0-1.442 1.086l-1.414 4.926a.75.75 0 0 0 .826.95 28.896 28.896 0 0 0 15.293-9.354.75.75 0 0 0 0-1.022A28.89 28.89 0 0 0 3.105 2.289Z"
+                  />
+                </svg>
+                {{ activeWordDefinition.translation }}
+              </p>
+            </div>
+          </Transition>
         </div>
 
         <!-- STATS BAR -->
@@ -809,6 +939,23 @@ const completedPhrases = ref<
 >([]);
 const profile = ref({ language: "es", level: "beginner", nickname: "" });
 
+// Listening Mode & Hover Dictionary States
+const isListeningMode = ref(false);
+
+interface WordDefinition {
+  word: string;
+  partOfSpeech: string;
+  definition: string;
+  translation: string;
+}
+
+const activeWordDefinition = ref<WordDefinition | null>(null);
+const isLoadingDefinition = ref(false);
+const definitionsCache = ref<Record<string, WordDefinition>>({});
+
+// Timer for hover debounce
+let hoverTimer: number | null = null;
+
 const inputRef = ref<HTMLInputElement | null>(null);
 const sidebarRef = ref<HTMLDivElement | null>(null);
 const isFocused = ref(false);
@@ -1102,9 +1249,15 @@ ${JSON.stringify(lines, null, 2)}
     const aiPhrases = parsedJson.phrases || [];
     const finalPhrases = lines.map((originalText, idx) => {
       // Buscar coincidencia en la respuesta de la IA (por texto o por índice correspondiente)
-      const aiMatch = aiPhrases.find(
-        (ap: any) => ap && ap.text && ap.text.toLowerCase().trim() === originalText.toLowerCase()
-      ) || aiPhrases[idx] || {};
+      const aiMatch =
+        aiPhrases.find(
+          (ap: any) =>
+            ap &&
+            ap.text &&
+            ap.text.toLowerCase().trim() === originalText.toLowerCase()
+        ) ||
+        aiPhrases[idx] ||
+        {};
 
       return {
         id: `cphrase_${lessonId}_${idx}`,
@@ -1279,18 +1432,184 @@ const activeTranslation = computed(() => {
   return trans;
 });
 
-// Compute highlighted letters with classes
+// Helper functions for Dictionary Lookup with Hover, Debounce and Cache
+async function lookupWord(word: string, contextPhrase: string) {
+  const cleanWord = word.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "").trim();
+  if (!cleanWord || cleanWord.length <= 1) return;
+
+  const cacheKey = cleanWord.toLowerCase();
+
+  // 1. Si está en caché, mostrar inmediatamente
+  if (definitionsCache.value[cacheKey]) {
+    activeWordDefinition.value = definitionsCache.value[cacheKey];
+    return;
+  }
+
+  // 2. Si es la palabra clave (keyword) de la frase activa y coincide
+  const p = activePhrase.value;
+  if (
+    p &&
+    p.keyword &&
+    p.keyword.toLowerCase() === cacheKey &&
+    p.keywordTranslations
+  ) {
+    const keywordDef: WordDefinition = {
+      word: cleanWord,
+      partOfSpeech: "keyword",
+      definition: "Palabra clave de esta frase para aprender.",
+      translation: p.keywordTranslations.join(", "),
+    };
+    definitionsCache.value[cacheKey] = keywordDef;
+    activeWordDefinition.value = keywordDef;
+    return;
+  }
+
+  activeWordDefinition.value = {
+    word: cleanWord,
+    partOfSpeech: "",
+    definition: "Buscando...",
+    translation: "",
+  };
+  isLoadingDefinition.value = true;
+
+  // 3. Si no hay API Key de Gemini, usar la API de diccionario en inglés gratuita
+  if (!geminiApiKey.value) {
+    try {
+      const res = await fetch(
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${cacheKey}`
+      );
+      if (!res.ok) throw new Error();
+      const data = await res.json();
+      const meaning = data[0]?.meanings[0];
+      const def = meaning?.definitions[0]?.definition || "No definition found.";
+      const pos = meaning?.partOfSpeech || "word";
+
+      const newDef: WordDefinition = {
+        word: cleanWord,
+        partOfSpeech: pos,
+        definition: def,
+        translation:
+          "(Configura Gemini API Key para ver traducción al español)",
+      };
+      definitionsCache.value[cacheKey] = newDef;
+      activeWordDefinition.value = newDef;
+    } catch (e) {
+      activeWordDefinition.value = {
+        word: cleanWord,
+        partOfSpeech: "error",
+        definition:
+          "No se encontró definición local en inglés ni traducción en español.",
+        translation: "",
+      };
+    } finally {
+      isLoadingDefinition.value = false;
+    }
+    return;
+  }
+
+  // 4. Si hay API Key, consultar a Gemini para obtener definición y traducción contextual
+  try {
+    const promptText = `
+Eres un diccionario bilingüe contextual inglés-español. Analiza la palabra en inglés "${cleanWord}" en el contexto de la frase "${contextPhrase}".
+Genera un objeto JSON estructurado con el siguiente formato exacto:
+{
+  "word": "${cleanWord}",
+  "partOfSpeech": "ej. noun, verb, adjective, adverb",
+  "definition": "definición en inglés muy corta y simple (máximo 12 palabras)",
+  "translation": "traducción más exacta de la palabra al español en este contexto"
+}
+Retorna únicamente el JSON válido.
+`;
+
+    const ai = new GoogleGenAI({ apiKey: geminiApiKey.value });
+    const response = await ai.models.generateContent({
+      model: "gemini-3.5-flash",
+      contents: promptText,
+      config: {
+        responseMimeType: "application/json",
+      },
+    });
+
+    const responseText = response.text;
+    if (responseText) {
+      const parsed = JSON.parse(responseText.trim());
+      const newDef: WordDefinition = {
+        word: parsed.word || cleanWord,
+        partOfSpeech: parsed.partOfSpeech || "word",
+        definition: parsed.definition || "No definition.",
+        translation: parsed.translation || "",
+      };
+      definitionsCache.value[cacheKey] = newDef;
+      activeWordDefinition.value = newDef;
+    }
+  } catch (error) {
+    console.error(error);
+    activeWordDefinition.value = {
+      word: cleanWord,
+      partOfSpeech: "error",
+      definition: "Error consultando la definición.",
+      translation: "",
+    };
+  } finally {
+    isLoadingDefinition.value = false;
+  }
+}
+
+let pronounceTimer: number | null = null;
+
+function onWordHoverPronounce(wordText: string) {
+  // Limpiar puntuaciones para la pronunciación limpia
+  const cleanWord = wordText
+    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "")
+    .trim();
+  if (!cleanWord || cleanWord.length <= 1) return;
+
+  if (pronounceTimer) {
+    clearTimeout(pronounceTimer);
+    pronounceTimer = null;
+  }
+
+  // Debounce de 200ms para pronunciar la palabra con TTS
+  pronounceTimer = window.setTimeout(() => {
+    speakText(cleanWord);
+  }, 200);
+}
+
+function onWordLeavePronounce() {
+  if (pronounceTimer) {
+    clearTimeout(pronounceTimer);
+    pronounceTimer = null;
+  }
+}
+
+function closeDictionary() {
+  activeWordDefinition.value = null;
+  isLoadingDefinition.value = false;
+}
+
+// Compute letter spans grouped by words for interactive dictionary hover support
 interface LetterObj {
   char: string;
   class: string;
 }
-const letterSpans = computed<LetterObj[]>(() => {
+
+interface WordSpan {
+  wordText: string;
+  letters: LetterObj[];
+}
+
+const wordSpans = computed<WordSpan[]>(() => {
   const p = activePhrase.value;
   if (!p) {
     return [
       {
-        char: "No hay frases en este tema.",
-        class: "text-slate-400 dark:text-slate-650 text-sm font-semibold",
+        wordText: "",
+        letters: [
+          {
+            char: "No hay frases en este tema.",
+            class: "text-slate-400 dark:text-slate-650 text-sm font-semibold",
+          },
+        ],
       },
     ];
   }
@@ -1298,13 +1617,22 @@ const letterSpans = computed<LetterObj[]>(() => {
   const target = p.text;
   const current = normalizeText(typedText.value, true);
 
-  return target.split("").map((char, index) => {
+  // Generar las letras individuales con sus clases
+  const letters = target.split("").map((char, index) => {
     let klass = "char-default";
+    let displayChar = char;
+
     if (index < current.length) {
       if (current[index].toLowerCase() === target[index].toLowerCase()) {
         klass = "char-correct";
       } else {
         klass = "char-incorrect";
+      }
+    } else {
+      if (isListeningMode.value) {
+        // En Modo Escucha, ocultar las letras no escritas usando un punto medio
+        displayChar = "•";
+        klass += " opacity-40";
       }
     }
 
@@ -1313,10 +1641,33 @@ const letterSpans = computed<LetterObj[]>(() => {
     }
 
     return {
-      char,
+      char: displayChar,
       class: klass,
     };
   });
+
+  // Agrupar las letras en palabras basándose en los espacios del target
+  const result: WordSpan[] = [];
+  let currentWordLetters: LetterObj[] = [];
+  let currentWordText = "";
+
+  for (let i = 0; i < target.length; i++) {
+    const char = target[i];
+    currentWordLetters.push(letters[i]);
+    currentWordText += char;
+
+    // Si es un espacio o es el último carácter, se cierra la palabra actual
+    if (char === " " || i === target.length - 1) {
+      result.push({
+        wordText: currentWordText.trim(),
+        letters: currentWordLetters,
+      });
+      currentWordLetters = [];
+      currentWordText = "";
+    }
+  }
+
+  return result;
 });
 
 // Keyword Highlight dynamically
@@ -1511,6 +1862,8 @@ function resetSession() {
   isTimerRunning.value = false;
   liveWpm.value = 0;
   liveAcc.value = 100;
+  activeWordDefinition.value = null;
+  isLoadingDefinition.value = false;
   if (inputRef.value) {
     inputRef.value.value = "";
   }
@@ -1592,6 +1945,13 @@ function handleGlobalClick(e: MouseEvent) {
   const isVoiceSettingsClick = target.closest("#voice-settings-wrapper");
   if (!isVoiceSettingsClick) {
     isVoiceSettingsOpen.value = false;
+  }
+
+  // Cerrar el diccionario si el clic es fuera de su card y no es en una palabra interactiva
+  const isWordSpanInteractiveClick = target.closest(".word-span-interactive");
+  const isDictionaryCardClick = target.closest("#word-dictionary-card");
+  if (!isWordSpanInteractiveClick && !isDictionaryCardClick) {
+    closeDictionary();
   }
 
   if (activeLessonId.value === "create_new_lesson") return;
