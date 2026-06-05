@@ -1,0 +1,116 @@
+{
+  "title": {
+    "es": "Traveling • Viajando",
+    "ar": "Traveling • السفر",
+    "pt": "Traveling • Viajando",
+    "fr": "Traveling • Voyager",
+    "de": "Traveling • Reisen",
+    "it": "Traveling • Viaggiare",
+    "en": "Traveling • Traveling"
+  },
+  "phrases": [
+    {
+      "id": "tv1",
+      "text": "Where is the airport?",
+      "translations": {
+        "es": "¿Dónde está el aeropuerto?",
+        "ar": "أين المطار؟",
+        "pt": "Onde fica o aeroporto?",
+        "fr": "Où se trouve l'aéroport ?",
+        "de": "Wo ist der Flughafen?",
+        "it": "Dov'è l'aeroporto?",
+        "en": "Where is the airport."
+      },
+      "keyword": "airport",
+      "keywordTranslations": ["aeropuerto"]
+    },
+    {
+      "id": "tv2",
+      "text": "I need my passport.",
+      "translations": {
+        "es": "Necesito mi pasaporte.",
+        "ar": "أحتاج جواز سفري.",
+        "pt": "Eu preciso do meu passaporte.",
+        "fr": "J'ai besoin de mon passeport.",
+        "de": "Ich brauche meinen Reisepass.",
+        "it": "Ho bisogno del mio pasaporte.",
+        "en": "I need my passport."
+      },
+      "keyword": "passport",
+      "keywordTranslations": ["pasaporte"]
+    },
+    {
+      "id": "tv3",
+      "text": "My flight is on time.",
+      "translations": {
+        "es": "Mi vuelo está a tiempo.",
+        "ar": "رحلتي في موعدها.",
+        "pt": "Meu voo está no horário.",
+        "fr": "Mon vol est à l'heure.",
+        "de": "Mein Flug ist pünktlich.",
+        "it": "Il mio volo è in orario.",
+        "en": "My flight is on time."
+      },
+      "keyword": "flight",
+      "keywordTranslations": ["vuelo", "trayecto"]
+    },
+    {
+      "id": "tv4",
+      "text": "I lost my suitcase.",
+      "translations": {
+        "es": "Perdí mi maleta.",
+        "ar": "فقدت حقيبتي.",
+        "pt": "Perdi minha mala.",
+        "fr": "J'ai perdu ma valise.",
+        "de": "Ich habe meinen Koffer verloren.",
+        "it": "Ho perso la valigia.",
+        "en": "I lost my suitcase."
+      },
+      "keyword": "suitcase",
+      "keywordTranslations": ["maleta", "valija", "equipaje"]
+    },
+    {
+      "id": "tv5",
+      "text": "Where can I buy a ticket?",
+      "translations": {
+        "es": "¿Dónde puedo comprar un boleto?",
+        "ar": "أin yomkinoni shira' tadkira?",
+        "pt": "Onde posso comprar uma passagem?",
+        "fr": "Où puis-je acheter un billet ?",
+        "de": "Wo kann ich eine Fahrkarte kaufen?",
+        "it": "Dove posso acquistare un biglietto?",
+        "en": "Where can I buy a ticket."
+      },
+      "keyword": "ticket",
+      "keywordTranslations": ["boleto", "ticket", "entrada"]
+    },
+    {
+      "id": "tv6",
+      "text": "Is this the train to London?",
+      "translations": {
+        "es": "¿Es este el tren a Londres?",
+        "ar": "هل هذا هو القطار المؤدي إلى لندن؟",
+        "pt": "Este é o trem para Londres?",
+        "fr": "Est-ce le train pour Londres ?",
+        "de": "Ist das der Zug nach London?",
+        "it": "Questo è il treno per Londra?",
+        "en": "Is this the train to London."
+      },
+      "keyword": "train",
+      "keywordTranslations": ["tren", "ferrocarril"]
+    },
+    {
+      "id": "tv7",
+      "text": "Enjoy your trip.",
+      "translations": {
+        "es": "Disfruta tu viaje.",
+        "ar": "رحلة سعيدة.",
+        "pt": "Aproveite a sua viagem.",
+        "fr": "Bon voyage.",
+        "de": "Gute Reise.",
+        "it": "Buon viaggio.",
+        "en": "Enjoy your trip."
+      }
+    }
+  ]
+}

@@ -1,0 +1,124 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Onboarding from '../components/Onboarding.vue';
+import TypingPractice from '../components/TypingPractice.vue';
+---
+
+<Layout title="linebyline - Practica tu inglés escribiendo frases">
+  
+  <!-- ONBOARDING MODAL/VIEW CONTAINER -->
+  <div id="onboarding-wrapper" class="hidden">
+    <Onboarding client:load />
+  </div>
+
+  <!-- MAIN APP CONTAINER -->
+  <div id="app-wrapper" class="hidden flex-grow flex flex-col justify-start min-h-screen">
+    <Header />
+
+    <!-- MAIN VIEW -->
+    <TypingPractice client:load />
+  </div>
+
+  <!-- ORCHESTRATION CLIENT SCRIPT -->
+  <script>
+    function initOrchestrator() {
+      const onboardingWrapper = document.getElementById('onboarding-wrapper')!;
+      const appWrapper = document.getElementById('app-wrapper')!;
+      
+      if (!onboardingWrapper) return; // safeguard
+
+      // --- STATE & ROUTING CONTROL ---
+      function checkUserProfile() {
+        const stored = localStorage.getItem('lbl_user_profile');
+        if (stored) {
+          try {
+            const profile = JSON.parse(stored);
+            onboardingWrapper.classList.add('hidden');
+            appWrapper.classList.remove('hidden');
+            
+            // Trigger keyboard focus on typing practice hidden input
+            const hiddenInput = document.getElementById('typing-hidden-input') as HTMLInputElement;
+            if (hiddenInput) {
+              setTimeout(() => hiddenInput.focus(), 150);
+            }
+
+            // Dispatch profile details to Header and TypingPractice components
+            setTimeout(() => {
+              window.dispatchEvent(new CustomEvent('profile-loaded', { detail: profile }));
+              window.dispatchEvent(new CustomEvent('onboarding-completed-start'));
+            }, 100);
+          } catch(e) {
+            showOnboarding();
+          }
+        } else {
+          showOnboarding();
+        }
+      }
+
+      function showOnboarding() {
+        appWrapper.classList.add('hidden');
+        onboardingWrapper.classList.remove('hidden');
+      }
+
+      // --- CUSTOM EVENT ROUTERS ---
+
+      // 1. Onboarding Completed Listener
+      window.addEventListener('onboarding-complete', (e: any) => {
+        const profile = e.detail;
+        onboardingWrapper.classList.add('hidden');
+        appWrapper.classList.remove('hidden');
+        
+        // Focus writing input
+        const hiddenInput = document.getElementById('typing-hidden-input') as HTMLInputElement;
+        if (hiddenInput) {
+          setTimeout(() => hiddenInput.focus(), 150);
+        }
+
+        window.dispatchEvent(new CustomEvent('profile-loaded', { detail: profile }));
+        window.dispatchEvent(new CustomEvent('onboarding-completed-start'));
+      });
+
+      // 2. Reset User Profile from Header Avatar Dropdown
+      window.addEventListener('profile-reset', () => {
+        localStorage.removeItem('lbl_user_profile');
+        showOnboarding();
+        // Notify Onboarding view to reset wizard step to language select
+        window.dispatchEvent(new CustomEvent('profile-reset-state'));
+      });
+
+      // 3. Change Native Language in Header dropdown
+      window.addEventListener('native-lang-changed', (e: any) => {
+        const updatedLang = e.detail.lang;
+        const stored = localStorage.getItem('lbl_user_profile');
+        if (stored) {
+          try {
+            const profile = JSON.parse(stored);
+            profile.language = updatedLang;
+            localStorage.setItem('lbl_user_profile', JSON.stringify(profile));
+
+            // Notify Header to update names, and TypingPractice to translate phrases
+            window.dispatchEvent(new CustomEvent('profile-loaded', { detail: profile }));
+            window.dispatchEvent(new CustomEvent('native-lang-changed-state'));
+          } catch(err) {}
+        }
+      });
+
+      // Check initially on load
+      checkUserProfile();
+    }
+
+    let isOrchestratorInitialized = false;
+    function runOrchestratorInit() {
+      if (isOrchestratorInitialized) return;
+      isOrchestratorInitialized = true;
+      initOrchestrator();
+    }
+
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      runOrchestratorInit();
+    } else {
+      document.addEventListener('DOMContentLoaded', runOrchestratorInit);
+    }
+  </script>
+</Layout>

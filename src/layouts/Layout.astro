@@ -1,0 +1,90 @@
+---
+import "@fontsource-variable/onest";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const {
+  title,
+  description = "Type & Speak - Escribe y escucha frases en inglés con TTS",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    <!-- Inline script to determine and set the theme & color preference before body rendering -->
+    <script is:inline>
+      const getThemePreference = () => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme");
+        }
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      };
+
+      const theme = getThemePreference();
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+
+      const getColorPreference = () => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("color-theme")
+        ) {
+          return localStorage.getItem("color-theme");
+        }
+        return "theme-indigo";
+      };
+
+      const colorTheme = getColorPreference();
+      document.documentElement.classList.add(colorTheme);
+    </script>
+  </head>
+  <body
+    class="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors duration-300 antialiased selection:bg-primary-500 selection:text-white"
+  >
+    <div class="relative min-h-screen flex flex-col overflow-hidden">
+      <!-- Premium background decorations (gradients/glows) -->
+      <div
+        class="absolute top-0 left-1/4 -translate-x-1/2 w-96 h-96 bg-primary-500/10 dark:bg-primary-500/5 rounded-full blur-3xl pointer-events-none"
+      >
+      </div>
+      <div
+        class="absolute bottom-0 right-1/4 translate-x-1/2 w-[30rem] h-[30rem] bg-primary-500/5 dark:bg-primary-500/5 rounded-full blur-3xl pointer-events-none"
+      >
+      </div>
+
+      <main class="flex-grow flex flex-col z-10">
+        <slot />
+      </main>
+
+      <footer
+        class="py-6 text-center text-xs text-slate-400 dark:text-slate-600 border-t border-slate-200/50 dark:border-slate-800/30 glass mt-auto z-10"
+      >
+        <p>
+          &copy; {new Date().getFullYear()} TypeByRitzu. Creado con Astro y Tailwind
+          CSS v4.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

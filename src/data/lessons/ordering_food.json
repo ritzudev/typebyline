@@ -1,0 +1,133 @@
+{
+  "title": {
+    "es": "Ordering Food • Pedir comida",
+    "ar": "Ordering Food • طلب طعام",
+    "pt": "Ordering Food • Pedir comida",
+    "fr": "Ordering Food • Commander à manger",
+    "de": "Ordering Food • Essen bestellen",
+    "it": "Ordering Food • Ordinare cibo",
+    "en": "Ordering Food • Ordering Food"
+  },
+  "phrases": [
+    {
+      "id": "of1",
+      "text": "I want to order food.",
+      "translations": {
+        "es": "Quiero pedir comida.",
+        "ar": "أريد أن أطلب طعامًا.",
+        "pt": "Eu quero pedir comida.",
+        "fr": "Je veux commander de la nourriture.",
+        "de": "Ich möchte Essen bestellen.",
+        "it": "Voglio ordinare cibo.",
+        "en": "I want to order food."
+      },
+      "keyword": "order",
+      "keywordTranslations": ["pedir", "ordenar", "encargar"]
+    },
+    {
+      "id": "of2",
+      "text": "A table for two, please.",
+      "translations": {
+        "es": "Una mesa para dos, por favor.",
+        "ar": "طاولة لشخصين من فضلك.",
+        "pt": "Uma mesa para dois, por favor.",
+        "fr": "Une table pour deux, s'il vous plaît.",
+        "de": "Einen Tisch für zwei, bitte.",
+        "it": "Un tavolo per due, per favore.",
+        "en": "A table for two, please."
+      },
+      "keyword": "table",
+      "keywordTranslations": ["mesa", "tablero"]
+    },
+    {
+      "id": "of3",
+      "text": "Can I see the menu?",
+      "translations": {
+        "es": "¿Puedo ver el menú?",
+        "ar": "هل يمكنني رؤية قائمة الطعام؟",
+        "pt": "Posso ver o cardápio?",
+        "fr": "Puis-je voir le menu ?",
+        "de": "Kann ich die Speisekarte sehen?",
+        "it": "Posso vedere le menu?",
+        "en": "Can I see the menu?"
+      },
+      "keyword": "see",
+      "keywordTranslations": ["ver", "mirar", "observar"]
+    },
+    {
+      "id": "of4",
+      "text": "I will have water.",
+      "translations": {
+        "es": "Tomaré agua.",
+        "ar": "سآخذ ماءً.",
+        "pt": "Eu vou querer água.",
+        "fr": "Je vais prendre de l'eau.",
+        "de": "Ich nehme Wasser.",
+        "it": "Prenderò dell'acqua.",
+        "en": "I will have water."
+      },
+      "keyword": "water",
+      "keywordTranslations": ["agua"]
+    },
+    {
+      "id": "of5",
+      "text": "Is this dish spicy?",
+      "translations": {
+        "es": "¿Este plato es picante?",
+        "ar": "هل هذا الطبق حار؟",
+        "pt": "Este prato é apimentado?",
+        "fr": "Ce plat est-il épicé ?",
+        "de": "Ist dieses Gericht scharf?",
+        "it": "Questo piatto es piccante?",
+        "en": "Is this dish spicy?"
+      },
+      "keyword": "spicy",
+      "keywordTranslations": ["picante", "condimentado"]
+    },
+    {
+      "id": "of6",
+      "text": "The food is delicious.",
+      "translations": {
+        "es": "La comida está deliciosa.",
+        "ar": "الطعام لذيذ.",
+        "pt": "A comida está deliciosa.",
+        "fr": "La nourriture est délicieuse.",
+        "de": "Das Essen ist lecker.",
+        "it": "Il cibo es delizioso.",
+        "en": "The food is delicious."
+      },
+      "keyword": "delicious",
+      "keywordTranslations": ["deliciosa", "sabrosa", "exquisita"]
+    },
+    {
+      "id": "of7",
+      "text": "Check, please.",
+      "translations": {
+        "es": "La cuenta, por favor.",
+        "ar": "الحساب من فضلك.",
+        "pt": "A conta, por favor.",
+        "fr": "L'addition, s'il vous plaît.",
+        "de": "Die Rechnung, bitte.",
+        "it": "Il conto, per favore.",
+        "en": "Check, please."
+      },
+      "keyword": "check",
+      "keywordTranslations": ["cuenta", "factura", "cheque"]
+    },
+    {
+      "id": "of8",
+      "text": "Thank you very much.",
+      "translations": {
+        "es": "Muchas gracias.",
+        "ar": "شكرا جزيلا لك.",
+        "pt": "Muito obrigado.",
+        "fr": "Merci beaucoup.",
+        "de": "Vielen Dank.",
+        "it": "Grazie mille.",
+        "en": "Thank you very much."
+      },
+      "keyword": "much",
+      "keywordTranslations": ["mucho", "bastante", "demasiado"]
+    }
+  ]
+}

@@ -1,0 +1,133 @@
+{
+  "title": {
+    "es": "New Friend • Nuevo amigo",
+    "ar": "New Friend • صديق جديد",
+    "pt": "New Friend • Novo amigo",
+    "fr": "New Friend • Nouvel ami",
+    "de": "New Friend • Neuer Freund",
+    "it": "New Friend • Nuovo amico",
+    "en": "New Friend • New Friend"
+  },
+  "phrases": [
+    {
+      "id": "nf1",
+      "text": "My name is Lina.",
+      "translations": {
+        "es": "Mi nombre es Lina.",
+        "ar": "اسمي لينا.",
+        "pt": "Meu nome é Lina.",
+        "fr": "Je m'appelle Lina.",
+        "de": "Mein Name ist Lina.",
+        "it": "Il mio nome è Lina.",
+        "en": "My name is Lina."
+      },
+      "keyword": "name",
+      "keywordTranslations": ["nombre", "denominación"]
+    },
+    {
+      "id": "nf2",
+      "text": "I am from Yemen.",
+      "translations": {
+        "es": "Soy de Yemen.",
+        "ar": "أنا من اليمن.",
+        "pt": "Eu sou do Iêmen.",
+        "fr": "Je viens du Yémen.",
+        "de": "Ich komme aus dem Jemen.",
+        "it": "Vengo dallo Yemen.",
+        "en": "I am from Yemen."
+      },
+      "keyword": "from",
+      "keywordTranslations": ["de (origen)", "desde"]
+    },
+    {
+      "id": "nf3",
+      "text": "I moved to England.",
+      "translations": {
+        "es": "Me mudé a Inglaterra.",
+        "ar": "انتقلت إلى إنجلترا.",
+        "pt": "Eu me mudei para a Inglaterra.",
+        "fr": "J'ai déménagé en Angleterre.",
+        "de": "Ich bin nach England gezogen.",
+        "it": "Mi sono trasferito in Inghilterra.",
+        "en": "I moved to England."
+      },
+      "keyword": "moved",
+      "keywordTranslations": ["me mudé", "mudarse", "trasladarse"]
+    },
+    {
+      "id": "nf4",
+      "text": "Nice to meet you.",
+      "translations": {
+        "es": "Gusto en conocerte.",
+        "ar": "سررت بلقائك.",
+        "pt": "Prazer em conhecê-lo.",
+        "fr": "Ravi de vous rencontrer.",
+        "de": "Schön Sie kennenzulernen.",
+        "it": "Piacere di conoscerti.",
+        "en": "Nice to meet you."
+      },
+      "keyword": "meet",
+      "keywordTranslations": ["conocer", "encontrarse", "reunirse"]
+    },
+    {
+      "id": "nf5",
+      "text": "What is your name?",
+      "translations": {
+        "es": "¿Cómo te llamas?",
+        "ar": "ما اسمك؟",
+        "pt": "Qual é o seu nome?",
+        "fr": "Comment vous appelez-vous ?",
+        "de": "Wie heißen Sie?",
+        "it": "Come ti chiami?",
+        "en": "What is your name?"
+      },
+      "keyword": "your",
+      "keywordTranslations": ["tu", "tuyo", "vuestro"]
+    },
+    {
+      "id": "nf6",
+      "text": "I live in London now.",
+      "translations": {
+        "es": "Vivo en Londres ahora.",
+        "ar": "أنا أعيش في لندن الآن.",
+        "pt": "Eu moro em Londres agora.",
+        "fr": "J'habite à Londres maintenant.",
+        "de": "Ich wohne jetzt in London.",
+        "it": "Vivo a Londra adesso.",
+        "en": "I live in London now."
+      },
+      "keyword": "live",
+      "keywordTranslations": ["vivo", "vivir", "residir"]
+    },
+    {
+      "id": "nf7",
+      "text": "I want to learn English.",
+      "translations": {
+        "es": "Quiero aprender inglés.",
+        "ar": "أريد أن أتعلم الإنجليزية.",
+        "pt": "Eu quero aprender inglés.",
+        "fr": "Je veux apprendre l'anglais.",
+        "de": "Ich möchte Englisch lernen.",
+        "it": "Voglio imparare l'inglese.",
+        "en": "I want to learn English."
+      },
+      "keyword": "learn",
+      "keywordTranslations": ["aprender", "estudiar"]
+    },
+    {
+      "id": "nf8",
+      "text": "Let's be friends.",
+      "translations": {
+        "es": "Seamos amigos.",
+        "ar": "لنكن أصدقاء.",
+        "pt": "Vamos ser amigos.",
+        "fr": "Soyons amis.",
+        "de": "Lass uns Freunde sein.",
+        "it": "Diventiamo amici.",
+        "en": "Let's be friends."
+      },
+      "keyword": "friends",
+      "keywordTranslations": ["amigos", "amistades"]
+    }
+  ]
+}

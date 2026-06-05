@@ -1,0 +1,580 @@
+---
+import FlagAR from "./flags/FlagAR.astro";
+import FlagDE from "./flags/FlagDE.astro";
+import FlagEN from "./flags/FlagEN.astro";
+import FlagES from "./flags/FlagES.astro";
+import FlagFR from "./flags/FlagFR.astro";
+import FlagIT from "./flags/FlagIT.astro";
+import FlagPT from "./flags/FlagPT.astro";
+---
+
+<header
+  class="flex justify-between items-center py-4 px-6 border-b border-slate-200/50 dark:border-slate-800/30 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md sticky top-0 z-50 transition-colors duration-300"
+>
+  <!-- Left Brand -->
+  <div class="flex items-center gap-3">
+    <div
+      class="p-2 bg-primary-600 dark:bg-primary-500 text-white rounded-xl shadow-md shadow-primary-500/10 flex items-center justify-center"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2.5"
+        stroke="currentColor"
+        class="w-5 h-5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z"
+        ></path>
+      </svg>
+    </div>
+    <div>
+      <span
+        class="text-xl font-black font-display tracking-tight text-slate-800 dark:text-slate-100"
+      >
+        linebyline
+      </span>
+    </div>
+  </div>
+
+
+
+  <!-- Right Side Actions -->
+  <div class="flex items-center gap-3 relative">
+    <!-- Language Selector Dropdown Button -->
+    <button
+      id="lang-menu-btn"
+      class="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors flex items-center gap-1.5 cursor-pointer border border-slate-200/60 dark:border-slate-800/80 bg-white dark:bg-slate-950 text-slate-700 dark:text-slate-200"
+    >
+      <span
+        id="current-lang-flag"
+        class="flex items-center justify-center py-0.5"
+      >
+        <span data-active-flag="es"><FlagES width={24} height={16} /></span>
+        <span data-active-flag="en" class="hidden"
+          ><FlagEN width={24} height={16} /></span
+        >
+        <span data-active-flag="ar" class="hidden"
+          ><FlagAR width={24} height={16} /></span
+        >
+        <span data-active-flag="pt" class="hidden"
+          ><FlagPT width={24} height={16} /></span
+        >
+        <span data-active-flag="fr" class="hidden"
+          ><FlagFR width={24} height={16} /></span
+        >
+        <span data-active-flag="de" class="hidden"
+          ><FlagDE width={24} height={16} /></span
+        >
+        <span data-active-flag="it" class="hidden"
+          ><FlagIT width={24} height={16} /></span
+        >
+      </span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2.5"
+        stroke="currentColor"
+        class="w-3 h-3 text-slate-400"
+        ><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m19.5 8.25-7.5 7.5-7.5-7.5"></path></svg
+      >
+    </button>
+
+    <!-- Color Palette Button -->
+    <button
+      id="color-palette-btn"
+      class="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors text-slate-500 dark:text-slate-400 cursor-pointer border border-slate-200/60 dark:border-slate-800/80 bg-white dark:bg-slate-950"
+      aria-label="Cambiar paleta de colores"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        class="w-5 h-5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9.53 16.122a3 3 0 0 0-2.22 4.283 1.75 1.75 0 0 0 2.7-.424 5.002 5.002 0 0 1 7.925-5.918 1.75 1.75 0 0 0 2.7-.424 3 3 0 0 0-2.22-4.283 1.75 1.75 0 0 0-1.7 1.7 4.998 4.998 0 0 1-5.185 5.185 1.75 1.75 0 0 0-1.7-1.7Z"
+        ></path>
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M10.47 7.878A2.508 2.508 0 0 0 8.5 7c-1.38 0-2.5 1.12-2.5 2.5 0 .723.307 1.375.8 1.83M18.03 9.83c0-1.38-1.12-2.5-2.5-2.5a2.508 2.508 0 0 0-1.97.878"
+        ></path>
+      </svg>
+    </button>
+
+    <!-- Light / Dark Mode Toggle Button -->
+    <button
+      id="main-theme-toggle"
+      class="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors text-slate-500 dark:text-slate-400 cursor-pointer border border-slate-200/60 dark:border-slate-800/80 bg-white dark:bg-slate-950"
+      aria-label="Cambiar tema"
+    >
+      <!-- Sun Icon (visible in dark theme) -->
+      <svg
+        id="main-theme-sun"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        class="w-5 h-5 hidden"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 3v2.25m0 13.5V21M4.318 4.318l1.591 1.591M18.09 18.09l1.591 1.591M6.25 12H3.75m16.5 0h-2.25m-1.591-11.409-1.591 1.591M6.25 17.75l-1.591 1.591M12 7.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9Z"
+        ></path>
+      </svg>
+      <!-- Moon Icon (visible in light theme) -->
+      <svg
+        id="main-theme-moon"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        class="w-5 h-5"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z"
+        ></path>
+      </svg>
+    </button>
+
+    <!-- User Profile Dropdown Button -->
+    <div class="relative">
+      <button
+        id="profile-menu-btn"
+        class="w-8 h-8 rounded-full bg-primary-600 hover:bg-primary-500 text-white font-bold flex items-center justify-center text-sm shadow-md cursor-pointer uppercase hover:scale-[1.05] transition-transform select-none"
+      >
+        <span id="profile-initial">-</span>
+      </button>
+
+      <!-- Profile Dropdown Content -->
+      <div
+        id="profile-dropdown"
+        class="absolute right-0 mt-2 w-48 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl hidden py-1.5 z-50"
+      >
+        <div class="px-4 py-2 border-b border-slate-100 dark:border-slate-850">
+          <p
+            class="text-3xs text-slate-400 dark:text-slate-500 uppercase tracking-wider font-semibold"
+          >
+            Usuario
+          </p>
+          <p
+            id="profile-name-display"
+            class="text-sm font-semibold truncate text-slate-800 dark:text-slate-100"
+          >
+            ...
+          </p>
+          <p
+            id="profile-lvl-display"
+            class="text-3xs text-primary-600 dark:text-primary-400 font-medium"
+          >
+            Principiante
+          </p>
+        </div>
+        <button
+          id="btn-reset-profile"
+          class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-rose-600 dark:text-rose-400 text-xs font-semibold flex items-center gap-2 cursor-pointer select-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            class="w-4 h-4"
+            ><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"
+            ></path></svg
+          >
+          Reiniciar Perfil
+        </button>
+      </div>
+    </div>
+
+    <!-- Language Selector Dropdown Content -->
+    <div
+      id="lang-dropdown"
+      class="absolute right-12 top-12 w-44 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl hidden py-1.5 z-50"
+    >
+      <button
+        data-switch-lang="es"
+        class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-3 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
+        ><span><FlagES width={24} height={16} /></span> Español</button
+      >
+      <button
+        data-switch-lang="en"
+        class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-3 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
+        ><span><FlagEN width={24} height={16} /></span> English</button
+      >
+      <button
+        data-switch-lang="ar"
+        class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-3 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
+        ><span><FlagAR width={24} height={16} /></span> العربية</button
+      >
+      <button
+        data-switch-lang="pt"
+        class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-3 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
+        ><span><FlagPT width={24} height={16} /></span> Português</button
+      >
+      <button
+        data-switch-lang="fr"
+        class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-3 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
+        ><span><FlagFR width={24} height={16} /></span> Français</button
+      >
+      <button
+        data-switch-lang="de"
+        class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-3 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
+        ><span><FlagDE width={24} height={16} /></span> Deutsch</button
+      >
+      <button
+        data-switch-lang="it"
+        class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-3 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
+        ><span><FlagIT width={24} height={16} /></span> Italiano</button
+      >
+    </div>
+
+    <!-- Color Palette Dropdown Content -->
+    <div
+      id="color-palette-dropdown"
+      class="absolute right-24 top-12 w-44 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl hidden py-1.5 z-50 animate-in fade-in duration-100"
+    >
+      <div class="px-3 py-1.5 border-b border-slate-100 dark:border-slate-850">
+        <p
+          class="text-3xs text-slate-400 dark:text-slate-500 uppercase tracking-wider font-semibold"
+        >
+          Acento de Color
+        </p>
+      </div>
+      <button
+        data-palette="theme-indigo"
+        class="w-full text-left px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-2.5 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
+      >
+        <span
+          class="w-3.5 h-3.5 rounded-full bg-indigo-500 border border-white/20"
+        ></span>
+        Índigo
+      </button>
+      <button
+        data-palette="theme-emerald"
+        class="w-full text-left px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-2.5 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
+      >
+        <span
+          class="w-3.5 h-3.5 rounded-full bg-emerald-500 border border-white/20"
+        ></span>
+        Esmeralda
+      </button>
+      <button
+        data-palette="theme-rose"
+        class="w-full text-left px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-2.5 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
+      >
+        <span
+          class="w-3.5 h-3.5 rounded-full bg-rose-500 border border-white/20"
+        ></span>
+        Rosa
+      </button>
+      <button
+        data-palette="theme-amber"
+        class="w-full text-left px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-2.5 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
+      >
+        <span
+          class="w-3.5 h-3.5 rounded-full bg-amber-500 border border-white/20"
+        ></span>
+        Ámbar
+      </button>
+      <button
+        data-palette="theme-sky"
+        class="w-full text-left px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-2.5 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
+      >
+        <span class="w-3.5 h-3.5 rounded-full bg-sky-500 border border-white/20"
+        ></span>
+        Celeste
+      </button>
+      <button
+        data-palette="theme-violet"
+        class="w-full text-left px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-2.5 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
+      >
+        <span
+          class="w-3.5 h-3.5 rounded-full bg-violet-500 border border-white/20"
+        ></span>
+        Violeta
+      </button>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Setup logic on DOM load
+  function initHeader() {
+
+    const mainThemeToggle = document.getElementById(
+      "main-theme-toggle",
+    ) as HTMLButtonElement | null;
+    const mainThemeSun = document.getElementById(
+      "main-theme-sun",
+    ) as SVGElement | null;
+    const mainThemeMoon = document.getElementById(
+      "main-theme-moon",
+    ) as SVGElement | null;
+    const langMenuBtn = document.getElementById(
+      "lang-menu-btn",
+    ) as HTMLButtonElement | null;
+    const langDropdown = document.getElementById(
+      "lang-dropdown",
+    ) as HTMLDivElement | null;
+    const profileMenuBtn = document.getElementById(
+      "profile-menu-btn",
+    ) as HTMLButtonElement | null;
+    const profileDropdown = document.getElementById(
+      "profile-dropdown",
+    ) as HTMLDivElement | null;
+    const btnResetProfile = document.getElementById(
+      "btn-reset-profile",
+    ) as HTMLButtonElement | null;
+    const currentLangFlag = document.getElementById(
+      "current-lang-flag",
+    ) as HTMLSpanElement | null;
+    const colorPaletteBtn = document.getElementById(
+      "color-palette-btn",
+    ) as HTMLButtonElement | null;
+    const colorPaletteDropdown = document.getElementById(
+      "color-palette-dropdown",
+    ) as HTMLDivElement | null;
+
+
+
+    // THEME TOGGLER
+    function updateThemeIcons() {
+      if (mainThemeSun && mainThemeMoon) {
+        const isDark = document.documentElement.classList.contains("dark");
+        if (isDark) {
+          mainThemeSun.classList.remove("hidden");
+          mainThemeMoon.classList.add("hidden");
+        } else {
+          mainThemeSun.classList.add("hidden");
+          mainThemeMoon.classList.remove("hidden");
+        }
+      }
+    }
+
+    if (mainThemeToggle) {
+      mainThemeToggle.addEventListener("click", (e) => {
+        console.log(
+          "Dark mode is: " +
+            document.documentElement.classList.contains("dark"),
+        );
+        e.stopPropagation();
+        const willBeDark = !document.documentElement.classList.contains("dark");
+        document.documentElement.classList.toggle("dark", willBeDark);
+        try {
+          localStorage.setItem("theme", willBeDark ? "dark" : "light");
+        } catch (err) {
+          console.warn("Storage item setting failed:", err);
+        }
+        updateThemeIcons();
+        window.dispatchEvent(new CustomEvent("theme-toggled"));
+      });
+    }
+
+    // Initial icon alignment
+    updateThemeIcons();
+    window.addEventListener("theme-loaded", updateThemeIcons);
+
+    // DROPDOWNS TOGGLES
+    if (langMenuBtn && langDropdown && profileDropdown) {
+      langMenuBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        langDropdown.classList.toggle("hidden");
+        profileDropdown.classList.add("hidden");
+        if (colorPaletteDropdown) colorPaletteDropdown.classList.add("hidden");
+      });
+    }
+
+    if (profileMenuBtn && profileDropdown && langDropdown) {
+      profileMenuBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        profileDropdown.classList.toggle("hidden");
+        langDropdown.classList.add("hidden");
+        if (colorPaletteDropdown) colorPaletteDropdown.classList.add("hidden");
+      });
+    }
+
+    if (colorPaletteBtn && colorPaletteDropdown) {
+      colorPaletteBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        colorPaletteDropdown.classList.toggle("hidden");
+        if (langDropdown) langDropdown.classList.add("hidden");
+        if (profileDropdown) profileDropdown.classList.add("hidden");
+      });
+    }
+
+    // Close on click outside
+    window.addEventListener("click", () => {
+      if (langDropdown) langDropdown.classList.add("hidden");
+      if (profileDropdown) profileDropdown.classList.add("hidden");
+      if (colorPaletteDropdown) colorPaletteDropdown.classList.add("hidden");
+    });
+
+    // LANGUAGE SWITCHER
+    const switchLangBtns = document.querySelectorAll("[data-switch-lang]");
+    switchLangBtns.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const lang = btn.getAttribute("data-switch-lang")!;
+        if (currentLangFlag) {
+          const flags = currentLangFlag.querySelectorAll("[data-active-flag]");
+          flags.forEach((f) => {
+            if (f.getAttribute("data-active-flag") === lang) {
+              f.classList.remove("hidden");
+            } else {
+              f.classList.add("hidden");
+            }
+          });
+        }
+        if (langDropdown) {
+          langDropdown.classList.add("hidden");
+        }
+        window.dispatchEvent(
+          new CustomEvent("native-lang-changed", { detail: { lang } }),
+        );
+      });
+    });
+
+    // COLOR PALETTE SWITCHER
+    const paletteButtons = document.querySelectorAll("[data-palette]");
+    const allPalettes = [
+      "theme-indigo",
+      "theme-emerald",
+      "theme-rose",
+      "theme-amber",
+      "theme-sky",
+      "theme-violet",
+    ];
+
+    paletteButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const selectedPalette = btn.getAttribute("data-palette");
+        if (selectedPalette) {
+          allPalettes.forEach((themeClass) => {
+            document.documentElement.classList.remove(themeClass);
+          });
+          document.documentElement.classList.add(selectedPalette);
+          try {
+            localStorage.setItem("color-theme", selectedPalette);
+          } catch (err) {
+            console.warn("Storage item setting failed:", err);
+          }
+          if (colorPaletteDropdown) {
+            colorPaletteDropdown.classList.add("hidden");
+          }
+        }
+      });
+    });
+
+    // Reset profile event
+    if (btnResetProfile) {
+      btnResetProfile.addEventListener("click", () => {
+        if (profileDropdown) {
+          profileDropdown.classList.add("hidden");
+        }
+        window.dispatchEvent(new CustomEvent("profile-reset"));
+      });
+    }
+
+    // Profile load update listener
+    window.addEventListener("profile-loaded", (e: any) => {
+      const p = e.detail;
+      const profileInitial = document.getElementById("profile-initial");
+      const profileNameDisplay = document.getElementById(
+        "profile-name-display",
+      );
+      const profileLvlDisplay = document.getElementById("profile-lvl-display");
+
+      if (profileInitial) profileInitial.textContent = p.nickname.charAt(0);
+      if (profileNameDisplay) profileNameDisplay.textContent = p.nickname;
+      if (currentLangFlag) {
+        const flags = currentLangFlag.querySelectorAll("[data-active-flag]");
+        const userLang = p.language || "es";
+        flags.forEach((f) => {
+          if (f.getAttribute("data-active-flag") === userLang) {
+            f.classList.remove("hidden");
+          } else {
+            f.classList.add("hidden");
+          }
+        });
+      }
+
+      const tLevelMap: { [key: string]: { [lang: string]: string } } = {
+        beginner: {
+          es: "Principiante",
+          ar: "مبتدئ",
+          pt: "Iniciante",
+          fr: "Débutant",
+          de: "Anfänger",
+          it: "Principiante",
+          en: "Beginner",
+        },
+        intermediate: {
+          es: "Intermedio",
+          ar: "متوسط",
+          pt: "Intermédio",
+          fr: "Intermédiaire",
+          de: "Mittelstufe",
+          it: "Intermedio",
+          en: "Intermediate",
+        },
+        advanced: {
+          es: "Avanzado",
+          ar: "متقدم",
+          pt: "Avançado",
+          fr: "Avancé",
+          de: "Fortgeschritten",
+          it: "Avanzato",
+          en: "Advanced",
+        },
+      };
+
+      const userLang = p.language || "es";
+      const lvlStr =
+        tLevelMap[p.level]?.[userLang] ||
+        tLevelMap[p.level]?.["es"] ||
+        "Principiante";
+      if (profileLvlDisplay) {
+        profileLvlDisplay.textContent = lvlStr;
+      }
+    });
+  }
+
+  let isHeaderInitialized = false;
+  function runHeaderInit() {
+    if (isHeaderInitialized) return;
+    isHeaderInitialized = true;
+    initHeader();
+  }
+
+  // Bind to dynamic DOM load events safely
+  if (
+    document.readyState === "complete" ||
+    document.readyState === "interactive"
+  ) {
+    runHeaderInit();
+  } else {
+    document.addEventListener("DOMContentLoaded", runHeaderInit);
+  }
+</script>

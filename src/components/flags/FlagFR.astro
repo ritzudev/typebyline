@@ -1,0 +1,9 @@
+---
+interface Props { width?: number | string; height?: number | string; class?: string; }
+const { width = 48, height = 32, class: className = '' } = Astro.props;
+---
+<svg width={width} height={height} class={className} viewBox="0 0 24 16" aria-hidden="true" style="display: block; border-radius: 1.5px; flex-shrink: 0;">
+  <rect x="0" y="0" width="24" height="16" fill="#ED2939"></rect>
+  <rect x="0" y="0" width="16" height="16" fill="#FFFFFF"></rect>
+  <rect x="0" y="0" width="8" height="16" fill="#002395"></rect>
+</svg>
