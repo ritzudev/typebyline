@@ -9,29 +9,181 @@
         v-if="showSidebar"
         class="w-full md:w-80 border-r border-slate-200/60 dark:border-slate-800/40 bg-slate-50/50 dark:bg-slate-950/20 p-5 flex flex-col justify-start shrink-0 relative overflow-y-auto max-h-50 md:max-h-[95vh]"
       >
-        <div class="flex justify-between items-center mb-6">
-          <p
-            class="text-3xs font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500"
+        <!-- Tabs selector -->
+        <div
+          class="flex border-b border-slate-200/60 dark:border-slate-800/40 mb-4 select-none shrink-0"
+        >
+          <button
+            @click="activeSidebarTab = 'lessons'"
+            class="flex-1 pb-3 text-[11px] font-extrabold uppercase tracking-wider text-center cursor-pointer transition-all border-b-2"
+            :class="
+              activeSidebarTab === 'lessons'
+                ? 'border-primary-550 text-primary-650 dark:border-primary-500 dark:text-primary-400'
+                : 'border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-650 dark:hover:text-slate-400'
+            "
           >
-            Completado
-          </p>
-          <span
-            id="typing-progress-badge"
-            class="px-2 py-0.5 rounded-full text-3xs font-extrabold bg-primary-50 dark:bg-primary-900/50 text-primary-650 dark:text-primary-400 border border-primary-100/50 dark:border-primary-800/30"
+            Temas
+          </button>
+          <button
+            @click="activeSidebarTab = 'progress'"
+            class="flex-1 pb-3 text-[11px] font-extrabold uppercase tracking-wider text-center cursor-pointer transition-all border-b-2 flex items-center justify-center gap-1.5"
+            :class="
+              activeSidebarTab === 'progress'
+                ? 'border-primary-550 text-primary-650 dark:border-primary-500 dark:text-primary-400'
+                : 'border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-650 dark:hover:text-slate-400'
+            "
           >
-            {{ completedPhrases.length }}/{{ activeLessonPhrases.length }}
-          </span>
+            <span>Progreso</span>
+            <span
+              class="px-1.5 py-0.5 rounded-full text-4xs font-mono font-bold"
+              :class="
+                activeSidebarTab === 'progress'
+                  ? 'bg-primary-100 dark:bg-primary-900/60 text-primary-650 dark:text-primary-450'
+                  : 'bg-slate-100 dark:bg-slate-900 text-slate-400 dark:text-slate-500'
+              "
+            >
+              {{ completedPhrases.length }}
+            </span>
+          </button>
         </div>
 
-        <!-- Sidebar Completed Scroll -->
+        <!-- LESSONS LIST TAB -->
         <div
-          id="completed-phrases-sidebar"
-          ref="sidebarRef"
-          class="flex flex-col gap-3 max-h-40 md:max-h-none overflow-y-auto pr-4"
+          v-if="activeSidebarTab === 'lessons'"
+          class="flex flex-col gap-4 overflow-y-auto pr-1 grow select-none"
+        >
+          <!-- Predeterminadas -->
+          <div class="flex flex-col gap-1.5">
+            <span
+              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1"
+            >
+              Temas Predeterminados
+            </span>
+            <button
+              v-for="(lesson, key) in lessonsData"
+              :key="key"
+              @click="selectLesson(key)"
+              class="w-full text-left px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
+              :class="
+                key === activeLessonId
+                  ? 'bg-primary-50/70 border-primary-200 text-primary-650 dark:bg-primary-900 dark:border-primary-900/40 dark:text-primary-400'
+                  : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
+              "
+            >
+              <span class="truncate pr-1">{{
+                lesson.title[profile.language] || lesson.title["es"]
+              }}</span>
+            </button>
+          </div>
+
+          <!-- Creadas por el usuario -->
+          <div
+            class="flex flex-col gap-1.5"
+            v-if="Object.keys(customLessons).length > 0"
+          >
+            <span
+              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1"
+            >
+              Tus Temas Creados
+            </span>
+            <div
+              v-for="(lesson, key) in customLessons"
+              :key="key"
+              class="relative group"
+            >
+              <button
+                @click="selectLesson(key)"
+                class="w-full text-left pl-3.5 pr-9 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
+                :class="
+                  key === activeLessonId
+                    ? 'bg-primary-50/70 border-primary-200 text-primary-650 dark:bg-primary-900 dark:border-primary-900/40 dark:text-primary-400'
+                    : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
+                "
+              >
+                <span class="truncate pr-1">{{
+                  lesson.title["es"] || lesson.title["en"]
+                }}</span>
+              </button>
+
+              <!-- Botón borrar lección personalizada -->
+              <button
+                @click.stop="deleteCustomLesson(key)"
+                class="absolute right-2.5 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-all cursor-pointer select-none"
+                title="Eliminar lección"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="2.5"
+                  stroke="currentColor"
+                  class="w-3.5 h-3.5"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Práctica de voz -->
+          <div class="flex flex-col gap-1.5">
+            <span
+              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1"
+            >
+              Práctica de Voz
+            </span>
+            <button
+              @click="selectLesson('custom_practice')"
+              class="w-full text-left px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
+              :class="
+                activeLessonId === 'custom_practice'
+                  ? 'bg-primary-50/70 border-primary-200 text-primary-650 dark:bg-primary-900 dark:border-primary-900/40 dark:text-primary-400'
+                  : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
+              "
+            >
+              <span>Práctica por Voz (Grabadas)</span>
+            </button>
+          </div>
+
+          <div
+            class="h-px bg-slate-200/50 dark:bg-slate-800/40 my-1 shrink-0"
+          ></div>
+
+          <!-- Botón Crear Nueva Lección -->
+          <button
+            @click="selectLesson('create_new_lesson')"
+            class="w-full py-2.5 px-4 bg-primary-650 hover:bg-primary-700 text-white rounded-xl font-bold text-xs shadow-lg shadow-primary-500/10 transition-all cursor-pointer text-center flex items-center justify-center gap-1.5 select-none shrink-0"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="3"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+            <span>Crear Nueva Lección</span>
+          </button>
+        </div>
+
+        <!-- PROGRESS TAB -->
+        <div
+          v-if="activeSidebarTab === 'progress'"
+          class="flex flex-col gap-3 overflow-y-auto pr-1 grow"
         >
           <div
             v-if="completedPhrases.length === 0"
-            class="py-8 text-center text-slate-400 dark:text-slate-650 text-xs font-medium"
+            class="py-12 text-center text-slate-400 dark:text-slate-650 text-xs font-medium"
           >
             Escribe la frase central para completarla.
           </div>
@@ -39,7 +191,7 @@
             v-else
             v-for="(p, idx) in completedPhrases"
             :key="idx"
-            class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/40 shadow-xs flex flex-col gap-1 select-text transition-colors duration-300"
+            class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/40 shadow-xs flex flex-col gap-1 select-text transition-colors duration-300 animate-in fade-in"
           >
             <div class="flex items-start gap-2">
               <span class="text-3xs font-mono font-bold text-primary-500 mt-0.5"
@@ -134,73 +286,17 @@
           >
         </button>
 
-        <div class="flex items-center gap-3" id="lesson-select-wrapper">
+        <div class="flex items-center gap-2" id="lesson-select-wrapper">
           <span
-            class="text-xs font-semibold text-slate-400 dark:text-slate-500 loc-topic-prefix"
-            >{{ t.topic }}</span
+            class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider"
           >
-
-          <!-- Custom Dropdown for Lesson selection -->
-          <div class="relative">
-            <button
-              @click="isDropdownOpen = !isDropdownOpen"
-              class="bg-transparent text-sm font-bold text-primary-650 dark:text-primary-400 outline-none flex items-center gap-1.5 cursor-pointer select-none hover:opacity-80 transition-opacity"
-            >
-              <span>{{ activeLessonLabel }}</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="2.5"
-                stroke="currentColor"
-                class="w-3 h-3 transition-transform duration-200"
-                :class="{ 'rotate-180': isDropdownOpen }"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="m19.5 8.25-7.5 7.5-7.5-7.5"
-                />
-              </svg>
-            </button>
-
-            <!-- Dropdown Options Menu -->
-            <Transition name="dropdown">
-              <div
-                v-if="isDropdownOpen"
-                class="absolute left-0 mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl py-1.5 z-50"
-              >
-                <button
-                  v-for="opt in lessonOptions"
-                  :key="opt.value"
-                  @click="selectLesson(opt.value)"
-                  class="w-full text-left px-4 py-2.5 text-xs font-semibold transition-colors flex items-center justify-between cursor-pointer"
-                  :class="
-                    opt.value === activeLessonId
-                      ? 'bg-primary-50 text-primary-600 dark:bg-primary-900 dark:text-primary-400'
-                      : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'
-                  "
-                >
-                  <span>{{ opt.label }}</span>
-                  <svg
-                    v-if="opt.value === activeLessonId"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="3"
-                    stroke="currentColor"
-                    class="w-3.5 h-3.5 text-primary-600 dark:text-primary-400"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="m4.5 12.75 6 6 9-13.5"
-                    />
-                  </svg>
-                </button>
-              </div>
-            </Transition>
-          </div>
+            Tema:
+          </span>
+          <span
+            class="text-sm font-extrabold text-primary-650 dark:text-primary-400 select-text"
+          >
+            {{ activeLessonLabel }}
+          </span>
         </div>
 
         <div class="flex items-center gap-2">
@@ -455,189 +551,237 @@
         v-if="activeLessonId !== 'create_new_lesson'"
         class="grow flex flex-col justify-between w-full max-w-6xl items-left"
       >
-        <!-- TARGET TYPING TEXT CONTAINER -->
-        <div
-          id="typing-box-container"
-          @click="focusInput"
-          class="w-full max-w-6xl grow flex flex-col justify-center items-left py-12 relative cursor-text"
-        >
-          <!-- Keyword Highlight -->
-          <div
-            v-if="showKeywordHighlight"
-            id="target-phrase-keyword"
-            class="w-full text-left mb-3.5 text-xs sm:text-sm font-semibold tracking-wide transition-all duration-300 select-none animate-in fade-in"
+        <!-- TARGET TYPING TEXT CON        <!-- TARGET TYPING TEXT CONTAINER WITH NAVIGATION BUTTONS -->
+        <div class="w-full grow flex items-center justify-between gap-4 py-8">
+          <!-- Botón frase anterior -->
+          <button
+            @click="prevPhrase"
+            :disabled="activePhraseIndex === 0"
+            class="p-3.5 rounded-full border border-slate-200/60 dark:border-slate-800/40 bg-white/70 dark:bg-slate-900/65 hover:bg-slate-100 dark:hover:bg-slate-850 text-slate-450 dark:text-slate-500 disabled:opacity-20 disabled:hover:bg-transparent dark:disabled:hover:bg-transparent transition-all cursor-pointer disabled:cursor-not-allowed select-none shrink-0"
+            title="Frase anterior"
           >
-            <span
-              id="keyword-english"
-              class="text-primary-600 dark:text-primary-400 mr-1.5"
-              >{{ activePhrase?.keyword }}</span
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="3"
+              stroke="currentColor"
+              class="w-4 h-4"
             >
-            <span
-              id="keyword-translation"
-              class="text-slate-400 dark:text-slate-500 font-normal"
-            >
-              {{ activePhrase?.keywordTranslations?.join(" • ") }}
-            </span>
-          </div>
-          <div v-else class="w-full h-5 mb-3.5"></div>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>
+          </button>
 
-          <!-- Speaker Role/Prefix Indicator -->
+          <!-- TARGET TYPING TEXT CONTAINER -->
           <div
-            v-if="activePhrase?.speakerPrefix"
-            class="mb-3.5 px-3 py-1 w-max rounded-full text-3xs sm:text-2xs font-extrabold uppercase tracking-widest bg-primary-50 dark:bg-primary-950/40 text-primary-650 dark:text-primary-400 border border-primary-100/50 dark:border-primary-800/30 select-none animate-in-fade"
+            id="typing-box-container"
+            @click="focusInput"
+            class="grow flex flex-col justify-center items-left py-12 relative cursor-text min-h-[200px]"
           >
-            {{ activePhrase.speakerPrefix }}
-          </div>
-
-          <!-- Text to type -->
-          <div
-            id="target-phrase-letters"
-            class="text-5xl md:text-6xl font-bold tracking-normal font-mono leading-relaxed mb-4 select-none flex flex-wrap justify-left gap-x-4"
-          >
-            <span
-              v-for="(wordObj, wIdx) in wordSpans"
-              :key="wIdx"
-              class="word-span-interactive hover:text-primary-600 dark:hover:text-primary-400 hover:underline decoration-primary-400/60 dark:decoration-primary-650/50 decoration-wavy decoration-3 transition-all cursor-help relative inline-block"
-              @mouseenter="onWordHoverPronounce(wordObj.wordText)"
-              @mouseleave="onWordLeavePronounce"
-              @click.stop="lookupWord(wordObj.wordText, activePhrase!.text)"
+            <!-- Keyword Highlight -->
+            <div
+              v-if="showKeywordHighlight"
+              id="target-phrase-keyword"
+              class="w-full text-left mb-3.5 text-xs sm:text-sm font-semibold tracking-wide transition-all duration-300 select-none animate-in fade-in"
             >
               <span
-                v-for="(letterObj, lIdx) in wordObj.letters"
-                :key="lIdx"
-                :class="letterObj.class"
+                id="keyword-english"
+                class="text-primary-600 dark:text-primary-400 mr-1.5"
+                >{{ activePhrase?.keyword }}</span
               >
-                {{ letterObj.char }}
+              <span
+                id="keyword-translation"
+                class="text-slate-400 dark:text-slate-500 font-normal"
+              >
+                {{ activePhrase?.keywordTranslations?.join(" • ") }}
               </span>
-            </span>
-          </div>
-
-          <!-- Native Translation -->
-          <div
-            id="target-phrase-translation"
-            class="text-base md:text-3xl text-slate-400 dark:text-slate-500 font-medium text-left h-8 leading-relaxed"
-          >
-            {{ activeTranslation }}
-          </div>
-
-          <!-- Word Dictionary Hover Card -->
-          <Transition name="dropdown">
-            <div
-              v-if="activeWordDefinition"
-              id="word-dictionary-card"
-              class="absolute bottom-4 z-35 w-full max-w-sm bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 shadow-xl rounded-2xl p-4 flex flex-col gap-1.5 backdrop-blur-md text-left select-text relative"
-            >
-              <!-- Botón de Cerrar (x) -->
-              <button
-                @click.stop="closeDictionary"
-                class="absolute top-3 right-3 text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-350 transition-colors cursor-pointer select-none p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
-                title="Cerrar Diccionario"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="2.5"
-                  stroke="currentColor"
-                  class="w-3.5 h-3.5"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M6 18 18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-
-              <div class="flex justify-between items-center pr-6">
-                <span
-                  class="text-xs font-black text-slate-800 dark:text-slate-100 flex items-center gap-1.5 flex-wrap"
-                >
-                  <span
-                    class="text-xs font-black text-slate-800 dark:text-slate-100"
-                  >
-                    {{ activeWordDefinition.word }}
-                  </span>
-
-                  <span
-                    v-if="activeWordDefinition.phonetic"
-                    class="text-4xs font-mono text-slate-400 dark:text-slate-500 font-bold"
-                  >
-                    {{ activeWordDefinition.phonetic }}
-                  </span>
-
-                  <button
-                    v-if="activeWordDefinition.audioUrl"
-                    @click.stop="playWordAudio(activeWordDefinition.audioUrl)"
-                    class="text-slate-400 hover:text-primary-600 dark:text-slate-500 dark:hover:text-primary-400 transition-colors p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
-                    title="Escuchar pronunciación"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                      class="w-3 h-3"
-                    >
-                      <path
-                        d="M10 3.75a.75.75 0 0 0-1.264-.546L5.203 6.25H3.5a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.703l3.533 3.046A.75.75 0 0 0 10 16.25V3.75ZM13.3 6.7a.75.75 0 1 0-1.1-1.02 6.5 6.5 0 0 1 0 8.64.75.75 0 1 0 1.1-1.02 5 5 0 0 0 0-6.6Z"
-                      />
-                      <path
-                        d="M15.5 8.7a.75.75 0 1 0-1.1-1.02 9.5 9.5 0 0 1 0 4.64.75.75 0 1 0 1.1-1.02 8 8 0 0 0 0-2.6Z"
-                      />
-                    </svg>
-                  </button>
-
-                  <span
-                    v-if="activeWordDefinition.partOfSpeech"
-                    class="text-4xs font-mono font-bold text-primary-500 uppercase tracking-widest bg-primary-50 dark:bg-primary-950/40 border border-primary-100/30 dark:border-primary-900/20 px-1.5 py-0.5 rounded-md"
-                  >
-                    {{ activeWordDefinition.partOfSpeech }}
-                  </span>
-                </span>
-                <svg
-                  v-if="isLoadingDefinition"
-                  class="animate-spin h-3.5 w-3.5 text-primary-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    class="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    stroke-width="4"
-                  ></circle>
-                  <path
-                    class="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-              </div>
-              <p
-                class="text-2xs text-slate-600 dark:text-slate-350 font-medium"
-              >
-                {{ activeWordDefinition.definition }}
-              </p>
-              <p
-                v-if="activeWordDefinition.translation"
-                class="text-2xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  class="w-3.5 h-3.5"
-                >
-                  <path
-                    d="M3.105 2.289a.75.75 0 0 0-.826.95l1.414 4.925A1.5 1.5 0 0 0 5.135 9.25h6.115a.75.75 0 0 1 0 1.5H5.135a1.5 1.5 0 0 0-1.442 1.086l-1.414 4.926a.75.75 0 0 0 .826.95 28.896 28.896 0 0 0 15.293-9.354.75.75 0 0 0 0-1.022A28.89 28.89 0 0 0 3.105 2.289Z"
-                  />
-                </svg>
-                {{ activeWordDefinition.translation }}
-              </p>
             </div>
-          </Transition>
+            <div v-else class="w-full h-5 mb-3.5"></div>
+
+            <!-- Speaker Role/Prefix Indicator -->
+            <div
+              v-if="activePhrase?.speakerPrefix"
+              class="mb-3.5 px-3 py-1 w-max rounded-full text-3xs sm:text-2xs font-extrabold uppercase tracking-widest bg-primary-50 dark:bg-primary-950/40 text-primary-650 dark:text-primary-400 border border-primary-100/50 dark:border-primary-800/30 select-none animate-in-fade"
+            >
+              {{ activePhrase.speakerPrefix }}
+            </div>
+
+            <!-- Text to type -->
+            <div
+              id="target-phrase-letters"
+              class="text-5xl md:text-6xl font-bold tracking-normal font-mono leading-relaxed mb-4 select-none flex flex-wrap justify-left gap-x-4"
+            >
+              <span
+                v-for="(wordObj, wIdx) in wordSpans"
+                :key="wIdx"
+                class="word-span-interactive hover:text-primary-600 dark:hover:text-primary-400 hover:underline decoration-primary-400/60 dark:decoration-primary-650/50 decoration-wavy decoration-3 transition-all cursor-help relative inline-block"
+                @mouseenter="onWordHoverPronounce(wordObj.wordText)"
+                @mouseleave="onWordLeavePronounce"
+                @click.stop="lookupWord(wordObj.wordText, activePhrase!.text)"
+              >
+                <span
+                  v-for="(letterObj, lIdx) in wordObj.letters"
+                  :key="lIdx"
+                  :class="letterObj.class"
+                >
+                  {{ letterObj.char }}
+                </span>
+              </span>
+            </div>
+
+            <!-- Native Translation -->
+            <div
+              id="target-phrase-translation"
+              class="text-base md:text-3xl text-slate-400 dark:text-slate-500 font-medium text-left h-8 leading-relaxed"
+            >
+              {{ activeTranslation }}
+            </div>
+
+            <!-- Word Dictionary Hover Card -->
+            <Transition name="dropdown">
+              <div
+                v-if="activeWordDefinition"
+                id="word-dictionary-card"
+                class="absolute bottom-4 z-35 w-full max-w-sm bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 shadow-xl rounded-2xl p-4 flex flex-col gap-1.5 backdrop-blur-md text-left select-text relative"
+              >
+                <!-- Botón de Cerrar (x) -->
+                <button
+                  @click.stop="closeDictionary"
+                  class="absolute top-3 right-3 text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-350 transition-colors cursor-pointer select-none p-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
+                  title="Cerrar Diccionario"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="2.5"
+                    stroke="currentColor"
+                    class="w-3.5 h-3.5"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18 18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+
+                <div class="flex justify-between items-center pr-6">
+                  <span
+                    class="text-xs font-black text-slate-800 dark:text-slate-100 flex items-center gap-1.5 flex-wrap"
+                  >
+                    <span
+                      class="text-xs font-black text-slate-800 dark:text-slate-100"
+                    >
+                      {{ activeWordDefinition.word }}
+                    </span>
+
+                    <span
+                      v-if="activeWordDefinition.phonetic"
+                      class="text-4xs font-mono text-slate-400 dark:text-slate-500 font-bold"
+                    >
+                      {{ activeWordDefinition.phonetic }}
+                    </span>
+
+                    <button
+                      v-if="activeWordDefinition.audioUrl"
+                      @click.stop="playWordAudio(activeWordDefinition.audioUrl)"
+                      class="text-slate-400 hover:text-primary-600 dark:text-slate-500 dark:hover:text-primary-400 transition-colors p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                      title="Escuchar pronunciación"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        class="w-3 h-3"
+                      >
+                        <path
+                          d="M10 3.75a.75.75 0 0 0-1.264-.546L5.203 6.25H3.5a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.703l3.533 3.046A.75.75 0 0 0 10 16.25V3.75ZM13.3 6.7a.75.75 0 1 0-1.1-1.02 6.5 6.5 0 0 1 0 8.64.75.75 0 1 0 1.1-1.02 5 5 0 0 0 0-6.6Z"
+                        />
+                        <path
+                          d="M15.5 8.7a.75.75 0 1 0-1.1-1.02 9.5 9.5 0 0 1 0 4.64.75.75 0 1 0 1.1-1.02 8 8 0 0 0 0-2.6Z"
+                        />
+                      </svg>
+                    </button>
+
+                    <span
+                      v-if="activeWordDefinition.partOfSpeech"
+                      class="text-4xs font-mono font-bold text-primary-500 uppercase tracking-widest bg-primary-50 dark:bg-primary-950/40 border border-primary-100/30 dark:border-primary-900/20 px-1.5 py-0.5 rounded-md"
+                    >
+                      {{ activeWordDefinition.partOfSpeech }}
+                    </span>
+                  </span>
+                  <svg
+                    v-if="isLoadingDefinition"
+                    class="animate-spin h-3.5 w-3.5 text-primary-500"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      class="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      stroke-width="4"
+                    ></circle>
+                    <path
+                      class="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                </div>
+                <p
+                  class="text-2xs text-slate-600 dark:text-slate-350 font-medium"
+                >
+                  {{ activeWordDefinition.definition }}
+                </p>
+                <p
+                  v-if="activeWordDefinition.translation"
+                  class="text-2xs font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    class="w-3.5 h-3.5"
+                  >
+                    <path
+                      d="M3.105 2.289a.75.75 0 0 0-.826.95l1.414 4.925A1.5 1.5 0 0 0 5.135 9.25h6.115a.75.75 0 0 1 0 1.5H5.135a1.5 1.5 0 0 0-1.442 1.086l-1.414 4.926a.75.75 0 0 0 .826.95 28.896 28.896 0 0 0 15.293-9.354.75.75 0 0 0 0-1.022A28.89 28.89 0 0 0 3.105 2.289Z"
+                    />
+                  </svg>
+                  {{ activeWordDefinition.translation }}
+                </p>
+              </div>
+            </Transition>
+          </div>
+
+          <!-- Botón frase siguiente (Omitir) -->
+          <button
+            @click="skipPhrase"
+            class="p-3.5 rounded-full border border-slate-200/60 dark:border-slate-800/40 bg-white/70 dark:bg-slate-900/65 hover:bg-slate-100 dark:hover:bg-slate-850 text-slate-450 dark:text-slate-500 transition-all cursor-pointer select-none shrink-0"
+            title="Siguiente frase (Omitir)"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="3"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </button>
         </div>
 
         <!-- STATS BAR -->
@@ -830,7 +974,7 @@
               class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"
             />
           </div>
-                <!-- Selector de Tipo de Contenido -->
+          <!-- Selector de Tipo de Contenido -->
           <div class="flex flex-col gap-2">
             <label
               class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider"
@@ -902,46 +1046,78 @@
           </div>
 
           <!-- Opciones de optimización -->
-          <div class="flex flex-col gap-3 py-3.5 px-4 bg-slate-50/50 dark:bg-slate-900/30 border border-slate-200/40 dark:border-slate-800/40 rounded-2xl">
-            <p class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider">Ajustes de Optimización (Recomendado para canciones)</p>
-            
+          <div
+            class="flex flex-col gap-3 py-3.5 px-4 bg-slate-50/50 dark:bg-slate-900/30 border border-slate-200/40 dark:border-slate-800/40 rounded-2xl"
+          >
+            <p
+              class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider"
+            >
+              Ajustes de Optimización (Recomendado para canciones)
+            </p>
+
             <div class="flex flex-col gap-3">
               <!-- Switch: Omitir duplicados -->
               <div class="flex items-center justify-between select-none gap-4">
                 <div class="flex flex-col">
-                  <span class="text-xs font-bold text-slate-700 dark:text-slate-350">Evitar líneas repetidas</span>
-                  <span class="text-3xs text-slate-400 dark:text-slate-500">Omite líneas idénticas y estribillos duplicados para evitar repetir la misma escritura</span>
+                  <span
+                    class="text-xs font-bold text-slate-700 dark:text-slate-350"
+                    >Evitar líneas repetidas</span
+                  >
+                  <span class="text-3xs text-slate-400 dark:text-slate-500"
+                    >Omite líneas idénticas y estribillos duplicados para evitar
+                    repetir la misma escritura</span
+                  >
                 </div>
                 <button
                   type="button"
                   @click="skipDuplicateLines = !skipDuplicateLines"
                   class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
-                  :class="skipDuplicateLines ? 'bg-primary-600' : 'bg-slate-200 dark:bg-slate-800'"
+                  :class="
+                    skipDuplicateLines
+                      ? 'bg-primary-600'
+                      : 'bg-slate-200 dark:bg-slate-800'
+                  "
                 >
                   <span
                     class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                    :class="skipDuplicateLines ? 'translate-x-4' : 'translate-x-0'"
+                    :class="
+                      skipDuplicateLines ? 'translate-x-4' : 'translate-x-0'
+                    "
                   />
                 </button>
               </div>
 
-              <div class="h-px bg-slate-200/50 dark:bg-slate-800/40 w-full"></div>
+              <div
+                class="h-px bg-slate-200/50 dark:bg-slate-800/40 w-full"
+              ></div>
 
               <!-- Switch: Limpiar interjecciones -->
               <div class="flex items-center justify-between select-none gap-4">
                 <div class="flex flex-col">
-                  <span class="text-xs font-bold text-slate-700 dark:text-slate-350">Limpiar expresiones vacías (Relleno)</span>
-                  <span class="text-3xs text-slate-400 dark:text-slate-500">Elimina expresiones cortas o de fondo como (Hey), (Oh), (Yeah) o (Huh)</span>
+                  <span
+                    class="text-xs font-bold text-slate-700 dark:text-slate-350"
+                    >Limpiar expresiones vacías (Relleno)</span
+                  >
+                  <span class="text-3xs text-slate-400 dark:text-slate-500"
+                    >Elimina expresiones cortas o de fondo como (Hey), (Oh),
+                    (Yeah) o (Huh)</span
+                  >
                 </div>
                 <button
                   type="button"
                   @click="cleanFillerWords = !cleanFillerWords"
                   class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
-                  :class="cleanFillerWords ? 'bg-primary-600' : 'bg-slate-200 dark:bg-slate-800'"
+                  :class="
+                    cleanFillerWords
+                      ? 'bg-primary-600'
+                      : 'bg-slate-200 dark:bg-slate-800'
+                  "
                 >
                   <span
                     class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
-                    :class="cleanFillerWords ? 'translate-x-4' : 'translate-x-0'"
+                    :class="
+                      cleanFillerWords ? 'translate-x-4' : 'translate-x-0'
+                    "
                   />
                 </button>
               </div>
@@ -1128,7 +1304,8 @@ const isFocused = ref(false);
 const liveWpm = ref(0);
 const liveAcc = ref(100);
 
-const showSidebar = ref(false);
+const showSidebar = ref(true);
+const activeSidebarTab = ref("lessons"); // 'lessons' o 'progress'
 
 const isVoiceSettingsOpen = ref(false);
 const voices = ref<SpeechSynthesisVoice[]>([]);
@@ -1258,70 +1435,84 @@ watch(contentType, (newType) => {
 
 function cleanSongLine(line: string): string {
   let cleaned = line;
-  
+
   // Limpiar expresiones comunes entre paréntesis de máximo 2-3 palabras cortas y vacías (como interjecciones)
   // Coincide con cosas como: (hey), (oh), (yeah), (huh), (ooh), (ah), (whoa), (wow), (baby), (hey hey), (oh oh), (yeah yeah), (mmm), etc.
-  const fillerRegex = /\s*\((hey|oh|yeah|huh|ooh|ah|whoa|wow|baby|mmm|eh|vocals|instrumental|vocals\s+only|chuckle|gasp|sigh|huh\?|sí|no|oh-oh|yeah\s+yeah|hey\s+hey|oh\s+oh)\)\s*/gi;
-  cleaned = cleaned.replace(fillerRegex, ' ').trim();
-  
+  const fillerRegex =
+    /\s*\((hey|oh|yeah|huh|ooh|ah|whoa|wow|baby|mmm|eh|vocals|instrumental|vocals\s+only|chuckle|gasp|sigh|huh\?|sí|no|oh-oh|yeah\s+yeah|hey\s+hey|oh\s+oh)\)\s*/gi;
+  cleaned = cleaned.replace(fillerRegex, " ").trim();
+
   // Limpiar texto que representa interjecciones solas
-  const singleFillerRegex = /^(hey|oh|yeah|huh|ooh|ah|whoa|wow|mmm|eh|vocals|instrumental|vocals\s+only)$/i;
-  const normalizedForCheck = cleaned.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?¿¡]/g, "").trim();
+  const singleFillerRegex =
+    /^(hey|oh|yeah|huh|ooh|ah|whoa|wow|mmm|eh|vocals|instrumental|vocals\s+only)$/i;
+  const normalizedForCheck = cleaned
+    .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?¿¡]/g, "")
+    .trim();
   if (singleFillerRegex.test(normalizedForCheck)) {
     return ""; // Omitir línea
   }
-  
-  cleaned = cleaned.replace(/\s+/g, ' ').trim();
+
+  cleaned = cleaned.replace(/\s+/g, " ").trim();
   return cleaned;
 }
 
-function processAndCleanPhrases(phrases: PhraseTranslation[]): PhraseTranslation[] {
+function processAndCleanPhrases(
+  phrases: PhraseTranslation[]
+): PhraseTranslation[] {
   const seenTexts = new Set<string>();
   const finalPhrases: PhraseTranslation[] = [];
-  
+
   for (const p of phrases) {
     let englishText = p.text.trim();
-    let spanishText = (p.translations?.es || p.translations?.en || p.text).trim();
-    
+    let spanishText = (
+      p.translations?.es ||
+      p.translations?.en ||
+      p.text
+    ).trim();
+
     if (cleanFillerWords.value) {
       englishText = cleanSongLine(englishText);
       spanishText = cleanSongLine(spanishText);
     }
-    
+
     // Si la frase quedó vacía tras la limpieza, se omite
     if (!englishText || englishText.length < 2) {
       continue;
     }
-    
+
     if (skipDuplicateLines.value) {
       // Normalizar para comparación (minúsculas, sin puntuación básica ni espacios extra)
-      const normText = englishText.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?¿¡]/g, "").replace(/\s+/g, " ").trim();
+      const normText = englishText
+        .toLowerCase()
+        .replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?¿¡]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
       if (seenTexts.has(normText)) {
         continue; // Omitir duplicados
       }
       seenTexts.add(normText);
     }
-    
+
     const finalTranslations: Record<string, string> = {
-      en: englishText
+      en: englishText,
     };
     if (spanishText) {
       finalTranslations.es = spanishText;
     } else {
       finalTranslations.es = englishText;
     }
-    
+
     finalPhrases.push({
       ...p,
       text: englishText,
-      translations: finalTranslations
+      translations: finalTranslations,
     });
   }
-  
+
   if (finalPhrases.length === 0 && phrases.length > 0) {
-    return phrases.filter(p => p.text && p.text.trim().length > 0);
+    return phrases.filter((p) => p.text && p.text.trim().length > 0);
   }
-  
+
   return finalPhrases;
 }
 
@@ -1353,8 +1544,34 @@ watch(newLessonText, (newText) => {
     });
 
   if (lines.length >= 2) {
-    const enWords = ["the", "and", "to", "you", "of", "is", "that", "it", "in", "my", "me"];
-    const esWords = ["el", "la", "los", "las", "un", "una", "y", "que", "es", "en", "con", "mi", "se"];
+    const enWords = [
+      "the",
+      "and",
+      "to",
+      "you",
+      "of",
+      "is",
+      "that",
+      "it",
+      "in",
+      "my",
+      "me",
+    ];
+    const esWords = [
+      "el",
+      "la",
+      "los",
+      "las",
+      "un",
+      "una",
+      "y",
+      "que",
+      "es",
+      "en",
+      "con",
+      "mi",
+      "se",
+    ];
 
     let oddEnScore = 0;
     let oddEsScore = 0;
@@ -1397,6 +1614,20 @@ function saveCustomLessons() {
     "lbl_custom_lessons",
     JSON.stringify(customLessons.value)
   );
+}
+
+function deleteCustomLesson(id: string) {
+  if (
+    confirm("¿Estás seguro de que deseas eliminar esta lección personalizada?")
+  ) {
+    delete customLessons.value[id];
+    saveCustomLessons();
+    // Si la lección que se elimina es la que está activa, regresar a la lección inicial
+    if (activeLessonId.value === id) {
+      activeLessonId.value = "new_friend";
+      handleLessonChange();
+    }
+  }
 }
 
 // Options for dropdown
@@ -1814,10 +2045,18 @@ function normalizeText(text: string, isUserInput = false): string {
   if (!text) return "";
   let result = text
     .replace(/[\u200B-\u200D\uFEFF]/g, "") // Remover zero-width spaces y BOM
+    .replace(/\u00A0/g, " ") // Normalizar espacios de no ruptura a espacios comunes
     .replace(/[’‘`´]/g, "'") // Normalizar apóstrofes y acentos a comilla simple
-    .replace(/[“”]/g, '"'); // Normalizar comillas dobles
+    .replace(/[“”]/g, '"') // Normalizar comillas dobles
+    .replace(/[—–]/g, "-") // Normalizar guiones largos a guion común
+    .replace(/…/g, "..."); // Normalizar puntos suspensivos
 
-  if (!isUserInput) {
+  if (isUserInput) {
+    // El input del usuario no debe iniciar con espacios
+    result = result.trimStart();
+    // Reemplazar espacios múltiples consecutivos por uno solo
+    result = result.replace(/\s{2,}/g, " ");
+  } else {
     result = result.replace(/\s+/g, " ").trim();
   }
   return result;
@@ -2335,7 +2574,23 @@ function processInput() {
   if (phrases.length === 0 || activePhraseIndex.value >= phrases.length) return;
 
   const target = phrases[activePhraseIndex.value].text;
-  const current = normalizeText(typedText.value, true);
+
+  // Normalizar la entrada del usuario de manera exhaustiva
+  let current = normalizeText(typedText.value, true);
+
+  // Si excede la longitud del target, recortar el exceso para evitar atascos visuales al final de la frase
+  if (current.length > target.length) {
+    current = current.slice(0, target.length);
+  }
+
+  // Sincronizar de vuelta con el modelo y el elemento HTML input oculto
+  if (typedText.value !== current) {
+    typedText.value = current;
+  }
+  if (inputRef.value && inputRef.value.value !== current) {
+    inputRef.value.value = current;
+  }
+
   const currentCleaned = current.trimEnd();
 
   if (!isTimerRunning.value) {
@@ -2442,6 +2697,75 @@ function processInput() {
           speakText(nextP.text);
         }
       }, 400);
+    }
+  }
+}
+
+function prevPhrase() {
+  if (activePhraseIndex.value > 0) {
+    activePhraseIndex.value--;
+    typedText.value = "";
+    if (inputRef.value) {
+      inputRef.value.value = "";
+    }
+    // Hablar la frase anterior
+    setTimeout(() => {
+      const p = activePhrase.value;
+      if (p) {
+        speakText(p.text);
+      }
+    }, 200);
+  }
+}
+
+function skipPhrase() {
+  const phrases = activeLessonPhrases.value;
+  if (phrases.length === 0) return;
+
+  if (activePhraseIndex.value < phrases.length) {
+    // Registrar en completados como omitida
+    completedPhrases.value.push({
+      text: phrases[activePhraseIndex.value].text,
+      translation: (activeTranslation.value || "Omitida") + " (Omitida)",
+      speakerPrefix: phrases[activePhraseIndex.value].speakerPrefix,
+    });
+
+    nextTick(() => {
+      if (sidebarRef.value) {
+        sidebarRef.value.scrollTop = sidebarRef.value.scrollHeight;
+      }
+    });
+
+    activePhraseIndex.value++;
+    typedText.value = "";
+    if (inputRef.value) {
+      inputRef.value.value = "";
+    }
+
+    if (activePhraseIndex.value >= phrases.length) {
+      // Calcular estadísticas finales
+      const elapsedMinutes = (Date.now() - startTime.value) / 60000;
+      let totalChars = 0;
+      phrases.forEach((p) => (totalChars += p.text.length));
+
+      const finalWpm = Math.round(totalChars / 5 / (elapsedMinutes || 1));
+      let finalAcc = 100;
+      if (errorsCount.value > 0) {
+        finalAcc = Math.max(
+          50,
+          Math.round(((totalChars - errorsCount.value) / totalChars) * 100)
+        );
+      }
+
+      finalWpmComputed.value = finalWpm;
+      finalAccComputed.value = finalAcc;
+    } else {
+      setTimeout(() => {
+        const p = activePhrase.value;
+        if (p) {
+          speakText(p.text);
+        }
+      }, 200);
     }
   }
 }
