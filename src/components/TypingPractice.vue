@@ -7,7 +7,7 @@
     <Transition name="sidebar">
       <aside
         v-if="showSidebar"
-        class="w-full md:w-80 border-r border-slate-200/60 dark:border-slate-800/40 bg-slate-50/50 dark:bg-slate-950/20 p-5 flex flex-col justify-start shrink-0 relative overflow-y-auto max-h-[200px] md:max-h-[95vh]"
+        class="w-full md:w-80 border-r border-slate-200/60 dark:border-slate-800/40 bg-slate-50/50 dark:bg-slate-950/20 p-5 flex flex-col justify-start shrink-0 relative overflow-y-auto max-h-50 md:max-h-[95vh]"
       >
         <div class="flex justify-between items-center mb-6">
           <p
@@ -91,7 +91,7 @@
 
     <!-- CENTRAL TYPING AREA -->
     <section
-      class="flex-grow flex flex-col justify-between p-6 md:p-12 items-center relative overflow-hidden select-none"
+      class="grow flex flex-col justify-between p-6 md:px-12 md:pb-12 md:pt-6 items-center relative overflow-hidden select-none"
     >
       <!-- Lesson Info / Topic Selector -->
       <div
@@ -392,8 +392,32 @@
 
                 <!-- Gemini API Key Setup -->
                 <div
-                  class="border-t border-slate-100 dark:border-slate-850 my-1 pt-3 flex flex-col gap-1.5"
+                  class="border-t border-slate-100 dark:border-slate-850 my-1 pt-3 flex flex-col gap-2.5"
                 >
+                  <!-- Gemini TTS Toggle -->
+                  <div class="flex items-center justify-between select-none">
+                    <span
+                      class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider"
+                      >Usar Voz Gemini (IA)</span
+                    >
+                    <button
+                      @click="useGeminiTts = !useGeminiTts"
+                      class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+                      :class="
+                        useGeminiTts
+                          ? 'bg-primary-600'
+                          : 'bg-slate-200 dark:bg-slate-800'
+                      "
+                    >
+                      <span
+                        class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                        :class="
+                          useGeminiTts ? 'translate-x-4' : 'translate-x-0'
+                        "
+                      />
+                    </button>
+                  </div>
+
                   <div
                     class="flex justify-between items-center select-none text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider"
                   >
@@ -429,13 +453,13 @@
 
       <div
         v-if="activeLessonId !== 'create_new_lesson'"
-        class="grow flex flex-col justify-between w-full items-center"
+        class="grow flex flex-col justify-between w-full max-w-6xl items-left"
       >
         <!-- TARGET TYPING TEXT CONTAINER -->
         <div
           id="typing-box-container"
           @click="focusInput"
-          class="w-full max-w-3xl grow flex flex-col justify-center items-center py-12 relative cursor-text"
+          class="w-full max-w-6xl grow flex flex-col justify-center items-left py-12 relative cursor-text"
         >
           <!-- Keyword Highlight -->
           <div
@@ -460,7 +484,7 @@
           <!-- Speaker Role/Prefix Indicator -->
           <div
             v-if="activePhrase?.speakerPrefix"
-            class="mb-3.5 px-3 py-1 rounded-full text-3xs sm:text-2xs font-extrabold uppercase tracking-widest bg-primary-50 dark:bg-primary-950/40 text-primary-650 dark:text-primary-400 border border-primary-100/50 dark:border-primary-800/30 select-none animate-in-fade"
+            class="mb-3.5 px-3 py-1 w-max rounded-full text-3xs sm:text-2xs font-extrabold uppercase tracking-widest bg-primary-50 dark:bg-primary-950/40 text-primary-650 dark:text-primary-400 border border-primary-100/50 dark:border-primary-800/30 select-none animate-in-fade"
           >
             {{ activePhrase.speakerPrefix }}
           </div>
@@ -468,7 +492,7 @@
           <!-- Text to type -->
           <div
             id="target-phrase-letters"
-            class="text-6xl md:text-7xl font-bold tracking-normal font-mono text-center leading-relaxed mb-4 select-none flex flex-wrap justify-center gap-x-4"
+            class="text-5xl md:text-6xl font-bold tracking-normal font-mono leading-relaxed mb-4 select-none flex flex-wrap justify-left gap-x-4"
           >
             <span
               v-for="(wordObj, wIdx) in wordSpans"
@@ -491,7 +515,7 @@
           <!-- Native Translation -->
           <div
             id="target-phrase-translation"
-            class="text-base md:text-3xl text-slate-400 dark:text-slate-500 font-medium text-center h-8 leading-relaxed"
+            class="text-base md:text-3xl text-slate-400 dark:text-slate-500 font-medium text-left h-8 leading-relaxed"
           >
             {{ activeTranslation }}
           </div>
@@ -527,9 +551,42 @@
 
               <div class="flex justify-between items-center pr-6">
                 <span
-                  class="text-xs font-black text-slate-800 dark:text-slate-100 flex items-center gap-1.5"
+                  class="text-xs font-black text-slate-800 dark:text-slate-100 flex items-center gap-1.5 flex-wrap"
                 >
-                  {{ activeWordDefinition.word }}
+                  <span
+                    class="text-xs font-black text-slate-800 dark:text-slate-100"
+                  >
+                    {{ activeWordDefinition.word }}
+                  </span>
+
+                  <span
+                    v-if="activeWordDefinition.phonetic"
+                    class="text-4xs font-mono text-slate-400 dark:text-slate-500 font-bold"
+                  >
+                    {{ activeWordDefinition.phonetic }}
+                  </span>
+
+                  <button
+                    v-if="activeWordDefinition.audioUrl"
+                    @click.stop="playWordAudio(activeWordDefinition.audioUrl)"
+                    class="text-slate-400 hover:text-primary-600 dark:text-slate-500 dark:hover:text-primary-400 transition-colors p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                    title="Escuchar pronunciación"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="w-3 h-3"
+                    >
+                      <path
+                        d="M10 3.75a.75.75 0 0 0-1.264-.546L5.203 6.25H3.5a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.703l3.533 3.046A.75.75 0 0 0 10 16.25V3.75ZM13.3 6.7a.75.75 0 1 0-1.1-1.02 6.5 6.5 0 0 1 0 8.64.75.75 0 1 0 1.1-1.02 5 5 0 0 0 0-6.6Z"
+                      />
+                      <path
+                        d="M15.5 8.7a.75.75 0 1 0-1.1-1.02 9.5 9.5 0 0 1 0 4.64.75.75 0 1 0 1.1-1.02 8 8 0 0 0 0-2.6Z"
+                      />
+                    </svg>
+                  </button>
+
                   <span
                     v-if="activeWordDefinition.partOfSpeech"
                     class="text-4xs font-mono font-bold text-primary-500 uppercase tracking-widest bg-primary-50 dark:bg-primary-950/40 border border-primary-100/30 dark:border-primary-900/20 px-1.5 py-0.5 rounded-md"
@@ -585,7 +642,7 @@
 
         <!-- STATS BAR -->
         <div
-          class="w-full max-w-3xl flex flex-col sm:flex-row justify-between items-center gap-4 mt-4 pt-4 border-t border-slate-200/60 dark:border-slate-800/30 text-xs"
+          class="w-full max-w-6xl flex flex-col sm:flex-row justify-between items-center gap-4 mt-4 pt-4 border-t border-slate-200/60 dark:border-slate-800/30 text-xs"
         >
           <!-- Bottom Stats -->
           <div
@@ -773,6 +830,63 @@
               class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"
             />
           </div>
+                <!-- Selector de Tipo de Contenido -->
+          <div class="flex flex-col gap-2">
+            <label
+              class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider"
+              >Tipo de Contenido</label
+            >
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <button
+                type="button"
+                @click="contentType = 'text'"
+                class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center flex flex-col justify-center items-center gap-1"
+                :class="
+                  contentType === 'text'
+                    ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold shadow-sm'
+                    : 'bg-slate-50/50 border-slate-200/50 text-slate-600 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/60'
+                "
+              >
+                <span>Texto / Artículo</span>
+              </button>
+              <button
+                type="button"
+                @click="contentType = 'song'"
+                class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center flex flex-col justify-center items-center gap-1"
+                :class="
+                  contentType === 'song'
+                    ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold shadow-sm'
+                    : 'bg-slate-50/50 border-slate-200/50 text-slate-600 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/60'
+                "
+              >
+                <span>Canción (Inglés)</span>
+              </button>
+              <button
+                type="button"
+                @click="contentType = 'song_translated'"
+                class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center flex flex-col justify-center items-center gap-1"
+                :class="
+                  contentType === 'song_translated'
+                    ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold shadow-sm'
+                    : 'bg-slate-50/50 border-slate-200/50 text-slate-600 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/60'
+                "
+              >
+                <span>Con Traducción</span>
+              </button>
+              <button
+                type="button"
+                @click="contentType = 'dialogue'"
+                class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center flex flex-col justify-center items-center gap-1"
+                :class="
+                  contentType === 'dialogue'
+                    ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold shadow-sm'
+                    : 'bg-slate-50/50 border-slate-200/50 text-slate-600 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/60'
+                "
+              >
+                <span>Diálogo / Entrevista</span>
+              </button>
+            </div>
+          </div>
 
           <div class="flex flex-col gap-1.5">
             <label
@@ -782,9 +896,56 @@
             <textarea
               v-model="newLessonText"
               rows="6"
-              placeholder="Pega las oraciones, historia o letras aquí. Cada salto de línea será una oración para practicar."
-              class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs font-medium text-slate-700 dark:text-slate-200 outline-none resize-none font-mono"
+              :placeholder="textareaPlaceholder"
+              class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs font-medium text-slate-700 dark:text-slate-200 outline-none resize-none font-mono transition-all duration-300 focus:border-primary-500/50"
             ></textarea>
+          </div>
+
+          <!-- Opciones de optimización -->
+          <div class="flex flex-col gap-3 py-3.5 px-4 bg-slate-50/50 dark:bg-slate-900/30 border border-slate-200/40 dark:border-slate-800/40 rounded-2xl">
+            <p class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider">Ajustes de Optimización (Recomendado para canciones)</p>
+            
+            <div class="flex flex-col gap-3">
+              <!-- Switch: Omitir duplicados -->
+              <div class="flex items-center justify-between select-none gap-4">
+                <div class="flex flex-col">
+                  <span class="text-xs font-bold text-slate-700 dark:text-slate-350">Evitar líneas repetidas</span>
+                  <span class="text-3xs text-slate-400 dark:text-slate-500">Omite líneas idénticas y estribillos duplicados para evitar repetir la misma escritura</span>
+                </div>
+                <button
+                  type="button"
+                  @click="skipDuplicateLines = !skipDuplicateLines"
+                  class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+                  :class="skipDuplicateLines ? 'bg-primary-600' : 'bg-slate-200 dark:bg-slate-800'"
+                >
+                  <span
+                    class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                    :class="skipDuplicateLines ? 'translate-x-4' : 'translate-x-0'"
+                  />
+                </button>
+              </div>
+
+              <div class="h-px bg-slate-200/50 dark:bg-slate-800/40 w-full"></div>
+
+              <!-- Switch: Limpiar interjecciones -->
+              <div class="flex items-center justify-between select-none gap-4">
+                <div class="flex flex-col">
+                  <span class="text-xs font-bold text-slate-700 dark:text-slate-350">Limpiar expresiones vacías (Relleno)</span>
+                  <span class="text-3xs text-slate-400 dark:text-slate-500">Elimina expresiones cortas o de fondo como (Hey), (Oh), (Yeah) o (Huh)</span>
+                </div>
+                <button
+                  type="button"
+                  @click="cleanFillerWords = !cleanFillerWords"
+                  class="relative inline-flex h-5 w-9 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
+                  :class="cleanFillerWords ? 'bg-primary-600' : 'bg-slate-200 dark:bg-slate-800'"
+                >
+                  <span
+                    class="pointer-events-none inline-block h-4 w-4 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"
+                    :class="cleanFillerWords ? 'translate-x-4' : 'translate-x-0'"
+                  />
+                </button>
+              </div>
+            </div>
           </div>
 
           <div
@@ -873,12 +1034,14 @@ interface Lesson {
 import newFriendLesson from "../data/lessons/new_friend.json";
 import orderingFoodLesson from "../data/lessons/ordering_food.json";
 import travelingLesson from "../data/lessons/traveling.json";
+import jobInterviewLesson from "../data/lessons/job_interview.json";
 
 // Data sources
 const lessonsData: Record<string, Lesson> = {
   new_friend: newFriendLesson as Lesson,
   ordering_food: orderingFoodLesson as Lesson,
   traveling: travelingLesson as Lesson,
+  job_interview: jobInterviewLesson as Lesson,
 };
 
 const tLocalMap: Record<string, Record<string, string>> = {
@@ -947,6 +1110,8 @@ interface WordDefinition {
   partOfSpeech: string;
   definition: string;
   translation: string;
+  phonetic?: string;
+  audioUrl?: string;
 }
 
 const activeWordDefinition = ref<WordDefinition | null>(null);
@@ -963,7 +1128,7 @@ const isFocused = ref(false);
 const liveWpm = ref(0);
 const liveAcc = ref(100);
 
-const showSidebar = ref(true);
+const showSidebar = ref(false);
 
 const isVoiceSettingsOpen = ref(false);
 const voices = ref<SpeechSynthesisVoice[]>([]);
@@ -972,6 +1137,9 @@ const voiceRate = ref(0.9);
 const voicePitch = ref(1.0);
 const voiceVolume = ref(1.0);
 const geminiApiKey = ref("");
+const useGeminiTts = ref(false);
+let activeGeminiAudio: HTMLAudioElement | null = null;
+const audioCache = ref<Record<string, HTMLAudioElement>>({});
 
 function getVoiceScore(name: string): number {
   const lowerName = name.toLowerCase();
@@ -1018,6 +1186,9 @@ function loadVoices() {
 
   const storedApiKey = localStorage.getItem("lbl_gemini_api_key");
   if (storedApiKey) geminiApiKey.value = storedApiKey;
+
+  const storedUseGeminiTts = localStorage.getItem("lbl_use_gemini_tts");
+  if (storedUseGeminiTts) useGeminiTts.value = storedUseGeminiTts === "true";
 }
 
 watch(selectedVoiceName, (newVal) => {
@@ -1034,6 +1205,12 @@ watch(voiceVolume, (newVal) => {
 });
 watch(geminiApiKey, (newVal) => {
   localStorage.setItem("lbl_gemini_api_key", newVal);
+});
+watch(useGeminiTts, (newVal) => {
+  localStorage.setItem("lbl_use_gemini_tts", String(newVal));
+});
+watch(showSidebar, (newVal) => {
+  localStorage.setItem("lbl_show_sidebar", String(newVal));
 });
 
 function toggleSidebar() {
@@ -1060,9 +1237,151 @@ const t = computed(() => {
 const customLessons = ref<Record<string, Lesson>>({});
 const newLessonTitle = ref("");
 const newLessonText = ref("");
+const contentType = ref("text"); // 'text', 'song', 'song_translated', 'dialogue'
 const isGenerating = ref(false);
 const errorMessage = ref("");
 const importFileInput = ref<HTMLInputElement | null>(null);
+
+const skipDuplicateLines = ref(true);
+const cleanFillerWords = ref(true);
+
+// Watcher para activar/desactivar opciones recomendadas según el tipo de contenido
+watch(contentType, (newType) => {
+  if (newType === "song" || newType === "song_translated") {
+    skipDuplicateLines.value = true;
+    cleanFillerWords.value = true;
+  } else {
+    skipDuplicateLines.value = false;
+    cleanFillerWords.value = false;
+  }
+});
+
+function cleanSongLine(line: string): string {
+  let cleaned = line;
+  
+  // Limpiar expresiones comunes entre paréntesis de máximo 2-3 palabras cortas y vacías (como interjecciones)
+  // Coincide con cosas como: (hey), (oh), (yeah), (huh), (ooh), (ah), (whoa), (wow), (baby), (hey hey), (oh oh), (yeah yeah), (mmm), etc.
+  const fillerRegex = /\s*\((hey|oh|yeah|huh|ooh|ah|whoa|wow|baby|mmm|eh|vocals|instrumental|vocals\s+only|chuckle|gasp|sigh|huh\?|sí|no|oh-oh|yeah\s+yeah|hey\s+hey|oh\s+oh)\)\s*/gi;
+  cleaned = cleaned.replace(fillerRegex, ' ').trim();
+  
+  // Limpiar texto que representa interjecciones solas
+  const singleFillerRegex = /^(hey|oh|yeah|huh|ooh|ah|whoa|wow|mmm|eh|vocals|instrumental|vocals\s+only)$/i;
+  const normalizedForCheck = cleaned.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?¿¡]/g, "").trim();
+  if (singleFillerRegex.test(normalizedForCheck)) {
+    return ""; // Omitir línea
+  }
+  
+  cleaned = cleaned.replace(/\s+/g, ' ').trim();
+  return cleaned;
+}
+
+function processAndCleanPhrases(phrases: PhraseTranslation[]): PhraseTranslation[] {
+  const seenTexts = new Set<string>();
+  const finalPhrases: PhraseTranslation[] = [];
+  
+  for (const p of phrases) {
+    let englishText = p.text.trim();
+    let spanishText = (p.translations?.es || p.translations?.en || p.text).trim();
+    
+    if (cleanFillerWords.value) {
+      englishText = cleanSongLine(englishText);
+      spanishText = cleanSongLine(spanishText);
+    }
+    
+    // Si la frase quedó vacía tras la limpieza, se omite
+    if (!englishText || englishText.length < 2) {
+      continue;
+    }
+    
+    if (skipDuplicateLines.value) {
+      // Normalizar para comparación (minúsculas, sin puntuación básica ni espacios extra)
+      const normText = englishText.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?¿¡]/g, "").replace(/\s+/g, " ").trim();
+      if (seenTexts.has(normText)) {
+        continue; // Omitir duplicados
+      }
+      seenTexts.add(normText);
+    }
+    
+    const finalTranslations: Record<string, string> = {
+      en: englishText
+    };
+    if (spanishText) {
+      finalTranslations.es = spanishText;
+    } else {
+      finalTranslations.es = englishText;
+    }
+    
+    finalPhrases.push({
+      ...p,
+      text: englishText,
+      translations: finalTranslations
+    });
+  }
+  
+  if (finalPhrases.length === 0 && phrases.length > 0) {
+    return phrases.filter(p => p.text && p.text.trim().length > 0);
+  }
+  
+  return finalPhrases;
+}
+
+const textareaPlaceholder = computed(() => {
+  if (contentType.value === "song_translated") {
+    return "Pega la letra alternada de Letras.com aquí:\n\nYou know you love me, I know you care\nTú sabes que me amas, sé que te importo\nJust shout whenever and I'll be there\nSolo grita cuando sea y estaré allí";
+  }
+  if (contentType.value === "song") {
+    return "Pega la letra en inglés aquí. Cada línea será una frase para practicar:\n\nYou know you love me, I know you care\nJust shout whenever and I'll be there";
+  }
+  if (contentType.value === "dialogue") {
+    return "Pega un diálogo o entrevista en inglés. Se detectarán los hablantes automáticamente:\n\nInterviewer: What is your name?\nCandidate: My name is John.";
+  }
+  return "Pega las oraciones, historia o párrafo en inglés aquí. Cada salto de línea será una oración para practicar:\n\nMy name is Lina.\nI live in London now.";
+});
+
+watch(newLessonText, (newText) => {
+  if (!newText) {
+    contentType.value = "text";
+    return;
+  }
+  const lines = newText
+    .split("\n")
+    .map((l) => l.trim())
+    .filter((l) => {
+      if (l.startsWith("[") && l.endsWith("]")) return false;
+      if (l.startsWith("(") && l.endsWith(")")) return false;
+      return l.length > 0;
+    });
+
+  if (lines.length >= 2) {
+    const enWords = ["the", "and", "to", "you", "of", "is", "that", "it", "in", "my", "me"];
+    const esWords = ["el", "la", "los", "las", "un", "una", "y", "que", "es", "en", "con", "mi", "se"];
+
+    let oddEnScore = 0;
+    let oddEsScore = 0;
+    let evenEnScore = 0;
+    let evenEsScore = 0;
+
+    for (let i = 0; i < Math.min(lines.length, 10); i++) {
+      const words = lines[i].toLowerCase().split(/\s+/);
+      words.forEach((w) => {
+        const cleanW = w.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "");
+        if (enWords.includes(cleanW)) {
+          if (i % 2 === 0) oddEnScore++;
+          else evenEnScore++;
+        }
+        if (esWords.includes(cleanW)) {
+          if (i % 2 === 0) oddEsScore++;
+          else evenEsScore++;
+        }
+      });
+    }
+
+    // Si las líneas impares (índice 0, 2...) tienen más inglés y las pares (1, 3...) tienen más español
+    if (oddEnScore > oddEsScore && evenEsScore > evenEnScore) {
+      contentType.value = "song_translated";
+    }
+  }
+});
 
 function loadCustomLessons() {
   const stored = localStorage.getItem("lbl_custom_lessons");
@@ -1139,30 +1458,59 @@ function createLessonSimple() {
   errorMessage.value = "";
   if (!newLessonTitle.value || !newLessonText.value) return;
 
-  const lines = newLessonText.value
+  const rawLines = newLessonText.value
     .split("\n")
     .map((l) => l.trim())
-    .filter((l) => l.length > 0);
+    .filter((l) => {
+      // Filtrar anotaciones comunes en corchetes o paréntesis
+      if (l.startsWith("[") && l.endsWith("]")) return false;
+      if (l.startsWith("(") && l.endsWith(")")) return false;
+      return l.length > 0;
+    });
 
-  if (lines.length === 0) {
+  if (rawLines.length === 0) {
     errorMessage.value = "El texto de la lección está vacío.";
     return;
   }
 
   const lessonId = `custom_${Date.now()}`;
-  const newLesson: Lesson = {
-    title: {
-      es: newLessonTitle.value,
-      en: newLessonTitle.value,
-    },
-    phrases: lines.map((line, idx) => ({
+  let finalPhrases: PhraseTranslation[] = [];
+
+  if (contentType.value === "song_translated") {
+    // Agrupar de dos en dos (Inglés / Español) sin IA
+    for (let i = 0; i < rawLines.length; i += 2) {
+      const english = rawLines[i];
+      const spanish = rawLines[i + 1] || english;
+      finalPhrases.push({
+        id: `cphrase_${lessonId}_${i / 2}`,
+        text: english,
+        translations: {
+          es: spanish,
+          en: english,
+        },
+      });
+    }
+  } else {
+    // Formato estándar (una frase por línea)
+    finalPhrases = rawLines.map((line, idx) => ({
       id: `cphrase_${lessonId}_${idx}`,
       text: line,
       translations: {
         es: line,
         en: line,
       },
-    })),
+    }));
+  }
+
+  // Filtrar duplicados y limpiar palabras vacías en base a la configuración seleccionada
+  finalPhrases = processAndCleanPhrases(finalPhrases);
+
+  const newLesson: Lesson = {
+    title: {
+      es: newLessonTitle.value,
+      en: newLessonTitle.value,
+    },
+    phrases: finalPhrases,
   };
 
   customLessons.value[lessonId] = newLesson;
@@ -1170,6 +1518,7 @@ function createLessonSimple() {
 
   newLessonTitle.value = "";
   newLessonText.value = "";
+  contentType.value = "text";
 
   activeLessonId.value = lessonId;
   handleLessonChange();
@@ -1184,23 +1533,138 @@ async function createLessonWithIA() {
     return;
   }
 
-  // Dividir el texto en líneas en JavaScript
-  const lines = newLessonText.value
-    .split("\n")
-    .map((l) => l.trim())
-    .filter((l) => l.length > 0);
-
-  if (lines.length === 0) {
-    errorMessage.value = "El texto de la lección está vacío.";
-    return;
-  }
-
   isGenerating.value = true;
 
   try {
-    const promptText = `
-Eres un asistente experto en idiomas. Traduce al español y extrae vocabulario clave para cada una de las frases en inglés que aparecen en la lista proporcionada.
-Genera un objeto JSON estructurado con el siguiente formato:
+    let promptText = "";
+
+    if (contentType.value === "dialogue") {
+      promptText = `
+Eres un asistente experto en traducción y aprendizaje de idiomas. 
+Se te proporcionará un diálogo o entrevista en inglés. Tu tarea es traducirlo al español y estructurarlo.
+
+Importante:
+1. Identifica y extrae cada línea del diálogo.
+2. Mantén el formato de los hablantes al inicio (ej: "Interviewer: ...", "Candidate: ...", "Alex: ..."). Asegúrate de que tanto el texto en inglés como la traducción al español conserven e identifiquen correctamente al hablante correspondiente.
+3. Para cada frase en inglés, selecciona una palabra clave (keyword) de vocabulario interesante de la frase y proporciona sus traducciones al español (keywordTranslations).
+
+Genera un objeto JSON estructurado con el formato exacto:
+{
+  "title": {
+    "es": "Traducción al español del título",
+    "en": "Título de la entrevista"
+  },
+  "phrases": [
+    {
+      "text": "Speaker: frase en inglés",
+      "translations": {
+        "es": "Speaker: traducción al español"
+      },
+      "keyword": "palabra clave en inglés",
+      "keywordTranslations": ["traducción palabra clave"]
+    }
+  ]
+}
+
+Título de la lección: "${newLessonTitle.value}"
+Texto:
+"""
+${newLessonText.value}
+"""
+
+Reglas:
+- Conserva el hablante al inicio de las frases (ej: "Interviewer: Hello" -> es: "Interviewer: Hola").
+- Retorna ÚNICAMENTE JSON válido. Ningún otro texto adicional.
+`;
+    } else if (contentType.value === "song") {
+      promptText = `
+Eres un asistente experto en traducción y aprendizaje de idiomas. 
+Se te proporcionará la letra de una canción en inglés. Tu tarea es traducirla al español de forma natural y estructurarla.
+
+Importante:
+1. Identifica y extrae cada línea de la canción. Descarta anotaciones entre corchetes o paréntesis como "[Chorus]", "[Verse]", etc.
+2. Traduce cada línea con precisión y de forma natural/poética al español.
+3. Para cada frase, selecciona una palabra clave y proporciona sus traducciones (keywordTranslations).
+4. Omitir líneas duplicadas: Si una línea o frase en inglés ya apareció anteriormente en la canción, no la vuelvas a añadir a la lista de frases para evitar aburrir al usuario escribiendo lo mismo varias veces.
+5. Limpiar interjecciones: Elimina palabras vacías e interjecciones sin significado real entre paréntesis o sueltas como "(Hey)", "(Oh)", "(Yeah)", "(Ooh)", "(Baby)", "(Mmm)", etc.
+
+Genera un objeto JSON estructurado con el formato exacto:
+{
+  "title": {
+    "es": "Traducción al español del título",
+    "en": "Título de la canción"
+  },
+  "phrases": [
+    {
+      "text": "línea en inglés",
+      "translations": {
+        "es": "traducción en español"
+      },
+      "keyword": "palabra clave",
+      "keywordTranslations": ["traducción palabra clave"]
+    }
+  ]
+}
+
+Título de la lección/canción: "${newLessonTitle.value}"
+Texto:
+"""
+${newLessonText.value}
+"""
+
+Reglas:
+- Retorna ÚNICAMENTE JSON válido. Ningún otro texto adicional.
+`;
+    } else if (contentType.value === "song_translated") {
+      promptText = `
+Eres un asistente experto en traducción de canciones. Se te proporcionará la letra de una canción con líneas alternadas en inglés y español.
+Tu tarea:
+1. Extrae cada línea en inglés.
+2. Asóciala con su traducción correspondiente al español que aparece en la línea siguiente del texto.
+3. Extrae una palabra clave interesante para cada frase y sus traducciones al español (keywordTranslations).
+4. Omitir líneas duplicadas: Si una línea o frase en inglés ya apareció anteriormente en la canción, no la vuelvas a añadir a la lista de frases para evitar repeticiones tediosas en la lección de escritura.
+5. Limpiar interjecciones: Elimina palabras vacías de relleno o coros cortos innecesarios en paréntesis como "(Hey)", "(Oh)", "(Yeah)", "(Ooh)", "(Mmm)", etc., tanto en inglés como en español.
+
+Genera un objeto JSON estructurado con el formato exacto:
+{
+  "title": {
+    "es": "Título en español de la canción",
+    "en": "Título en inglés"
+  },
+  "phrases": [
+    {
+      "text": "línea en inglés del texto",
+      "translations": {
+        "es": "línea de traducción en español del texto"
+      },
+      "keyword": "palabra clave",
+      "keywordTranslations": ["traducción palabra clave"]
+    }
+  ]
+}
+
+Título de la lección/canción: "${newLessonTitle.value}"
+Texto:
+"""
+${newLessonText.value}
+"""
+
+Reglas:
+- Asocia las traducciones que ya vienen en el texto, no inventes traducciones nuevas a menos que falten.
+- Retorna ÚNICAMENTE JSON válido. Ningún otro texto adicional.
+`;
+    } else {
+      // Standard text/article
+      promptText = `
+Eres un asistente experto en traducción y aprendizaje de idiomas. 
+Se te proporcionará un texto o artículo en inglés. Tu tarea es dividirlo en oraciones lógicas, traducirlo al español y estructurarlo.
+
+Importante:
+1. Extrae cada oración lógica en inglés.
+2. Tradúcela con precisión al español.
+3. Para cada frase, selecciona una palabra clave y proporciona sus traducciones (keywordTranslations).
+
+Genera un objeto JSON estructurado con el formato exacto:
 {
   "title": {
     "es": "Traducción al español del título de la lección",
@@ -1208,25 +1672,26 @@ Genera un objeto JSON estructurado con el siguiente formato:
   },
   "phrases": [
     {
-      "text": "frase original exacta en inglés de la lista",
+      "text": "oración en inglés",
       "translations": {
-        "es": "traducción al español"
+        "es": "traducción en español"
       },
-      "keyword": "una palabra clave en inglés que aparezca en la frase",
-      "keywordTranslations": ["traducciones de la palabra clave al español"]
+      "keyword": "palabra clave",
+      "keywordTranslations": ["traducción palabra clave"]
     }
   ]
 }
 
-Reglas importantes:
-1. Traduce exactamente las frases de la lista proporcionada.
-2. Mantén el mismo orden de las frases.
-3. Asegúrate de retornar ÚNICAMENTE el JSON válido que cumpla con el esquema.
-
 Título de la lección: "${newLessonTitle.value}"
-Lista de frases a procesar:
-${JSON.stringify(lines, null, 2)}
+Texto:
+"""
+${newLessonText.value}
+"""
+
+Reglas:
+- Retorna ÚNICAMENTE JSON válido. Ningún otro texto adicional.
 `;
+    }
 
     const ai = new GoogleGenAI({ apiKey: geminiApiKey.value });
     const response = await ai.models.generateContent({
@@ -1239,42 +1704,44 @@ ${JSON.stringify(lines, null, 2)}
 
     const responseText = response.text;
     if (!responseText) {
-      throw new Error("No se obtuvo respuesta de Gemini Pro.");
+      throw new Error("No se obtuvo respuesta de Gemini.");
     }
 
     const parsedJson = JSON.parse(responseText.trim());
     const lessonId = `custom_${Date.now()}`;
 
-    // Mapear de forma defensiva basándonos en nuestras líneas originales de JS
-    const aiPhrases = parsedJson.phrases || [];
-    const finalPhrases = lines.map((originalText, idx) => {
-      // Buscar coincidencia en la respuesta de la IA (por texto o por índice correspondiente)
-      const aiMatch =
-        aiPhrases.find(
-          (ap: any) =>
-            ap &&
-            ap.text &&
-            ap.text.toLowerCase().trim() === originalText.toLowerCase()
-        ) ||
-        aiPhrases[idx] ||
-        {};
+    // Validar y estructurar las frases devueltas
+    const rawPhrases = parsedJson.phrases || [];
+    let finalPhrases = rawPhrases
+      .map((p: any, idx: number) => {
+        const textVal = (p.text || "").trim();
+        const transVal = (p.translations?.es || p.translation || "").trim();
+        return {
+          id: `cphrase_${lessonId}_${idx}`,
+          text: textVal,
+          translations: {
+            es: transVal || textVal,
+            en: textVal,
+          },
+          keyword: p.keyword ? p.keyword.trim() : undefined,
+          keywordTranslations: p.keywordTranslations || undefined,
+        };
+      })
+      .filter((p: any) => p.text.length > 0);
 
-      return {
-        id: `cphrase_${lessonId}_${idx}`,
-        text: originalText, // Mantener el texto original exacto ingresado por el usuario
-        translations: {
-          es: aiMatch.translations?.es || originalText,
-          en: originalText,
-        },
-        keyword: aiMatch.keyword || undefined,
-        keywordTranslations: aiMatch.keywordTranslations || undefined,
-      };
-    });
+    // Filtrar duplicados y limpiar palabras vacías en base a la configuración seleccionada
+    finalPhrases = processAndCleanPhrases(finalPhrases);
+
+    if (finalPhrases.length === 0) {
+      throw new Error(
+        "No se pudieron extraer oraciones en inglés válidas del texto tras la limpieza."
+      );
+    }
 
     const newLesson: Lesson = {
-      title: parsedJson.title || {
-        es: newLessonTitle.value,
-        en: newLessonTitle.value,
+      title: {
+        es: parsedJson.title?.es || newLessonTitle.value,
+        en: parsedJson.title?.en || newLessonTitle.value,
       },
       phrases: finalPhrases,
     };
@@ -1284,6 +1751,7 @@ ${JSON.stringify(lines, null, 2)}
 
     newLessonTitle.value = "";
     newLessonText.value = "";
+    contentType.value = "text";
 
     activeLessonId.value = lessonId;
     handleLessonChange();
@@ -1472,78 +1940,103 @@ async function lookupWord(word: string, contextPhrase: string) {
   };
   isLoadingDefinition.value = true;
 
-  // 3. Si no hay API Key de Gemini, usar la API de diccionario en inglés gratuita
-  if (!geminiApiKey.value) {
+  try {
+    let partOfSpeech = "";
+    let definition = "";
+    let phonetic = "";
+    let audioUrl = "";
+    let translation = "";
+
+    // A. Consultar la API del diccionario en inglés gratuita (siempre para fonética y audio)
     try {
       const res = await fetch(
         `https://api.dictionaryapi.dev/api/v2/entries/en/${cacheKey}`
       );
-      if (!res.ok) throw new Error();
-      const data = await res.json();
-      const meaning = data[0]?.meanings[0];
-      const def = meaning?.definitions[0]?.definition || "No definition found.";
-      const pos = meaning?.partOfSpeech || "word";
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          const entry = data[0];
+          const meaning = entry.meanings?.[0];
+          partOfSpeech = meaning?.partOfSpeech || "";
+          definition = meaning?.definitions?.[0]?.definition || "";
+          phonetic =
+            entry.phonetic ||
+            entry.phonetics?.find((pt: any) => pt.text)?.text ||
+            "";
 
-      const newDef: WordDefinition = {
-        word: cleanWord,
-        partOfSpeech: pos,
-        definition: def,
-        translation:
-          "(Configura Gemini API Key para ver traducción al español)",
-      };
-      definitionsCache.value[cacheKey] = newDef;
-      activeWordDefinition.value = newDef;
+          // Buscar el primer audio no vacío en el array de fonética
+          const audioPart = entry.phonetics?.find(
+            (pt: any) => pt.audio && pt.audio.trim() !== ""
+          );
+          if (audioPart) {
+            audioUrl = audioPart.audio;
+            if (audioUrl.startsWith("//")) {
+              audioUrl = "https:" + audioUrl;
+            }
+          }
+        }
+      }
     } catch (e) {
-      activeWordDefinition.value = {
-        word: cleanWord,
-        partOfSpeech: "error",
-        definition:
-          "No se encontró definición local en inglés ni traducción en español.",
-        translation: "",
-      };
-    } finally {
-      isLoadingDefinition.value = false;
+      console.warn("Error al consultar dictionaryapi.dev:", e);
     }
-    return;
-  }
 
-  // 4. Si hay API Key, consultar a Gemini para obtener definición y traducción contextual
-  try {
-    const promptText = `
+    // B. Consultar Gemini para la traducción contextual en español
+    if (geminiApiKey.value) {
+      try {
+        const promptText = `
 Eres un diccionario bilingüe contextual inglés-español. Analiza la palabra en inglés "${cleanWord}" en el contexto de la frase "${contextPhrase}".
 Genera un objeto JSON estructurado con el siguiente formato exacto:
 {
-  "word": "${cleanWord}",
-  "partOfSpeech": "ej. noun, verb, adjective, adverb",
-  "definition": "definición en inglés muy corta y simple (máximo 12 palabras)",
-  "translation": "traducción más exacta de la palabra al español en este contexto"
+  "translation": "traducción más exacta de la palabra al español en este contexto",
+  "definition": "definición en inglés muy corta y simple si no la tienes (máximo 12 palabras)",
+  "partOfSpeech": "noun, verb, adjective, adverb"
 }
 Retorna únicamente el JSON válido.
 `;
+        const ai = new GoogleGenAI({ apiKey: geminiApiKey.value });
+        const response = await ai.models.generateContent({
+          model: "gemini-3.5-flash",
+          contents: promptText,
+          config: {
+            responseMimeType: "application/json",
+          },
+        });
 
-    const ai = new GoogleGenAI({ apiKey: geminiApiKey.value });
-    const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
-      contents: promptText,
-      config: {
-        responseMimeType: "application/json",
-      },
-    });
-
-    const responseText = response.text;
-    if (responseText) {
-      const parsed = JSON.parse(responseText.trim());
-      const newDef: WordDefinition = {
-        word: parsed.word || cleanWord,
-        partOfSpeech: parsed.partOfSpeech || "word",
-        definition: parsed.definition || "No definition.",
-        translation: parsed.translation || "",
-      };
-      definitionsCache.value[cacheKey] = newDef;
-      activeWordDefinition.value = newDef;
+        const responseText = response.text;
+        if (responseText) {
+          const parsed = JSON.parse(responseText.trim());
+          translation = parsed.translation || "";
+          if (!partOfSpeech) partOfSpeech = parsed.partOfSpeech || "";
+          if (!definition) definition = parsed.definition || "";
+        }
+      } catch (err) {
+        console.warn("Error al consultar traducción en Gemini:", err);
+      }
     }
-  } catch (error) {
-    console.error(error);
+
+    // Valores por defecto de seguridad
+    if (!definition) {
+      definition = "No definition found.";
+    }
+    if (!translation) {
+      translation = geminiApiKey.value
+        ? "No se pudo traducir"
+        : "(Configura Gemini API Key para ver traducción al español)";
+    }
+
+    const newDef: WordDefinition = {
+      word: cleanWord,
+      partOfSpeech,
+      definition,
+      translation,
+      phonetic,
+      audioUrl,
+    };
+
+    definitionsCache.value[cacheKey] = newDef;
+    activeWordDefinition.value = newDef;
+  } catch (err) {
+    console.error("Error global en lookupWord:", err);
     activeWordDefinition.value = {
       word: cleanWord,
       partOfSpeech: "error",
@@ -1585,6 +2078,18 @@ function onWordLeavePronounce() {
 function closeDictionary() {
   activeWordDefinition.value = null;
   isLoadingDefinition.value = false;
+}
+
+function playWordAudio(url: string) {
+  if (!url) return;
+  try {
+    const audio = new Audio(url);
+    audio.play().catch((err) => {
+      console.error("Error playing word audio:", err);
+    });
+  } catch (e) {
+    console.error("Error playing word audio:", e);
+  }
 }
 
 // Compute letter spans grouped by words for interactive dictionary hover support
@@ -1629,8 +2134,8 @@ const wordSpans = computed<WordSpan[]>(() => {
         klass = "char-incorrect";
       }
     } else {
-      if (isListeningMode.value) {
-        // En Modo Escucha, ocultar las letras no escritas usando un punto medio
+      if (isListeningMode.value && char !== " ") {
+        // En Modo Escucha, ocultar las letras no escritas usando un punto medio (excepto espacios)
         displayChar = "•";
         klass += " opacity-40";
       }
@@ -1707,8 +2212,7 @@ const showCompleteOverlay = computed(() => {
 const finalWpmComputed = ref(0);
 const finalAccComputed = ref(100);
 
-// Sound and synthesis
-function speakText(text: string) {
+function fallbackSpeechSynthesis(text: string) {
   if (typeof window === "undefined" || !window.speechSynthesis) return;
   window.speechSynthesis.cancel();
 
@@ -1722,6 +2226,93 @@ function speakText(text: string) {
   utterance.pitch = voicePitch.value;
   utterance.volume = voiceVolume.value;
   window.speechSynthesis.speak(utterance);
+}
+
+// Sound and synthesis
+function speakText(text: string) {
+  if (activeGeminiAudio) {
+    activeGeminiAudio.pause();
+    activeGeminiAudio = null;
+  }
+
+  if (useGeminiTts.value && geminiApiKey.value) {
+    speakTextWithGemini(text);
+  } else {
+    fallbackSpeechSynthesis(text);
+  }
+}
+
+async function speakTextWithGemini(text: string) {
+  const cacheKey = text.trim().toLowerCase();
+
+  // 1. Si el audio está en caché, reproducir de inmediato sin llamar a la API
+  if (audioCache.value[cacheKey]) {
+    try {
+      const audio = audioCache.value[cacheKey];
+      activeGeminiAudio = audio;
+      audio.currentTime = 0; // Reiniciar al principio
+      audio.volume = voiceVolume.value;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.error("Error al reproducir audio desde caché:", err);
+        });
+      }
+      return;
+    } catch (err) {
+      console.error("Error al reproducir audio de caché:", err);
+    }
+  }
+
+  try {
+    const ai = new GoogleGenAI({ apiKey: geminiApiKey.value });
+    const response = await ai.models.generateContent({
+      model: "gemini-2.0-flash", // Modelo estándar v1beta
+      contents: `Recite the following text exactly as written. Do not add any extra comments or text. Text: "${text}"`,
+      config: {
+        responseModalities: ["AUDIO"],
+        speechConfig: {
+          voiceConfig: {
+            prebuiltVoiceConfig: {
+              voiceName: "Aoede", // Voz de alta calidad (Aoede)
+            },
+          },
+        },
+      },
+    });
+
+    const part = response.candidates?.[0]?.content?.parts?.[0];
+    if (part?.inlineData?.data) {
+      const base64Data = part.inlineData.data;
+      const mimeType = part.inlineData.mimeType || "audio/wav";
+      const audioUrl = `data:${mimeType};base64,${base64Data}`;
+
+      const audio = new Audio(audioUrl);
+      audio.volume = voiceVolume.value;
+
+      // Guardar el objeto de Audio en la caché
+      audioCache.value[cacheKey] = audio;
+
+      activeGeminiAudio = audio;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.error("Error al reproducir nuevo audio:", err);
+        });
+      }
+    } else {
+      console.warn(
+        "La respuesta de Gemini no contiene datos de audio inline. Usando fallback del navegador."
+      );
+      fallbackSpeechSynthesis(text);
+    }
+  } catch (e: any) {
+    console.warn(
+      "La API de Gemini no soporta audio nativo en esta clave (Usando fallback del navegador):",
+      e.message || e
+    );
+    fallbackSpeechSynthesis(text);
+  }
 }
 
 function replayAudio() {
@@ -1745,6 +2336,7 @@ function processInput() {
 
   const target = phrases[activePhraseIndex.value].text;
   const current = normalizeText(typedText.value, true);
+  const currentCleaned = current.trimEnd();
 
   if (!isTimerRunning.value) {
     startTime.value = Date.now();
@@ -1753,10 +2345,13 @@ function processInput() {
 
   // Errors calculation
   let errors = 0;
-  const attempted = current.length;
+  const attempted = currentCleaned.length;
   for (let i = 0; i < attempted; i++) {
     const targetChar = target[i];
-    if (!targetChar || current[i].toLowerCase() !== targetChar.toLowerCase()) {
+    if (
+      !targetChar ||
+      currentCleaned[i].toLowerCase() !== targetChar.toLowerCase()
+    ) {
       errors++;
     }
   }
@@ -1767,11 +2362,11 @@ function processInput() {
     if (elapsed > 0) {
       // WPM calculated on correct characters matching index positions
       let correctChars = 0;
-      for (let i = 0; i < current.length; i++) {
+      for (let i = 0; i < currentCleaned.length; i++) {
         const targetChar = target[i];
         if (
           targetChar &&
-          current[i].toLowerCase() === targetChar.toLowerCase()
+          currentCleaned[i].toLowerCase() === targetChar.toLowerCase()
         ) {
           correctChars++;
         }
@@ -1782,11 +2377,11 @@ function processInput() {
 
     if (attempted > 0) {
       let correctCount = 0;
-      for (let i = 0; i < current.length; i++) {
+      for (let i = 0; i < currentCleaned.length; i++) {
         const targetChar = target[i];
         if (
           targetChar &&
-          current[i].toLowerCase() === targetChar.toLowerCase()
+          currentCleaned[i].toLowerCase() === targetChar.toLowerCase()
         ) {
           correctCount++;
         }
@@ -1802,10 +2397,7 @@ function processInput() {
   }
 
   // Sentence match: case-insensitive check (Rule: Case-insensitive)
-  if (
-    current.length >= target.length &&
-    current.toLowerCase() === target.toLowerCase()
-  ) {
+  if (currentCleaned.toLowerCase() === target.toLowerCase()) {
     completedPhrases.value.push({
       text: target,
       translation: activeTranslation.value,
@@ -1994,6 +2586,11 @@ onMounted(() => {
   loadCustomLessons();
   loadLessonData("new_friend");
   loadVoices();
+
+  const storedSidebar = localStorage.getItem("lbl_show_sidebar");
+  if (storedSidebar !== null) {
+    showSidebar.value = storedSidebar === "true";
+  }
 
   if (typeof window !== "undefined" && window.speechSynthesis) {
     window.speechSynthesis.onvoiceschanged = loadVoices;

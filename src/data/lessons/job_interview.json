@@ -1,0 +1,93 @@
+{
+  "title": {
+    "es": "Job Interview • Entrevista de trabajo",
+    "ar": "Job Interview • مقابلة عمل",
+    "pt": "Job Interview • Entrevista de emprego",
+    "fr": "Job Interview • Entretien d'embauche",
+    "de": "Job Interview • Vorstellungsgespräch",
+    "it": "Job Interview • Colloquio de lavoro",
+    "en": "Job Interview • Job Interview"
+  },
+  "phrases": [
+    {
+      "id": "ji1",
+      "text": "Interviewer: Tell me about yourself.",
+      "translations": {
+        "es": "Interviewer: Háblame de ti.",
+        "en": "Interviewer: Tell me about yourself."
+      },
+      "keyword": "yourself",
+      "keywordTranslations": ["a ti mismo", "de ti"]
+    },
+    {
+      "id": "ji2",
+      "text": "Candidate: I am a software developer.",
+      "translations": {
+        "es": "Candidate: Soy desarrollador de software.",
+        "en": "Candidate: I am a software developer."
+      },
+      "keyword": "developer",
+      "keywordTranslations": ["desarrollador", "programador"]
+    },
+    {
+      "id": "ji3",
+      "text": "Interviewer: Why do you want this job?",
+      "translations": {
+        "es": "Interviewer: ¿Por qué quieres este trabajo?",
+        "en": "Interviewer: Why do you want this job?"
+      },
+      "keyword": "why",
+      "keywordTranslations": ["por qué"]
+    },
+    {
+      "id": "ji4",
+      "text": "Candidate: I want to grow my career.",
+      "translations": {
+        "es": "Candidate: Quiero hacer crecer mi carrera.",
+        "en": "Candidate: I want to grow my career."
+      },
+      "keyword": "grow",
+      "keywordTranslations": ["crecer", "desarrollar"]
+    },
+    {
+      "id": "ji5",
+      "text": "Interviewer: What are your strengths?",
+      "translations": {
+        "es": "Interviewer: ¿Cuáles son tus fortalezas?",
+        "en": "Interviewer: What are your strengths?"
+      },
+      "keyword": "strengths",
+      "keywordTranslations": ["fortalezas", "puntos fuertes"]
+    },
+    {
+      "id": "ji6",
+      "text": "Candidate: I am a good problem solver.",
+      "translations": {
+        "es": "Candidate: Soy bueno resolviendo problemas.",
+        "en": "Candidate: I am a good problem solver."
+      },
+      "keyword": "solver",
+      "keywordTranslations": ["solucionador", "el que resuelve"]
+    },
+    {
+      "id": "ji7",
+      "text": "Interviewer: Do you have any questions?",
+      "translations": {
+        "es": "Interviewer: ¿Tienes alguna pregunta?",
+        "en": "Interviewer: Do you have any questions?"
+      },
+      "keyword": "questions",
+      "keywordTranslations": ["preguntas", "dudas"]
+    },
+    {
+      "id": "ji8",
+      "text": "Candidate: What is the company culture like?",
+      "translations": {
+        "es": "Candidate: ¿Cómo es la cultura de la empresa?",
+        "en": "Candidate: What is the company culture like?"
+      },
+      "keyword": "culture",
+      "keywordTranslations": ["cultura", "ambiente"]
+    }
+  ]
+}
