@@ -1,6 +1,7 @@
 <template>
   <div
     id="view-typing"
+    :class="'theme-' + selectedTheme"
     class="grow flex flex-col md:flex-row overflow-hidden relative transition-colors duration-300"
   >
     <!-- LEFT SIDEBAR (COMPLETED LIST) -->
@@ -335,6 +336,45 @@
             }}</span>
           </button>
 
+          <!-- Modo Ciego / Blind Mode Toggle -->
+          <button
+            id="btn-blind-mode"
+            @click="isBlindMode = !isBlindMode"
+            class="p-2 rounded-lg transition-colors flex items-center justify-center gap-1.5 text-xs font-bold cursor-pointer select-none border"
+            :class="
+              isBlindMode
+                ? 'bg-indigo-50 border-indigo-200/60 text-indigo-650 dark:bg-indigo-950/30 dark:border-indigo-900/20 dark:text-indigo-400 shadow-xs'
+                : 'bg-slate-100 border-slate-200/50 text-slate-500 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-900/60'
+            "
+            :title="
+              isBlindMode
+                ? 'Modo Ciego Activo'
+                : 'Activar Modo Ciego (Oculta texto y traducción)'
+            "
+          >
+            <span>🙈</span>
+            <span class="hidden sm:inline">{{
+              isBlindMode ? "Ciego activo" : "Modo Ciego"
+            }}</span>
+          </button>
+
+          <!-- Botón de Pista para Modo Ciego (solo visible en modo ciego) -->
+          <button
+            v-if="isBlindMode"
+            id="btn-blind-hint"
+            @click="showBlindHint = !showBlindHint"
+            class="p-2 rounded-lg transition-colors flex items-center justify-center gap-1.5 text-xs font-bold cursor-pointer select-none border"
+            :class="
+              showBlindHint
+                ? 'bg-emerald-50 border-emerald-200/60 text-emerald-650 dark:bg-emerald-950/30 dark:border-emerald-900/20 dark:text-emerald-400 shadow-xs'
+                : 'bg-slate-100 border-slate-200/50 text-slate-500 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-900/60'
+            "
+            title="Mostrar/Ocultar traducción de apoyo"
+          >
+            <span>{{ showBlindHint ? '👁️' : '👁️‍🗨️' }}</span>
+            <span class="hidden sm:inline">Pista</span>
+          </button>
+
           <!-- Replay voice -->
           <button
             id="btn-replay-audio"
@@ -525,6 +565,62 @@
                     placeholder="Almacenada localmente"
                     class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"
                   />
+                </div>
+
+                <!-- Efectos de Sonido (Idea 5) -->
+                <div
+                  class="border-t border-slate-100 dark:border-slate-850 my-1 pt-3 flex flex-col gap-1.5"
+                >
+                  <label
+                    class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider select-none"
+                    >Efectos de Sonido (Mecanografía)</label
+                  >
+                  <select
+                    v-model="selectedSoundTheme"
+                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none cursor-pointer"
+                  >
+                    <option value="none">Sin sonido</option>
+                    <option value="mechanical">Teclado Mecánico (Click)</option>
+                    <option value="bubble">Burbuja Digital (Bubble)</option>
+                    <option value="retro">Retro Game (Beep)</option>
+                  </select>
+                </div>
+
+                <!-- Temas Visuales (Idea 5) -->
+                <div
+                  class="border-t border-slate-100 dark:border-slate-850 my-1 pt-3 flex flex-col gap-1.5"
+                >
+                  <label
+                    class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider select-none"
+                    >Tema Visual</label
+                  >
+                  <select
+                    v-model="selectedTheme"
+                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none cursor-pointer"
+                  >
+                    <option value="default">Estilo Predeterminado</option>
+                    <option value="cyberpunk">Cyberpunk (Neon Dark)</option>
+                    <option value="forest">Midnight Forest (Sage)</option>
+                    <option value="sakura">Sakura Blossom (Cherry)</option>
+                  </select>
+                </div>
+
+                <!-- Modelo de IA (Gemini Model) -->
+                <div
+                  class="border-t border-slate-100 dark:border-slate-850 my-1 pt-3 flex flex-col gap-1.5"
+                >
+                  <label
+                    class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider select-none"
+                    >Modelo de IA (Gemini)</label
+                  >
+                  <select
+                    v-model="selectedAiModel"
+                    class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none cursor-pointer"
+                  >
+                    <option value="gemini-2.5-flash">Gemini 2.5 Flash (Alta cuota, recomendado)</option>
+                    <option value="gemini-1.5-flash">Gemini 1.5 Flash (Estable, alta cuota)</option>
+                    <option value="gemini-3.5-flash">Gemini 3.5 Flash (Experimental, cuota limitada)</option>
+                  </select>
                 </div>
               </div>
             </Transition>
@@ -962,88 +1058,183 @@
             </div>
           </div>
 
-          <div class="flex flex-col gap-1.5">
-            <label
-              class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider"
-              >Título de la lección / Canción</label
+          <!-- Selector de Modo de Creación -->
+          <div class="flex border-b border-slate-100 dark:border-slate-850 select-none shrink-0 mb-2">
+            <button
+              type="button"
+              @click="creationTab = 'paste'"
+              class="flex-1 pb-3 text-xs font-extrabold uppercase tracking-wider text-center cursor-pointer transition-all border-b-2"
+              :class="
+                creationTab === 'paste'
+                  ? 'border-primary-550 text-primary-650 dark:border-primary-500 dark:text-primary-400'
+                  : 'border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-450'
+              "
             >
-            <input
-              type="text"
-              v-model="newLessonTitle"
-              placeholder="Ej: Yellow - Coldplay o Historia sobre Lina"
-              class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"
-            />
-          </div>
-          <!-- Selector de Tipo de Contenido -->
-          <div class="flex flex-col gap-2">
-            <label
-              class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider"
-              >Tipo de Contenido</label
+              Pegar Texto Propio
+            </button>
+            <button
+              type="button"
+              @click="creationTab = 'topic'"
+              class="flex-1 pb-3 text-xs font-extrabold uppercase tracking-wider text-center cursor-pointer transition-all border-b-2 flex items-center justify-center gap-1.5"
+              :class="
+                creationTab === 'topic'
+                  ? 'border-primary-550 text-primary-650 dark:border-primary-500 dark:text-primary-400'
+                  : 'border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-650 dark:hover:text-slate-400'
+              "
             >
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              <button
-                type="button"
-                @click="contentType = 'text'"
-                class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center flex flex-col justify-center items-center gap-1"
-                :class="
-                  contentType === 'text'
-                    ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold shadow-sm'
-                    : 'bg-slate-50/50 border-slate-200/50 text-slate-600 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/60'
-                "
-              >
-                <span>Texto / Artículo</span>
-              </button>
-              <button
-                type="button"
-                @click="contentType = 'song'"
-                class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center flex flex-col justify-center items-center gap-1"
-                :class="
-                  contentType === 'song'
-                    ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold shadow-sm'
-                    : 'bg-slate-50/50 border-slate-200/50 text-slate-600 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/60'
-                "
-              >
-                <span>Canción (Inglés)</span>
-              </button>
-              <button
-                type="button"
-                @click="contentType = 'song_translated'"
-                class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center flex flex-col justify-center items-center gap-1"
-                :class="
-                  contentType === 'song_translated'
-                    ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold shadow-sm'
-                    : 'bg-slate-50/50 border-slate-200/50 text-slate-600 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/60'
-                "
-              >
-                <span>Con Traducción</span>
-              </button>
-              <button
-                type="button"
-                @click="contentType = 'dialogue'"
-                class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center flex flex-col justify-center items-center gap-1"
-                :class="
-                  contentType === 'dialogue'
-                    ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold shadow-sm'
-                    : 'bg-slate-50/50 border-slate-200/50 text-slate-600 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/60'
-                "
-              >
-                <span>Diálogo / Entrevista</span>
-              </button>
-            </div>
+              <span>Generar por Tema (IA)</span>
+              <span class="px-1.5 py-0.5 rounded-full text-[9px] bg-amber-100 dark:bg-amber-950/40 text-amber-650 dark:text-amber-450 font-bold uppercase tracking-wider">
+                Rápido
+              </span>
+            </button>
           </div>
 
-          <div class="flex flex-col gap-1.5">
-            <label
-              class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider"
-              >Texto en inglés</label
-            >
-            <textarea
-              v-model="newLessonText"
-              rows="6"
-              :placeholder="textareaPlaceholder"
-              class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs font-medium text-slate-700 dark:text-slate-200 outline-none resize-none font-mono transition-all duration-300 focus:border-primary-500/50"
-            ></textarea>
-          </div>
+          <!-- MODO: PEGAR TEXTO -->
+          <template v-if="creationTab === 'paste'">
+            <div class="flex flex-col gap-1.5">
+              <label
+                class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider"
+                >Título de la lección / Canción</label
+              >
+              <input
+                type="text"
+                v-model="newLessonTitle"
+                placeholder="Ej: Yellow - Coldplay o Historia sobre Lina"
+                class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"
+              />
+            </div>
+            
+            <!-- Selector de Tipo de Contenido -->
+            <div class="flex flex-col gap-2">
+              <label
+                class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider"
+                >Tipo de Contenido</label
+              >
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                <button
+                  type="button"
+                  @click="contentType = 'text'"
+                  class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center flex flex-col justify-center items-center gap-1"
+                  :class="
+                    contentType === 'text'
+                      ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold shadow-sm'
+                      : 'bg-slate-50/50 border-slate-200/50 text-slate-600 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/60'
+                  "
+                >
+                  <span>Texto / Artículo</span>
+                </button>
+                <button
+                  type="button"
+                  @click="contentType = 'song'"
+                  class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center flex flex-col justify-center items-center gap-1"
+                  :class="
+                    contentType === 'song'
+                      ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold shadow-sm'
+                      : 'bg-slate-50/50 border-slate-200/50 text-slate-600 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/60'
+                  "
+                >
+                  <span>Canción (Inglés)</span>
+                </button>
+                <button
+                  type="button"
+                  @click="contentType = 'song_translated'"
+                  class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center flex flex-col justify-center items-center gap-1"
+                  :class="
+                    contentType === 'song_translated'
+                      ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold shadow-sm'
+                      : 'bg-slate-50/50 border-slate-200/50 text-slate-600 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/60'
+                  "
+                >
+                  <span>Con Traducción</span>
+                </button>
+                <button
+                  type="button"
+                  @click="contentType = 'dialogue'"
+                  class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center flex flex-col justify-center items-center gap-1"
+                  :class="
+                    contentType === 'dialogue'
+                      ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold shadow-sm'
+                      : 'bg-slate-50/50 border-slate-200/50 text-slate-600 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-900/60'
+                  "
+                >
+                  <span>Diálogo / Entrevista</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="flex flex-col gap-1.5">
+              <label
+                class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider"
+                >Texto en inglés</label
+              >
+              <textarea
+                v-model="newLessonText"
+                rows="6"
+                :placeholder="textareaPlaceholder"
+                class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs font-medium text-slate-700 dark:text-slate-200 outline-none resize-none font-mono transition-all duration-300 focus:border-primary-500/50"
+              ></textarea>
+            </div>
+          </template>
+
+          <!-- MODO: GENERAR POR TEMA (IA EXPRESS) -->
+          <template v-else>
+            <div class="flex flex-col gap-1.5">
+              <label class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider">
+                ¿De qué te gustaría hablar o practicar hoy? (Tema)
+              </label>
+              <input
+                type="text"
+                v-model="expressTopic"
+                placeholder="Ej: Pedir comida, Una entrevista sobre React, Viaje a Londres..."
+                class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"
+              />
+            </div>
+            
+            <!-- Selector de Tipo de Contenido para Generación -->
+            <div class="flex flex-col gap-2">
+              <label class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider">
+                Formato de la Lección
+              </label>
+              <div class="grid grid-cols-3 gap-2">
+                <button
+                  type="button"
+                  @click="contentType = 'text'"
+                  class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center"
+                  :class="
+                    contentType === 'text'
+                      ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold'
+                      : 'bg-slate-50/50 border-slate-200/50 text-slate-650 hover:bg-slate-100 dark:bg-slate-900 dark:border-slate-800'
+                  "
+                >
+                  <span>Texto / Artículo</span>
+                </button>
+                <button
+                  type="button"
+                  @click="contentType = 'song'"
+                  class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center"
+                  :class="
+                    contentType === 'song'
+                      ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold'
+                      : 'bg-slate-50/50 border-slate-200/50 text-slate-650 hover:bg-slate-100 dark:bg-slate-900 dark:border-slate-800'
+                  "
+                >
+                  <span>Canción (Líricas)</span>
+                </button>
+                <button
+                  type="button"
+                  @click="contentType = 'dialogue'"
+                  class="py-2.5 px-3 rounded-xl border text-xs font-bold transition-all cursor-pointer select-none text-center"
+                  :class="
+                    contentType === 'dialogue'
+                      ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400 font-extrabold'
+                      : 'bg-slate-50/50 border-slate-200/50 text-slate-650 hover:bg-slate-100 dark:bg-slate-900 dark:border-slate-800'
+                  "
+                >
+                  <span>Diálogo / Entrevista</span>
+                </button>
+              </div>
+            </div>
+          </template>
 
           <!-- Opciones de optimización -->
           <div
@@ -1132,7 +1323,9 @@
           </div>
 
           <div class="flex flex-col sm:flex-row gap-3 pt-2">
+            <!-- Botón Generar con IA (Pegar texto propio) -->
             <button
+              v-if="creationTab === 'paste'"
               @click="createLessonWithIA"
               :disabled="
                 isGenerating ||
@@ -1168,7 +1361,47 @@
                   : "Generar con IA (Gemini Pro)"
               }}</span>
             </button>
+
+            <!-- Botón Generar por Tema con IA Express -->
             <button
+              v-else
+              @click="generateLessonExpress"
+              :disabled="
+                isGenerating ||
+                !expressTopic ||
+                !geminiApiKey
+              "
+              class="flex-1 py-3 px-4 bg-primary-650 hover:bg-primary-700 text-white disabled:bg-slate-200 disabled:text-slate-450 dark:disabled:bg-slate-800/50 dark:disabled:text-slate-650 font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer disabled:cursor-not-allowed select-none flex items-center justify-center gap-1.5"
+            >
+              <svg
+                v-if="isGenerating"
+                class="animate-spin h-3.5 w-3.5 text-white"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              <span>{{
+                isGenerating
+                  ? "Generando Lección Express..."
+                  : "Generar Lección Express con IA"
+              }}</span>
+            </button>
+
+            <button
+              v-if="creationTab === 'paste'"
               @click="createLessonSimple"
               :disabled="isGenerating || !newLessonTitle || !newLessonText"
               class="flex-1 py-3 px-4 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-850 font-bold text-xs rounded-xl transition-all cursor-pointer disabled:cursor-not-allowed select-none"
@@ -1177,7 +1410,7 @@
             </button>
             <button
               @click="cancelCreateLesson"
-              class="py-3 px-4 text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-350 font-bold text-xs rounded-xl transition-all cursor-pointer select-none"
+              class="py-3 px-4 text-slate-400 dark:text-slate-500 hover:text-slate-650 dark:hover:text-slate-350 font-bold text-xs rounded-xl transition-all cursor-pointer select-none"
             >
               Cancelar
             </button>
@@ -1303,6 +1536,7 @@ const isFocused = ref(false);
 
 const liveWpm = ref(0);
 const liveAcc = ref(100);
+let lastTypedLength = 0;
 
 const showSidebar = ref(true);
 const activeSidebarTab = ref("lessons"); // 'lessons' o 'progress'
@@ -1418,6 +1652,163 @@ const contentType = ref("text"); // 'text', 'song', 'song_translated', 'dialogue
 const isGenerating = ref(false);
 const errorMessage = ref("");
 const importFileInput = ref<HTMLInputElement | null>(null);
+
+// Variables de creación rápidas e interactivas
+const creationTab = ref("paste"); // 'paste' o 'topic'
+const expressTopic = ref("");
+
+// Variables del Modo Ciego y de Ayuda Visual
+const isBlindMode = ref(false);
+const showBlindHint = ref(false);
+
+// Variables de Estética y Sonidos (inicializados desde LocalStorage)
+const selectedSoundTheme = ref(
+  (typeof window !== "undefined" && localStorage.getItem("lbl_sound_theme")) || "bubble"
+);
+const selectedTheme = ref(
+  (typeof window !== "undefined" && localStorage.getItem("lbl_visual_theme")) || "default"
+);
+const selectedAiModel = ref(
+  (typeof window !== "undefined" && localStorage.getItem("lbl_ai_model")) || "gemini-2.5-flash"
+);
+
+// Sincronizar Modo Ciego con el Modo Escucha
+watch(isBlindMode, (newVal) => {
+  if (newVal) {
+    isListeningMode.value = true;
+  }
+});
+
+// Guardar preferencias de Temas, Sonidos y Modelo de IA
+watch(selectedTheme, (newVal) => {
+  localStorage.setItem("lbl_visual_theme", newVal);
+});
+watch(selectedSoundTheme, (newVal) => {
+  localStorage.setItem("lbl_sound_theme", newVal);
+});
+watch(selectedAiModel, (newVal) => {
+  localStorage.setItem("lbl_ai_model", newVal);
+});
+
+// Síntesis de Sonido en Tiempo Real con Web Audio API (100% Offline, Cero Latencia)
+let audioCtx: AudioContext | null = null;
+function getAudioContext() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+  }
+  if (audioCtx.state === "suspended") {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+function playKeyPressSound(type: "correct" | "incorrect" | "complete") {
+  if (selectedSoundTheme.value === "none") return;
+  try {
+    const ctx = getAudioContext();
+    const now = ctx.currentTime;
+    
+    if (type === "incorrect") {
+      // Sonido de error: Onda de sierra de baja frecuencia
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sawtooth";
+      osc.frequency.setValueAtTime(140, now);
+      osc.frequency.exponentialRampToValueAtTime(80, now + 0.15);
+      gain.gain.setValueAtTime(0.15, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.15);
+      return;
+    }
+    
+    if (type === "complete") {
+      // Arpegio ascendente triunfal al completar la frase
+      const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+      notes.forEach((freq, idx) => {
+        const time = now + idx * 0.06;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(freq, time);
+        gain.gain.setValueAtTime(0.1, time);
+        gain.gain.exponentialRampToValueAtTime(0.01, time + 0.15);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(time);
+        osc.stop(time + 0.18);
+      });
+      return;
+    }
+    
+    if (selectedSoundTheme.value === "mechanical") {
+      // Click de teclado mecánico: Mezcla de clic agudo y golpe de tecla
+      const noise = ctx.createBufferSource();
+      const bufferSize = ctx.sampleRate * 0.02; // 20ms
+      const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      noise.buffer = buffer;
+      const filter = ctx.createBiquadFilter();
+      filter.type = "bandpass";
+      filter.frequency.setValueAtTime(3000, now);
+      const noiseGain = ctx.createGain();
+      noiseGain.gain.setValueAtTime(0.08, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.005, now + 0.015);
+      noise.connect(filter);
+      filter.connect(noiseGain);
+      noiseGain.connect(ctx.destination);
+      
+      const osc = ctx.createOscillator();
+      const oscGain = ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(350, now);
+      osc.frequency.exponentialRampToValueAtTime(150, now + 0.03);
+      oscGain.gain.setValueAtTime(0.12, now);
+      oscGain.gain.exponentialRampToValueAtTime(0.005, now + 0.04);
+      osc.connect(oscGain);
+      oscGain.connect(ctx.destination);
+      
+      noise.start(now);
+      noise.stop(now + 0.02);
+      osc.start(now);
+      osc.stop(now + 0.045);
+      
+    } else if (selectedSoundTheme.value === "bubble") {
+      // Tono de burbuja ascendente
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(900, now);
+      osc.frequency.exponentialRampToValueAtTime(1400, now + 0.03);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.005, now + 0.03);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.035);
+      
+    } else if (selectedSoundTheme.value === "retro") {
+      // Beep retro de 8 bits
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "square";
+      osc.frequency.setValueAtTime(600, now);
+      gain.gain.setValueAtTime(0.04, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.05);
+    }
+  } catch (e) {
+    console.warn("Audio no soportado o bloqueado:", e);
+  }
+}
 
 const skipDuplicateLines = ref(true);
 const cleanFillerWords = ref(true);
@@ -1926,10 +2317,11 @@ Reglas:
 
     const ai = new GoogleGenAI({ apiKey: geminiApiKey.value });
     const response = await ai.models.generateContent({
-      model: "gemini-3.5-flash",
+      model: selectedAiModel.value,
       contents: promptText,
       config: {
         responseMimeType: "application/json",
+        tools: [{ googleSearch: {} }],
       },
     });
 
@@ -1989,6 +2381,122 @@ Reglas:
   } catch (error: any) {
     console.error(error);
     errorMessage.value = `Error generando lección: ${error.message || error}`;
+  } finally {
+    isGenerating.value = false;
+  }
+}
+
+async function generateLessonExpress() {
+  errorMessage.value = "";
+  if (!expressTopic.value) return;
+  if (!geminiApiKey.value) {
+    errorMessage.value = "Por favor, ingresa tu Gemini API Key en los ajustes de voz.";
+    return;
+  }
+
+  isGenerating.value = true;
+
+  try {
+    const promptText = `
+Eres un asistente experto en enseñanza de inglés y traducción.
+El usuario quiere aprender inglés sobre el siguiente tema de interés: "${expressTopic.value}".
+
+Tu tarea es generar una lección de inglés estructurada que contenga exactamente 8 oraciones o frases lógicas cortas de nivel práctico sobre ese tema.
+Dependiendo del tipo de contenido seleccionado ("${contentType.value}"), formatea las frases:
+- Si es "dialogue", crea un diálogo interactivo entre 2 personas con nombres de hablantes (ej: "A: Hello", "B: Hi").
+- Si es "song", crea líneas poéticas o rítmicas de una canción ficticia sobre el tema.
+- Para "text" o cualquier otro, crea oraciones narrativas o útiles sobre el tema.
+
+Para cada frase en inglés, proporciona:
+1. Su traducción precisa al español.
+2. Selecciona una palabra clave (keyword) de vocabulario relevante e interesante de la frase.
+3. Proporciona las traducciones al español de esa palabra clave (keywordTranslations).
+
+Genera un objeto JSON estructurado con el formato exacto:
+{
+  "title": {
+    "es": "Título de la lección en español (ej: En la cafetería)",
+    "en": "Título de la lección en inglés (ej: At the Coffee Shop)"
+  },
+  "phrases": [
+    {
+      "text": "Frase u oración en inglés",
+      "translations": {
+        "es": "Traducción al español de la frase"
+      },
+      "keyword": "palabra clave en inglés",
+      "keywordTranslations": ["traducción palabra clave"]
+    }
+  ]
+}
+
+Reglas:
+- Genera exactamente 8 frases.
+- No uses abreviaciones ni anotaciones raras.
+- Retorna ÚNICAMENTE JSON válido. Ningún otro texto adicional.
+`;
+
+    const ai = new GoogleGenAI({ apiKey: geminiApiKey.value });
+    const response = await ai.models.generateContent({
+      model: selectedAiModel.value,
+      contents: promptText,
+      config: {
+        responseMimeType: "application/json",
+        tools: [{ googleSearch: {} }],
+      },
+    });
+
+    const responseText = response.text;
+    if (!responseText) {
+      throw new Error("No se obtuvo respuesta de Gemini.");
+    }
+
+    const parsedJson = JSON.parse(responseText.trim());
+    const lessonId = `custom_${Date.now()}`;
+
+    // Validar y estructurar las frases devueltas
+    const rawPhrases = parsedJson.phrases || [];
+    let finalPhrases = rawPhrases
+      .map((p: any, idx: number) => {
+        const textVal = (p.text || "").trim();
+        const transVal = (p.translations?.es || p.translation || "").trim();
+        return {
+          id: `cphrase_${lessonId}_${idx}`,
+          text: textVal,
+          translations: {
+            es: transVal || textVal,
+            en: textVal,
+          },
+          keyword: p.keyword ? p.keyword.trim() : undefined,
+          keywordTranslations: p.keywordTranslations || undefined,
+        };
+      })
+      .filter((p: any) => p.text.length > 0);
+
+    // Aplicar optimizaciones si están configuradas
+    finalPhrases = processAndCleanPhrases(finalPhrases);
+
+    if (finalPhrases.length === 0) {
+      throw new Error("No se pudieron generar frases válidas tras el filtrado.");
+    }
+
+    const newLesson: Lesson = {
+      title: {
+        es: parsedJson.title?.es || expressTopic.value,
+        en: parsedJson.title?.en || expressTopic.value,
+      },
+      phrases: finalPhrases,
+    };
+
+    customLessons.value[lessonId] = newLesson;
+    saveCustomLessons();
+
+    expressTopic.value = "";
+    activeLessonId.value = lessonId;
+    handleLessonChange();
+  } catch (error: any) {
+    console.error(error);
+    errorMessage.value = `Error generando lección rápida: ${error.message || error}`;
   } finally {
     isGenerating.value = false;
   }
@@ -2130,6 +2638,11 @@ const activePhrase = computed<PhraseTranslation | null>(() => {
 const activeTranslation = computed(() => {
   const p = activePhrase.value;
   if (!p) return "";
+  
+  if (isBlindMode.value && !showBlindHint.value) {
+    return "";
+  }
+
   const lang = profile.value.language;
   let trans = p.translations[lang] || p.translations["es"] || "";
 
@@ -2234,7 +2747,7 @@ Retorna únicamente el JSON válido.
 `;
         const ai = new GoogleGenAI({ apiKey: geminiApiKey.value });
         const response = await ai.models.generateContent({
-          model: "gemini-3.5-flash",
+          model: selectedAiModel.value,
           contents: promptText,
           config: {
             responseMimeType: "application/json",
@@ -2369,11 +2882,21 @@ const wordSpans = computed<WordSpan[]>(() => {
     if (index < current.length) {
       if (current[index].toLowerCase() === target[index].toLowerCase()) {
         klass = "char-correct";
+        // En modo ciego mostramos la letra ya escrita de forma correcta
+        displayChar = char;
       } else {
         klass = "char-incorrect";
+        if (char === " ") {
+          klass += " char-space-incorrect";
+        }
+        displayChar = char;
       }
     } else {
-      if (isListeningMode.value && char !== " ") {
+      if (isBlindMode.value) {
+        // En modo ciego, ocultar el resto de caracteres manteniendo la letra real para el layout
+        displayChar = char;
+        klass += " opacity-0 select-none pointer-events-none";
+      } else if (isListeningMode.value && char !== " ") {
         // En Modo Escucha, ocultar las letras no escritas usando un punto medio (excepto espacios)
         displayChar = "•";
         klass += " opacity-40";
@@ -2382,6 +2905,10 @@ const wordSpans = computed<WordSpan[]>(() => {
 
     if (index === current.length) {
       klass += " typing-caret";
+      if (isBlindMode.value) {
+        // El caracter activo también permanece oculto para el modo ciego
+        displayChar = char;
+      }
     }
 
     return {
@@ -2575,23 +3102,26 @@ function processInput() {
 
   const target = phrases[activePhraseIndex.value].text;
 
-  // Normalizar la entrada del usuario de manera exhaustiva
-  let current = normalizeText(typedText.value, true);
+  // Normalizar la entrada del usuario de manera exhaustiva para realizar los cálculos y comparaciones
+  const rawInput = typedText.value || "";
+  const current = normalizeText(rawInput, true);
 
-  // Si excede la longitud del target, recortar el exceso para evitar atascos visuales al final de la frase
-  if (current.length > target.length) {
-    current = current.slice(0, target.length);
-  }
+  // Limitar los cálculos a la longitud máxima del target
+  const currentCapped = current.length > target.length ? current.slice(0, target.length) : current;
 
-  // Sincronizar de vuelta con el modelo y el elemento HTML input oculto
-  if (typedText.value !== current) {
-    typedText.value = current;
+  // Disparar sonido de tecleo al añadir un nuevo carácter en base al texto limitado
+  if (currentCapped.length > lastTypedLength) {
+    const lastCharIndex = currentCapped.length - 1;
+    const targetChar = target[lastCharIndex];
+    if (targetChar && currentCapped[lastCharIndex].toLowerCase() === targetChar.toLowerCase()) {
+      playKeyPressSound("correct");
+    } else {
+      playKeyPressSound("incorrect");
+    }
   }
-  if (inputRef.value && inputRef.value.value !== current) {
-    inputRef.value.value = current;
-  }
+  lastTypedLength = currentCapped.length;
 
-  const currentCleaned = current.trimEnd();
+  const currentCleaned = currentCapped.trimEnd();
 
   if (!isTimerRunning.value) {
     startTime.value = Date.now();
@@ -2653,6 +3183,10 @@ function processInput() {
 
   // Sentence match: case-insensitive check (Rule: Case-insensitive)
   if (currentCleaned.toLowerCase() === target.toLowerCase()) {
+    playKeyPressSound("complete");
+    lastTypedLength = 0;
+    showBlindHint.value = false;
+
     completedPhrases.value.push({
       text: target,
       translation: activeTranslation.value,
@@ -2705,6 +3239,8 @@ function prevPhrase() {
   if (activePhraseIndex.value > 0) {
     activePhraseIndex.value--;
     typedText.value = "";
+    lastTypedLength = 0;
+    showBlindHint.value = false;
     if (inputRef.value) {
       inputRef.value.value = "";
     }
@@ -2738,6 +3274,8 @@ function skipPhrase() {
 
     activePhraseIndex.value++;
     typedText.value = "";
+    lastTypedLength = 0;
+    showBlindHint.value = false;
     if (inputRef.value) {
       inputRef.value.value = "";
     }
@@ -3039,5 +3577,202 @@ watch(activePhrase, (newVal, oldVal) => {
 .dropdown-leave-to {
   opacity: 0;
   transform: translateY(-8px);
+}
+
+
+/* Estilo para los errores de espacio (bloque vertical translúcido) */
+.char-space-incorrect {
+  background-color: rgba(239, 68, 68, 0.35) !important;
+  display: inline-block;
+  min-width: 0.6em;
+  height: 1.10em;
+  line-height: 1.10em;
+  vertical-align: middle;
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   ESTILOS DE TEMAS VISUALES PREMIUM (Idea 5)
+   ========================================================================== */
+
+/* 1. TEMA CYBERPUNK (Neon Dark) */
+#view-typing.theme-cyberpunk {
+  --color-slate-50: #0d0517;
+  --color-slate-100: #1b0a2c;
+  --color-slate-200: #3c1460;
+  --color-slate-350: #bf55ec;
+  --color-slate-400: #542b87;
+  --color-slate-500: #a562f5;
+  --color-slate-600: #c091fb;
+  --color-slate-700: #dbbffd;
+  --color-slate-800: #2d104d;
+  --color-slate-900: #f5efff;
+  --color-slate-950: #06020b;
+  
+  --color-primary-50: #18032c;
+  --color-primary-100: #320a56;
+  --color-primary-200: #56168e;
+  --color-primary-500: #ff007f;
+  --color-primary-600: #00ffff;
+  --color-primary-650: #00ffff;
+  --color-primary-700: #00d5d5;
+  
+  background-color: #07020d !important;
+  color: #f5efff !important;
+}
+
+#view-typing.theme-cyberpunk .char-default {
+  color: #4f2979 !important;
+}
+
+#view-typing.theme-cyberpunk .char-correct {
+  color: #00ffff !important;
+  text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
+}
+
+#view-typing.theme-cyberpunk .char-incorrect {
+  color: #ff007f !important;
+  background-color: rgba(255, 0, 127, 0.15) !important;
+  text-shadow: 0 0 8px rgba(255, 0, 127, 0.6);
+}
+
+#view-typing.theme-cyberpunk .typing-caret::after {
+  background-color: #ff007f !important;
+  box-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f !important;
+}
+
+/* 2. TEMA MIDNIGHT FOREST (Sage & Mint) */
+#view-typing.theme-forest {
+  --color-slate-50: #0c1813;
+  --color-slate-100: #12261d;
+  --color-slate-200: #1a382a;
+  --color-slate-350: #5eead4;
+  --color-slate-400: #2a4738;
+  --color-slate-500: #3c6a52;
+  --color-slate-600: #4e8c6c;
+  --color-slate-700: #60af86;
+  --color-slate-800: #1a382a;
+  --color-slate-900: #e6f5ee;
+  --color-slate-950: #050c09;
+  
+  --color-primary-50: #0c1f16;
+  --color-primary-100: #143324;
+  --color-primary-200: #1e4d37;
+  --color-primary-500: #5eead4;
+  --color-primary-600: #fbbf24;
+  --color-primary-650: #fbbf24;
+  --color-primary-700: #d97706;
+
+  background-color: #080f0c !important;
+  color: #e6f5ee !important;
+}
+
+#view-typing.theme-forest .char-default {
+  color: #274435 !important;
+}
+
+#view-typing.theme-forest .char-correct {
+  color: #5eead4 !important;
+  text-shadow: 0 0 4px rgba(94, 234, 212, 0.3);
+}
+
+#view-typing.theme-forest .char-incorrect {
+  color: #f87171 !important;
+  background-color: rgba(248, 113, 113, 0.12) !important;
+}
+
+#view-typing.theme-forest .typing-caret::after {
+  background-color: #fbbf24 !important;
+  box-shadow: 0 0 8px #fbbf24 !important;
+}
+
+/* 3. TEMA SAKURA BLOSSOM (Cherry Pink) */
+#view-typing.theme-sakura {
+  --color-slate-50: #fff0f2;
+  --color-slate-100: #ffe3e7;
+  --color-slate-200: #ffd1d8;
+  --color-slate-350: #ff5c8a;
+  --color-slate-400: #d0b2b9;
+  --color-slate-550: #7a515a;
+  --color-slate-600: #9c6b76;
+  --color-slate-700: #bd8691;
+  --color-slate-800: #ffd1d8;
+  --color-slate-900: #4a2b31;
+  --color-slate-950: #fff5f6;
+  
+  --color-primary-50: #fff0f2;
+  --color-primary-100: #ffe3e7;
+  --color-primary-200: #ffd1d8;
+  --color-primary-500: #ff5c8a;
+  --color-primary-600: #e11d48;
+  --color-primary-650: #be123c;
+  --color-primary-700: #be123c;
+
+  background-color: #fff9fa !important;
+  color: #4a2b31 !important;
+}
+
+#view-typing.theme-sakura .char-default {
+  color: #d8bdc3 !important;
+}
+
+#view-typing.theme-sakura .char-correct {
+  color: #ff5c8a !important;
+  text-shadow: 0 0 4px rgba(255, 92, 138, 0.2);
+}
+
+#view-typing.theme-sakura .char-incorrect {
+  color: #e11d48 !important;
+  background-color: rgba(225, 29, 72, 0.1) !important;
+}
+
+#view-typing.theme-sakura .typing-caret::after {
+  background-color: #ff5c8a !important;
+  box-shadow: 0 0 6px #ff5c8a !important;
+}
+
+/* Sakura Blossom Dark Mode overrides */
+.dark #view-typing.theme-sakura {
+  --color-slate-50: #291519;
+  --color-slate-100: #3b1e24;
+  --color-slate-200: #5b2f38;
+  --color-slate-350: #ff85a1;
+  --color-slate-400: #6a444d;
+  --color-slate-500: #9c606e;
+  --color-slate-600: #c98292;
+  --color-slate-700: #f5a0b2;
+  --color-slate-800: #5b2f38;
+  --color-slate-900: #ffeef0;
+  --color-slate-950: #1b0d10;
+  
+  --color-primary-50: #2d1318;
+  --color-primary-100: #451b24;
+  --color-primary-200: #692a37;
+  --color-primary-500: #ff85a1;
+  --color-primary-600: #ff5c8a;
+  --color-primary-650: #ff5c8a;
+  --color-primary-700: #e11d48;
+
+  background-color: #190b0e !important;
+  color: #ffeef0 !important;
+}
+
+.dark #view-typing.theme-sakura .char-default {
+  color: #5c3b42 !important;
+}
+
+.dark #view-typing.theme-sakura .char-correct {
+  color: #ff85a1 !important;
+  text-shadow: 0 0 6px rgba(255, 133, 161, 0.3);
+}
+
+.dark #view-typing.theme-sakura .char-incorrect {
+  color: #ff5c8a !important;
+  background-color: rgba(255, 92, 138, 0.15) !important;
+}
+
+.dark #view-typing.theme-sakura .typing-caret::after {
+  background-color: #ff85a1 !important;
+  box-shadow: 0 0 8px #ff85a1 !important;
 }
 </style>
