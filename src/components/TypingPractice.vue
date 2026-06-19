@@ -26,25 +26,15 @@
             Temas
           </button>
           <button
-            @click="activeSidebarTab = 'progress'"
-            class="flex-1 pb-3 text-[11px] font-extrabold uppercase tracking-wider text-center cursor-pointer transition-all border-b-2 flex items-center justify-center gap-1.5"
+            @click="activeSidebarTab = 'key_phrases'"
+            class="flex-1 pb-3 text-[11px] font-extrabold uppercase tracking-wider text-center cursor-pointer transition-all border-b-2"
             :class="
-              activeSidebarTab === 'progress'
+              activeSidebarTab === 'key_phrases'
                 ? 'border-primary-550 text-primary-650 dark:border-primary-500 dark:text-primary-400'
                 : 'border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-650 dark:hover:text-slate-400'
             "
           >
-            <span>Progreso</span>
-            <span
-              class="px-1.5 py-0.5 rounded-full text-4xs font-mono font-bold"
-              :class="
-                activeSidebarTab === 'progress'
-                  ? 'bg-primary-100 dark:bg-primary-900/60 text-primary-650 dark:text-primary-450'
-                  : 'bg-slate-100 dark:bg-slate-900 text-slate-400 dark:text-slate-500'
-              "
-            >
-              {{ completedPhrases.length }}
-            </span>
+            Frases
           </button>
         </div>
 
@@ -74,6 +64,11 @@
               <span class="truncate pr-1">{{
                 lesson.title[profile.language] || lesson.title["es"]
               }}</span>
+              <span
+                v-if="getLevelBadge(key as string)"
+                class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-md border"
+                :class="getLevelBadge(key as string)?.classes"
+              >{{ getLevelBadge(key as string)?.label }}</span>
             </button>
           </div>
 
@@ -150,6 +145,36 @@
             </button>
           </div>
 
+          <!-- Repaso de Frases Difíciles -->
+          <div class="flex flex-col gap-1.5" v-if="difficultPhrases.length > 0">
+            <span
+              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1.5"
+            >
+              <span>🔄</span> Repaso Espaciado
+            </span>
+            <button
+              @click="selectLesson('difficult_review')"
+              class="w-full text-left px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
+              :class="
+                activeLessonId === 'difficult_review'
+                  ? 'bg-amber-50/70 border-amber-200 text-amber-700 dark:bg-amber-900/30 dark:border-amber-900/40 dark:text-amber-400'
+                  : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
+              "
+            >
+              <span class="truncate pr-1">Frases Difíciles</span>
+              <span class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-200/60 dark:border-amber-800/30">
+                {{ difficultPhrases.length }}
+              </span>
+            </button>
+            <button
+              v-if="difficultPhrases.length > 0"
+              @click="clearDifficultPhrases"
+              class="w-full text-center py-1.5 text-[10px] font-semibold text-slate-400 dark:text-slate-500 hover:text-rose-500 dark:hover:text-rose-400 transition-colors cursor-pointer select-none"
+            >
+              Limpiar todas
+            </button>
+          </div>
+
           <div
             class="h-px bg-slate-200/50 dark:bg-slate-800/40 my-1 shrink-0"
           ></div>
@@ -177,42 +202,100 @@
           </button>
         </div>
 
-        <!-- PROGRESS TAB -->
+        <!-- KEY PHRASES TAB -->
         <div
-          v-if="activeSidebarTab === 'progress'"
-          class="flex flex-col gap-3 overflow-y-auto pr-1 grow"
+          v-if="activeSidebarTab === 'key_phrases'"
+          class="flex flex-col gap-4 overflow-y-auto pr-1 grow select-none"
         >
-          <div
-            v-if="completedPhrases.length === 0"
-            class="py-12 text-center text-slate-400 dark:text-slate-650 text-xs font-medium"
-          >
-            Escribe la frase central para completarla.
+          <!-- Básico y Social -->
+          <div class="flex flex-col gap-1.5">
+            <span
+              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1.5"
+            >
+              <span>💬</span> Básico y Social
+            </span>
+            <button
+              v-for="(lesson, key) in keyLessonsByCategory.social"
+              :key="key"
+              @click="selectLesson(key)"
+              class="w-full text-left px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
+              :class="
+                key === activeLessonId
+                  ? 'bg-primary-50/70 border-primary-200 text-primary-650 dark:bg-primary-900 dark:border-primary-900/40 dark:text-primary-400'
+                  : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
+              "
+            >
+              <span class="truncate pr-1">{{
+                lesson.title[profile.language] || lesson.title["es"]
+              }}</span>
+              <span
+                v-if="getLevelBadge(key as string)"
+                class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-md border"
+                :class="getLevelBadge(key as string)?.classes"
+              >{{ getLevelBadge(key as string)?.label }}</span>
+            </button>
           </div>
-          <div
-            v-else
-            v-for="(p, idx) in completedPhrases"
-            :key="idx"
-            class="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800/40 shadow-xs flex flex-col gap-1 select-text transition-colors duration-300 animate-in fade-in"
-          >
-            <div class="flex items-start gap-2">
-              <span class="text-3xs font-mono font-bold text-primary-500 mt-0.5"
-                >{{ idx + 1 }}.</span
-              >
-              <div>
-                <p class="text-xs font-bold text-slate-800 dark:text-slate-100">
-                  <span
-                    v-if="p.speakerPrefix"
-                    class="text-primary-600 dark:text-primary-400 mr-1.5 font-bold tracking-wide text-2xs"
-                    >{{ p.speakerPrefix }}</span
-                  >{{ p.text }}
-                </p>
-                <p class="text-2xs text-slate-400 dark:text-slate-500">
-                  {{ p.translation }}
-                </p>
-              </div>
-            </div>
+
+          <!-- Trabajo y Diario -->
+          <div class="flex flex-col gap-1.5">
+            <span
+              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1.5"
+            >
+              <span>💼</span> Trabajo y Diario
+            </span>
+            <button
+              v-for="(lesson, key) in keyLessonsByCategory.work"
+              :key="key"
+              @click="selectLesson(key)"
+              class="w-full text-left px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
+              :class="
+                key === activeLessonId
+                  ? 'bg-primary-50/70 border-primary-200 text-primary-650 dark:bg-primary-900 dark:border-primary-900/40 dark:text-primary-400'
+                  : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
+              "
+            >
+              <span class="truncate pr-1">{{
+                lesson.title[profile.language] || lesson.title["es"]
+              }}</span>
+              <span
+                v-if="getLevelBadge(key as string)"
+                class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-md border"
+                :class="getLevelBadge(key as string)?.classes"
+              >{{ getLevelBadge(key as string)?.label }}</span>
+            </button>
+          </div>
+
+          <!-- Viajes y Servicios -->
+          <div class="flex flex-col gap-1.5">
+            <span
+              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1.5"
+            >
+              <span>✈️</span> Viajes y Servicios
+            </span>
+            <button
+              v-for="(lesson, key) in keyLessonsByCategory.travel"
+              :key="key"
+              @click="selectLesson(key)"
+              class="w-full text-left px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
+              :class="
+                key === activeLessonId
+                  ? 'bg-primary-50/70 border-primary-200 text-primary-650 dark:bg-primary-900 dark:border-primary-900/40 dark:text-primary-400'
+                  : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
+              "
+            >
+              <span class="truncate pr-1">{{
+                lesson.title[profile.language] || lesson.title["es"]
+              }}</span>
+              <span
+                v-if="getLevelBadge(key as string)"
+                class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-md border"
+                :class="getLevelBadge(key as string)?.classes"
+              >{{ getLevelBadge(key as string)?.label }}</span>
+            </button>
           </div>
         </div>
+
+
 
         <!-- Mobile-hidden bottom help -->
         <div
@@ -373,6 +456,26 @@
           >
             <span>{{ showBlindHint ? '👁️' : '👁️‍🗨️' }}</span>
             <span class="hidden sm:inline">Pista</span>
+          </button>
+
+          <!-- Sonido de Teclas Rápido Toggle -->
+          <button
+            id="btn-sound-toggle"
+            @click="toggleSoundMute"
+            class="p-2 rounded-lg transition-colors flex items-center justify-center gap-1.5 text-xs font-bold cursor-pointer select-none border"
+            :class="
+              selectedSoundTheme !== 'none'
+                ? 'bg-emerald-50 border-emerald-200/60 text-emerald-650 dark:bg-emerald-950/30 dark:border-emerald-900/20 dark:text-emerald-400 shadow-xs'
+                : 'bg-slate-100 border-slate-200/50 text-slate-500 dark:bg-slate-900/30 dark:border-slate-800/30 dark:text-slate-400 hover:bg-slate-200/80 dark:hover:bg-slate-900/60'
+            "
+            :title="
+              selectedSoundTheme !== 'none'
+                ? 'Silenciar sonidos de teclas'
+                : 'Activar sonidos de teclas'
+            "
+          >
+            <span>{{ selectedSoundTheme !== 'none' ? '🔊' : '🔇' }}</span>
+            <span class="hidden sm:inline">Sonido</span>
           </button>
 
           <!-- Replay voice -->
@@ -678,6 +781,21 @@
             @click="focusInput"
             class="grow flex flex-col justify-center items-left py-12 relative cursor-text min-h-[200px]"
           >
+            <!-- Barra de progreso visual sutil -->
+            <div class="absolute top-0 left-0 right-0 h-0.5 bg-slate-100 dark:bg-slate-900/50 rounded-full overflow-hidden">
+              <div
+                class="h-full bg-gradient-to-r from-primary-500 to-primary-650 dark:from-primary-600 dark:to-primary-400 transition-all duration-300 ease-out"
+                :style="{ width: `${progressPercent}%` }"
+              ></div>
+            </div>
+            <!-- Progress Counter in absolute corner -->
+            <div
+              v-if="activeLessonPhrases.length > 0"
+              class="absolute top-2 right-2 text-2xs font-bold font-mono px-2.5 py-1 rounded-xl bg-slate-50/50 dark:bg-slate-900/35 border border-slate-200/30 dark:border-slate-800/20 text-slate-400 dark:text-slate-500 select-none shadow-2xs backdrop-blur-xs"
+              title="Progreso de frases en la lección"
+            >
+              {{ activePhraseIndex + 1 }} / {{ activeLessonPhrases.length }}
+            </div>
             <!-- Keyword Highlight -->
             <div
               v-if="showKeywordHighlight"
@@ -709,8 +827,14 @@
             <!-- Text to type -->
             <div
               id="target-phrase-letters"
-              class="text-5xl md:text-6xl font-bold tracking-normal font-mono leading-relaxed mb-4 select-none flex flex-wrap justify-left gap-x-4"
+              class="text-5xl md:text-6xl font-bold tracking-normal font-mono leading-relaxed mb-4 select-none flex flex-wrap justify-left gap-x-4 relative"
             >
+              <!-- Smooth Caret Element -->
+              <div
+                v-if="caretStyle.opacity > 0"
+                class="absolute h-[4px] bg-primary-600 dark:bg-primary-400 transition-all duration-100 ease-out pointer-events-none rounded-full smooth-caret-active"
+                :style="caretStyle"
+              ></div>
               <span
                 v-for="(wordObj, wIdx) in wordSpans"
                 :key="wIdx"
@@ -853,6 +977,24 @@
                   </svg>
                   {{ activeWordDefinition.translation }}
                 </p>
+                <!-- Syllable Pronunciation Guide -->
+                <div
+                  v-if="activeWordDefinition.syllables && activeWordDefinition.syllables.length > 0"
+                  class="flex flex-wrap items-center gap-1.5 mt-1 pt-1.5 border-t border-slate-100/60 dark:border-slate-800/30"
+                >
+                  <span class="text-4xs font-extrabold uppercase tracking-widest text-slate-400 dark:text-slate-500 mr-0.5">Sílabas</span>
+                  <button
+                    v-for="(syl, sIdx) in activeWordDefinition.syllables"
+                    :key="sIdx"
+                    @click.stop="speakText(syl)"
+                    class="px-2 py-0.5 rounded-lg text-3xs font-bold cursor-pointer select-none transition-all border hover:scale-105 active:scale-95"
+                    :class="sIdx === 0
+                      ? 'bg-primary-50 border-primary-200/60 text-primary-700 dark:bg-primary-950/40 dark:border-primary-800/30 dark:text-primary-400'
+                      : 'bg-slate-50 border-slate-200/50 text-slate-600 dark:bg-slate-900/50 dark:border-slate-800/30 dark:text-slate-400'
+                    "
+                    :title="'Pronunciar: ' + syl"
+                  >{{ syl }}</button>
+                </div>
               </div>
             </Transition>
           </div>
@@ -879,6 +1021,8 @@
             </svg>
           </button>
         </div>
+
+
 
         <!-- STATS BAR -->
         <div
@@ -999,6 +1143,34 @@
               </div>
             </div>
 
+            <!-- Quiz results if completed -->
+            <div
+              v-if="quizQuestions.length > 0"
+              class="w-full flex items-center justify-between p-3.5 rounded-2xl bg-indigo-50/50 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/40 text-xs text-indigo-750 dark:text-indigo-305 font-bold"
+            >
+              <div class="flex items-center gap-2">
+                <span>🧠</span>
+                <span>Quiz de Vocabulario:</span>
+              </div>
+              <span class="px-2 py-0.5 bg-indigo-100 dark:bg-indigo-900/60 rounded-lg text-indigo-850 dark:text-indigo-250 font-black">
+                {{ quizScore }} / {{ quizQuestions.length }} correctas
+              </span>
+            </div>
+
+            <!-- New difficult phrases saved banner -->
+            <div
+              v-if="newDifficultCount > 0"
+              class="w-full flex items-center justify-between p-3.5 rounded-2xl bg-amber-50/60 dark:bg-amber-950/25 border border-amber-200/50 dark:border-amber-900/30 text-xs text-amber-800 dark:text-amber-300 font-bold"
+            >
+              <div class="flex items-center gap-2 text-left">
+                <span class="text-amber-500">🔄</span>
+                <span>Guardadas para repaso:</span>
+              </div>
+              <span class="px-2 py-0.5 bg-amber-100 dark:bg-amber-900/60 rounded-lg text-amber-900 dark:text-amber-250 font-black">
+                {{ newDifficultCount }} frases
+              </span>
+            </div>
+
             <!-- Action buttons -->
             <div class="flex gap-3 w-full">
               <button
@@ -1016,6 +1188,72 @@
                 Siguiente Tema
               </button>
             </div>
+          </div>
+        </div>
+
+        <!-- MINI VOCABULARY QUIZ OVERLAY -->
+        <div
+          v-if="showVocabQuiz && quizQuestions.length > 0"
+          id="vocab-quiz-overlay"
+          class="absolute inset-0 bg-slate-50/98 dark:bg-slate-950/98 z-40 flex flex-col items-center justify-center p-6 animate-fade-in"
+        >
+          <div
+            class="glass p-8 rounded-3xl border border-white/20 dark:border-white/5 shadow-2xl max-w-md w-full text-center flex flex-col items-center gap-6 relative overflow-hidden"
+          >
+            <div
+              class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+            ></div>
+
+            <!-- Quiz Header/Progress -->
+            <div class="w-full flex justify-between items-center text-xs font-bold text-slate-400 dark:text-slate-500">
+              <span class="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-650 dark:text-indigo-400 rounded-lg">
+                Pregunta {{ currentQuizIndex + 1 }} de {{ quizQuestions.length }}
+              </span>
+              <span>Score: {{ quizScore }}</span>
+            </div>
+
+            <!-- Quiz Question -->
+            <div class="my-2">
+              <span class="text-3xs uppercase tracking-widest font-black text-indigo-500">¿Qué significa esta palabra?</span>
+              <h3 class="text-3xl font-black text-slate-800 dark:text-white mt-1 select-none">
+                {{ quizQuestions[currentQuizIndex].keyword }}
+              </h3>
+              <p class="text-3xs text-slate-450 dark:text-slate-505 mt-2 italic max-w-xs mx-auto border-t border-slate-100 dark:border-slate-850 pt-2">
+                "{{ quizQuestions[currentQuizIndex].phraseText }}"
+              </p>
+            </div>
+
+            <!-- Quiz Options -->
+            <div class="flex flex-col gap-3 w-full">
+              <button
+                v-for="(option, idx) in quizQuestions[currentQuizIndex].options"
+                :key="idx"
+                @click="answerQuiz(option)"
+                :disabled="quizAnswered"
+                class="w-full text-left py-3.5 px-4 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
+                :class="[
+                  !quizAnswered
+                    ? 'bg-white border-slate-200 text-slate-700 hover:border-indigo-300 hover:bg-indigo-50/20 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-300 dark:hover:border-indigo-950 dark:hover:bg-indigo-950/10'
+                    : option === quizQuestions[currentQuizIndex].correctAnswer
+                      ? 'bg-emerald-500 border-emerald-500 text-white dark:bg-emerald-600 dark:border-emerald-600'
+                      : option === quizSelectedOption
+                        ? 'bg-rose-500 border-rose-500 text-white dark:bg-rose-600 dark:border-rose-600'
+                        : 'bg-white border-slate-200 text-slate-400 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-650 opacity-60'
+                ]"
+              >
+                <span>{{ option }}</span>
+                <span v-if="quizAnswered && option === quizQuestions[currentQuizIndex].correctAnswer" class="text-sm">✓</span>
+                <span v-if="quizAnswered && option === quizSelectedOption && option !== quizQuestions[currentQuizIndex].correctAnswer" class="text-sm">✗</span>
+              </button>
+            </div>
+
+            <!-- Skip button -->
+            <button
+              @click="skipQuiz"
+              class="text-3xs text-slate-450 hover:text-slate-650 dark:text-slate-500 dark:hover:text-slate-400 font-bold transition-colors mt-2"
+            >
+              Saltar Quiz y ver estadísticas
+            </button>
           </div>
         </div>
       </div>
@@ -1437,6 +1675,7 @@ interface PhraseTranslation {
 
 interface Lesson {
   title: Record<string, string>;
+  level?: 'beginner' | 'intermediate' | 'advanced';
   phrases: PhraseTranslation[];
 }
 
@@ -1444,6 +1683,19 @@ import newFriendLesson from "../data/lessons/new_friend.json";
 import orderingFoodLesson from "../data/lessons/ordering_food.json";
 import travelingLesson from "../data/lessons/traveling.json";
 import jobInterviewLesson from "../data/lessons/job_interview.json";
+import keyGreetingsLesson from "../data/lessons/key_greetings.json";
+import keyQuestionsLesson from "../data/lessons/key_questions.json";
+import keyWorkLesson from "../data/lessons/key_work.json";
+import keyShoppingLesson from "../data/lessons/key_shopping.json";
+import keyEmergenciesLesson from "../data/lessons/key_emergencies.json";
+import keySocializingLesson from "../data/lessons/key_socializing.json";
+import keyFeelingsLesson from "../data/lessons/key_feelings.json";
+import keyTechnologyLesson from "../data/lessons/key_technology.json";
+import keyWeatherLesson from "../data/lessons/key_weather.json";
+import keyEducationLesson from "../data/lessons/key_education.json";
+import keyDirectionsLesson from "../data/lessons/key_directions.json";
+import keyHotelLesson from "../data/lessons/key_hotel.json";
+import keyAirportLesson from "../data/lessons/key_airport.json";
 
 // Data sources
 const lessonsData: Record<string, Lesson> = {
@@ -1451,6 +1703,22 @@ const lessonsData: Record<string, Lesson> = {
   ordering_food: orderingFoodLesson as Lesson,
   traveling: travelingLesson as Lesson,
   job_interview: jobInterviewLesson as Lesson,
+};
+
+const keyLessonsData: Record<string, Lesson> = {
+  key_greetings: keyGreetingsLesson as Lesson,
+  key_questions: keyQuestionsLesson as Lesson,
+  key_work: keyWorkLesson as Lesson,
+  key_shopping: keyShoppingLesson as Lesson,
+  key_emergencies: keyEmergenciesLesson as Lesson,
+  key_socializing: keySocializingLesson as Lesson,
+  key_feelings: keyFeelingsLesson as Lesson,
+  key_technology: keyTechnologyLesson as Lesson,
+  key_weather: keyWeatherLesson as Lesson,
+  key_education: keyEducationLesson as Lesson,
+  key_directions: keyDirectionsLesson as Lesson,
+  key_hotel: keyHotelLesson as Lesson,
+  key_airport: keyAirportLesson as Lesson,
 };
 
 const tLocalMap: Record<string, Record<string, string>> = {
@@ -1521,6 +1789,7 @@ interface WordDefinition {
   translation: string;
   phonetic?: string;
   audioUrl?: string;
+  syllables?: string[];
 }
 
 const activeWordDefinition = ref<WordDefinition | null>(null);
@@ -1539,7 +1808,207 @@ const liveAcc = ref(100);
 let lastTypedLength = 0;
 
 const showSidebar = ref(true);
-const activeSidebarTab = ref("lessons"); // 'lessons' o 'progress'
+const activeSidebarTab = ref("lessons"); // 'lessons', 'key_phrases' o 'progress'
+
+const keyLessonsByCategory = computed(() => {
+  return {
+    social: {
+      key_greetings: keyLessonsData.key_greetings,
+      key_questions: keyLessonsData.key_questions,
+      key_socializing: keyLessonsData.key_socializing,
+      key_feelings: keyLessonsData.key_feelings,
+    },
+    work: {
+      key_work: keyLessonsData.key_work,
+      key_technology: keyLessonsData.key_technology,
+      key_weather: keyLessonsData.key_weather,
+      key_education: keyLessonsData.key_education,
+    },
+    travel: {
+      key_shopping: keyLessonsData.key_shopping,
+      key_emergencies: keyLessonsData.key_emergencies,
+      key_directions: keyLessonsData.key_directions,
+      key_hotel: keyLessonsData.key_hotel,
+      key_airport: keyLessonsData.key_airport,
+    }
+  };
+});
+
+// --- FEATURE 4: NIVELES DE DIFICULTAD (Badges) ---
+function getLevelBadge(lessonId: string): { emoji: string; label: string; classes: string } | null {
+  const lesson = lessonsData[lessonId] || keyLessonsData[lessonId];
+  const level = lesson?.level;
+  if (!level) return null;
+  if (level === 'beginner') return { emoji: '🟢', label: 'A1', classes: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border-emerald-200/60 dark:border-emerald-800/30' };
+  if (level === 'intermediate') return { emoji: '🟡', label: 'B1', classes: 'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border-amber-200/60 dark:border-amber-800/30' };
+  if (level === 'advanced') return { emoji: '🔴', label: 'C1', classes: 'bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-400 border-rose-200/60 dark:border-rose-800/30' };
+  return null;
+}
+
+// --- FEATURE 1: SISTEMA DE REPASO ESPACIADO ---
+interface DifficultPhrase {
+  phrase: PhraseTranslation;
+  lessonId: string;
+  lessonTitle: string;
+  accuracy: number;
+  timestamp: number;
+}
+
+const difficultPhrases = ref<DifficultPhrase[]>([]);
+const newDifficultCount = ref(0); // Frases difíciles detectadas en la sesión actual
+const currentPhraseErrors = ref(0); // Cuenta de errores de la frase actual
+
+function loadDifficultPhrases() {
+  const stored = localStorage.getItem('lbl_difficult_phrases');
+  if (stored) {
+    try {
+      difficultPhrases.value = JSON.parse(stored);
+    } catch (e) {}
+  }
+}
+
+function saveDifficultPhrases() {
+  localStorage.setItem('lbl_difficult_phrases', JSON.stringify(difficultPhrases.value));
+}
+
+function addDifficultPhrase(phrase: PhraseTranslation, lessonId: string, accuracy: number) {
+  // Evitar duplicados (misma frase del mismo lesson)
+  const exists = difficultPhrases.value.some(
+    dp => dp.phrase.text.toLowerCase() === phrase.text.toLowerCase() && dp.lessonId === lessonId
+  );
+  if (exists) return;
+
+  const lesson = lessonsData[lessonId] || keyLessonsData[lessonId] || customLessons.value[lessonId];
+  const lessonTitle = lesson?.title?.[profile.value.language] || lesson?.title?.['es'] || 'Lección';
+
+  difficultPhrases.value.push({
+    phrase: { ...phrase },
+    lessonId,
+    lessonTitle,
+    accuracy: Math.round(accuracy),
+    timestamp: Date.now(),
+  });
+  newDifficultCount.value++;
+  saveDifficultPhrases();
+}
+
+function removeDifficultPhrase(index: number) {
+  difficultPhrases.value.splice(index, 1);
+  saveDifficultPhrases();
+}
+
+function clearDifficultPhrases() {
+  difficultPhrases.value = [];
+  saveDifficultPhrases();
+}
+
+// --- FEATURE 3: MINI QUIZ DE VOCABULARIO ---
+interface QuizQuestion {
+  keyword: string;
+  correctAnswer: string;
+  options: string[];
+  phraseText: string;
+}
+
+const showVocabQuiz = ref(false);
+const quizQuestions = ref<QuizQuestion[]>([]);
+const currentQuizIndex = ref(0);
+const quizScore = ref(0);
+const quizSelectedOption = ref<string | null>(null);
+const quizAnswered = ref(false);
+const quizFinished = ref(false);
+
+function generateQuizQuestions() {
+  const phrases = activeLessonPhrases.value;
+  // Recopilar frases con keywords
+  const withKeywords = phrases.filter(p => p.keyword && p.keywordTranslations && p.keywordTranslations.length > 0);
+  if (withKeywords.length < 2) return false;
+
+  // Seleccionar hasta 4 al azar
+  const shuffled = [...withKeywords].sort(() => Math.random() - 0.5);
+  const selected = shuffled.slice(0, Math.min(4, shuffled.length));
+
+  // Recopilar todas las traducciones disponibles para distractores
+  const allTranslations = withKeywords
+    .filter(p => p.keywordTranslations)
+    .map(p => p.keywordTranslations![0])
+    .filter(Boolean);
+
+  quizQuestions.value = selected.map(phrase => {
+    const correctAnswer = phrase.keywordTranslations![0];
+    // Generar 3 distractores (diferentes de la respuesta correcta)
+    const distractors = allTranslations
+      .filter(t => t.toLowerCase() !== correctAnswer.toLowerCase())
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 3);
+
+    // Si no hay suficientes distractores, rellenar con genéricos
+    while (distractors.length < 3) {
+      const fallbacks = ['recordar', 'comprar', 'necesitar', 'trabajar', 'cocinar', 'viajar', 'estudiar', 'hablar'];
+      const fallback = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+      if (!distractors.includes(fallback) && fallback !== correctAnswer) {
+        distractors.push(fallback);
+      }
+    }
+
+    // Mezclar opciones
+    const options = [correctAnswer, ...distractors].sort(() => Math.random() - 0.5);
+
+    return {
+      keyword: phrase.keyword!,
+      correctAnswer,
+      options,
+      phraseText: phrase.text,
+    };
+  });
+
+  currentQuizIndex.value = 0;
+  quizScore.value = 0;
+  quizSelectedOption.value = null;
+  quizAnswered.value = false;
+  quizFinished.value = false;
+
+  return true;
+}
+
+function answerQuiz(selectedOption: string) {
+  if (quizAnswered.value) return;
+  quizSelectedOption.value = selectedOption;
+  quizAnswered.value = true;
+
+  const currentQ = quizQuestions.value[currentQuizIndex.value];
+  if (selectedOption === currentQ.correctAnswer) {
+    quizScore.value++;
+  }
+
+  // Auto-avanzar después de 1.5s
+  setTimeout(() => {
+    nextQuizQuestion();
+  }, 1500);
+}
+
+function nextQuizQuestion() {
+  if (currentQuizIndex.value < quizQuestions.value.length - 1) {
+    currentQuizIndex.value++;
+    quizSelectedOption.value = null;
+    quizAnswered.value = false;
+  } else {
+    quizFinished.value = true;
+  }
+}
+
+function finishQuiz() {
+  showVocabQuiz.value = false;
+  quizFinished.value = false;
+  // No necesitamos hacer nada más, el overlay de completado ya está visible
+}
+
+function skipQuiz() {
+  showVocabQuiz.value = false;
+  quizQuestions.value = [];
+}
+
+
 
 const isVoiceSettingsOpen = ref(false);
 const voices = ref<SpeechSynthesisVoice[]>([]);
@@ -1663,14 +2132,68 @@ const showBlindHint = ref(false);
 
 // Variables de Estética y Sonidos (inicializados desde LocalStorage)
 const selectedSoundTheme = ref(
-  (typeof window !== "undefined" && localStorage.getItem("lbl_sound_theme")) || "bubble"
+  (typeof window !== "undefined" && localStorage.getItem("lbl_sound_theme")) || "mechanical"
 );
+const lastActiveSoundTheme = ref(
+  (typeof window !== "undefined" && localStorage.getItem("lbl_sound_theme") !== "none" && localStorage.getItem("lbl_sound_theme")) || "mechanical"
+);
+
+function toggleSoundMute() {
+  if (selectedSoundTheme.value === "none") {
+    selectedSoundTheme.value = lastActiveSoundTheme.value;
+  } else {
+    lastActiveSoundTheme.value = selectedSoundTheme.value;
+    selectedSoundTheme.value = "none";
+  }
+}
+
 const selectedTheme = ref(
   (typeof window !== "undefined" && localStorage.getItem("lbl_visual_theme")) || "default"
 );
 const selectedAiModel = ref(
   (typeof window !== "undefined" && localStorage.getItem("lbl_ai_model")) || "gemini-2.5-flash"
 );
+
+// --- MEJORAS PREMIUM: CURSOR FLUIDO Y BARRA DE PROGRESO ---
+const progressPercent = computed(() => {
+  const total = activeLessonPhrases.value.length;
+  if (total === 0) return 0;
+  return (activePhraseIndex.value / total) * 100;
+});
+
+const caretStyle = ref({
+  left: "0px",
+  top: "0px",
+  width: "0px",
+  opacity: 0,
+});
+
+function updateCaret() {
+  nextTick(() => {
+    const lettersContainer = document.getElementById("target-phrase-letters");
+    if (!lettersContainer) return;
+
+    const activeChar = lettersContainer.querySelector(".typing-caret") as HTMLElement;
+    if (activeChar) {
+      const containerRect = lettersContainer.getBoundingClientRect();
+      const charRect = activeChar.getBoundingClientRect();
+      
+      caretStyle.value = {
+        left: `${charRect.left - containerRect.left}px`,
+        top: `${charRect.bottom - containerRect.top - 2}px`,
+        width: `${charRect.width}px`,
+        opacity: 1,
+      };
+    } else {
+      caretStyle.value.opacity = 0;
+    }
+  });
+}
+
+// Sincronizadores para el cursor fluido
+watch([typedText, activePhraseIndex, activeLessonId, selectedTheme], () => {
+  updateCaret();
+});
 
 // Sincronizar Modo Ciego con el Modo Escucha
 watch(isBlindMode, (newVal) => {
@@ -2028,6 +2551,14 @@ const lessonOptions = computed(() => {
     value: key,
     label: lessonsData[key].title[lang] || lessonsData[key].title["es"],
   }));
+
+  // Append key lessons
+  Object.keys(keyLessonsData).forEach((key) => {
+    list.push({
+      value: key,
+      label: keyLessonsData[key].title[lang] || keyLessonsData[key].title["es"],
+    });
+  });
 
   // Append user's custom lessons
   Object.keys(customLessons.value).forEach((key) => {
@@ -2577,8 +3108,16 @@ const activeLessonPhrases = computed(() => {
 
   if (lessonsData[id]) {
     phrases = [...lessonsData[id].phrases];
+  } else if (keyLessonsData[id]) {
+    phrases = [...keyLessonsData[id].phrases];
   } else if (customLessons.value[id]) {
     phrases = [...customLessons.value[id].phrases];
+  } else if (id === "difficult_review") {
+    // Cargar frases difíciles para repaso
+    phrases = difficultPhrases.value.map((dp, idx) => ({
+      ...dp.phrase,
+      id: `diff-${idx}`,
+    }));
   } else if (id === "custom_practice") {
     const stored = localStorage.getItem("speak_phrases");
     if (stored) {
@@ -2698,6 +3237,7 @@ async function lookupWord(word: string, contextPhrase: string) {
     let phonetic = "";
     let audioUrl = "";
     let translation = "";
+    let syllables: string[] = [];
 
     // A. Consultar la API del diccionario en inglés gratuita (siempre para fonética y audio)
     try {
@@ -2741,8 +3281,10 @@ Genera un objeto JSON estructurado con el siguiente formato exacto:
 {
   "translation": "traducción más exacta de la palabra al español en este contexto",
   "definition": "definición en inglés muy corta y simple si no la tienes (máximo 12 palabras)",
-  "partOfSpeech": "noun, verb, adjective, adverb"
+  "partOfSpeech": "noun, verb, adjective, adverb",
+  "syllables": ["sí", "la", "bas"]
 }
+El campo "syllables" debe contener la palabra separada en sus sílabas fonéticas en inglés (cada sílaba como un string separado). Si la palabra tiene una sola sílaba, retorna un array con un solo elemento.
 Retorna únicamente el JSON válido.
 `;
         const ai = new GoogleGenAI({ apiKey: geminiApiKey.value });
@@ -2760,6 +3302,9 @@ Retorna únicamente el JSON válido.
           translation = parsed.translation || "";
           if (!partOfSpeech) partOfSpeech = parsed.partOfSpeech || "";
           if (!definition) definition = parsed.definition || "";
+          if (parsed.syllables && Array.isArray(parsed.syllables)) {
+            syllables = parsed.syllables;
+          }
         }
       } catch (err) {
         console.warn("Error al consultar traducción en Gemini:", err);
@@ -2783,6 +3328,7 @@ Retorna únicamente el JSON válido.
       translation,
       phonetic,
       audioUrl,
+      syllables: syllables.length > 0 ? syllables : undefined,
     };
 
     definitionsCache.value[cacheKey] = newDef;
@@ -2971,7 +3517,7 @@ const showKeywordHighlight = computed(() => {
 // Lesson Completion overlay visibility
 const showCompleteOverlay = computed(() => {
   const phrases = activeLessonPhrases.value;
-  return phrases.length > 0 && activePhraseIndex.value >= phrases.length;
+  return phrases.length > 0 && activePhraseIndex.value >= phrases.length && !showVocabQuiz.value;
 });
 
 // Computed final stats for overlay
@@ -3093,6 +3639,7 @@ function focusInput() {
   if (inputRef.value) {
     inputRef.value.focus();
   }
+  updateCaret();
 }
 
 // Stats & Typing loop processing
@@ -3117,6 +3664,7 @@ function processInput() {
       playKeyPressSound("correct");
     } else {
       playKeyPressSound("incorrect");
+      currentPhraseErrors.value++;
     }
   }
   lastTypedLength = currentCapped.length;
@@ -3187,6 +3735,25 @@ function processInput() {
     lastTypedLength = 0;
     showBlindHint.value = false;
 
+    // --- FEATURE 1: Detectar frases difíciles ---
+    // Calcular accuracy real del tipeo de esta frase en base a los errores cometidos en el camino
+    const phraseLength = target.length;
+    const correctKeys = Math.max(0, phraseLength - currentPhraseErrors.value);
+    const phraseAccuracy = phraseLength > 0 ? (correctKeys / phraseLength) * 100 : 100;
+    if (phraseAccuracy < 85 && activeLessonId.value !== 'difficult_review') {
+      addDifficultPhrase(phrases[activePhraseIndex.value], activeLessonId.value, phraseAccuracy);
+    }
+    // Si la frase estaba en repaso y la accuracy fue buena, removerla
+    if (phraseAccuracy >= 85 && activeLessonId.value === 'difficult_review') {
+      const dpIdx = difficultPhrases.value.findIndex(
+        dp => dp.phrase.text.toLowerCase() === target.toLowerCase()
+      );
+      if (dpIdx !== -1) {
+        removeDifficultPhrase(dpIdx);
+      }
+    }
+    currentPhraseErrors.value = 0; // Reiniciar para la siguiente frase
+
     completedPhrases.value.push({
       text: target,
       translation: activeTranslation.value,
@@ -3224,6 +3791,12 @@ function processInput() {
 
       finalWpmComputed.value = finalWpm;
       finalAccComputed.value = finalAcc;
+
+      // --- FEATURE 3: Lanzar Quiz de Vocabulario ---
+      const hasQuiz = generateQuizQuestions();
+      if (hasQuiz) {
+        showVocabQuiz.value = true;
+      }
     } else {
       setTimeout(() => {
         const nextP = activePhrase.value;
@@ -3318,6 +3891,11 @@ function resetSession() {
   liveAcc.value = 100;
   activeWordDefinition.value = null;
   isLoadingDefinition.value = false;
+  newDifficultCount.value = 0;
+  currentPhraseErrors.value = 0;
+  showVocabQuiz.value = false;
+  quizQuestions.value = [];
+  quizFinished.value = false;
   if (inputRef.value) {
     inputRef.value.value = "";
   }
@@ -3349,7 +3927,13 @@ function restartLesson() {
 }
 
 function nextLesson() {
-  const ids = Object.keys(lessonsData);
+  let ids = Object.keys(lessonsData);
+  if (keyLessonsData[activeLessonId.value]) {
+    ids = Object.keys(keyLessonsData);
+  } else if (customLessons.value[activeLessonId.value]) {
+    ids = Object.keys(customLessons.value);
+  }
+
   let idx = ids.indexOf(activeLessonId.value) + 1;
   if (idx >= ids.length) idx = 0;
   loadLessonData(ids[idx]);
@@ -3446,6 +4030,7 @@ function handleCustomPhrasesChange() {
 onMounted(() => {
   readLocalProfile();
   loadCustomLessons();
+  loadDifficultPhrases();
   loadLessonData("new_friend");
   loadVoices();
 
@@ -3469,6 +4054,8 @@ onMounted(() => {
     "custom-phrases-changed-state-forward",
     handleCustomPhrasesChange
   );
+  window.addEventListener("resize", updateCaret);
+  setTimeout(updateCaret, 250);
 });
 
 onUnmounted(() => {
@@ -3487,6 +4074,7 @@ onUnmounted(() => {
     "custom-phrases-changed-state-forward",
     handleCustomPhrasesChange
   );
+  window.removeEventListener("resize", updateCaret);
 });
 
 // Watch to speak initial phrase on load

@@ -1,0 +1,119 @@
+{
+  "title": {
+    "es": "Sentimientos y Emociones",
+    "ar": "المشاعر والعواطف",
+    "pt": "Sentimentos e Emoções",
+    "fr": "Sentiments et Émotions",
+    "de": "Gefühle und Emotionen",
+    "it": "Sentimenti ed Emozioni",
+    "en": "Feelings & Emotions"
+  },
+  "level": "intermediate",
+  "phrases": [
+    {
+      "id": "kfe1",
+      "text": "I feel extremely happy about this news.",
+      "translations": {
+        "es": "Me siento extremadamente feliz por esta noticia.",
+        "ar": "أشعر بالسعادة البالغة بهذا الخبر.",
+        "pt": "Eu me sinto extremamente feliz com essa notícia.",
+        "fr": "Je suis extrêmement heureux de cette nouvelle.",
+        "de": "Ich freue mich riesig über diese Neuigkeit.",
+        "it": "Mi sento estremamente felice per questa notizia.",
+        "en": "I feel extremely happy about this news."
+      },
+      "keyword": "happy",
+      "keywordTranslations": ["feliz", "contento"]
+    },
+    {
+      "id": "kfe2",
+      "text": "Do not worry, everything will be fine.",
+      "translations": {
+        "es": "No te preocupes, todo estará bien.",
+        "ar": "لا تقلق، كل شيء سيكون على ما يرام.",
+        "pt": "Não se preocupe, tudo vai dar certo.",
+        "fr": "Ne t'inquiète pas, tout ira bien.",
+        "de": "Keine Sorge, alles wird gut.",
+        "it": "Non preoccuparti, andrà tutto bene.",
+        "en": "Do not worry, everything will be fine."
+      },
+      "keyword": "worry",
+      "keywordTranslations": ["preocupes", "preocuparse"]
+    },
+    {
+      "id": "kfe3",
+      "text": "I am so excited for the party.",
+      "translations": {
+        "es": "Estoy tan emocionado por la fiesta.",
+        "ar": "أنا متحمس جداً للحفلة.",
+        "pt": "Estou tão animado para a festa.",
+        "fr": "Je suis tellement excité pour la fête.",
+        "de": "Ich bin so aufgeregt wegen der Party.",
+        "it": "Sono così entusiasta per la festa.",
+        "en": "I am so excited for the party."
+      },
+      "keyword": "excited",
+      "keywordTranslations": ["emocionado", "animado"]
+    },
+    {
+      "id": "kfe4",
+      "text": "He looks very tired after the long run.",
+      "translations": {
+        "es": "Él se ve muy cansado después de la larga carrera.",
+        "ar": "يبدو متعباً جداً بعد الجري الطويل.",
+        "pt": "Ele parece muito cansado depois de correr tanto.",
+        "fr": "Il a l'air très fatigué après cette longue course.",
+        "de": "Er sieht nach dem langen Lauf sehr müde aus.",
+        "it": "Sembra molto stanco dopo la lunga corsa.",
+        "en": "He looks very tired after the long run."
+      },
+      "keyword": "tired",
+      "keywordTranslations": ["cansado"]
+    },
+    {
+      "id": "kfe5",
+      "text": "Please try to stay calm and focus.",
+      "translations": {
+        "es": "Por favor intenta mantener la calma y concentrarte.",
+        "ar": "يرجى محاولة الحفاظ على الهدوء والتركيز.",
+        "pt": "Por favor, tente manter a calma e se concentrar.",
+        "fr": "S'il vous plaît essayez de rester calme et concentré.",
+        "de": "Bitte versuchen Sie, ruhig zu bleiben und sich zu konzentrieren.",
+        "it": "Per favor cerca di rimanere calmo e concentrato.",
+        "en": "Please try to stay calm and focus."
+      },
+      "keyword": "calm",
+      "keywordTranslations": ["calma", "tranquilo"]
+    },
+    {
+      "id": "kfe6",
+      "text": "I am proud of your achievements.",
+      "translations": {
+        "es": "Estoy orgulloso de tus logros.",
+        "ar": "أنا فخور بإنجازاتك.",
+        "pt": "Estou orgulhoso das suas conquistas.",
+        "fr": "Je suis fier de tes réalisations.",
+        "de": "Ich bin stolz auf deine Leistungen.",
+        "it": "Sono orgoglioso dei tuoi traguardi.",
+        "en": "I am proud of your achievements."
+      },
+      "keyword": "proud",
+      "keywordTranslations": ["orgulloso"]
+    },
+    {
+      "id": "kfe7",
+      "text": "I will miss you when you leave.",
+      "translations": {
+        "es": "Te extrañaré cuando te vayas.",
+        "ar": "سأشتاق إليك عندما تغادر.",
+        "pt": "Vou sentir sua falta quando você for embora.",
+        "fr": "Tu vas me manquer quand tu partiras.",
+        "de": "Ich werde dich vermissen, wenn du gehst.",
+        "it": "Mi mancherai quando te ne andrai.",
+        "en": "I will miss you when you leave."
+      },
+      "keyword": "miss",
+      "keywordTranslations": ["extrañar", "echar de menos"]
+    }
+  ]
+}

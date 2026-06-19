@@ -1,0 +1,119 @@
+{
+  "title": {
+    "es": "En el Hotel",
+    "ar": "في الفندق",
+    "pt": "No Hotel",
+    "fr": "À l'Hôtel",
+    "de": "Im Hotel",
+    "it": "In Hotel",
+    "en": "At the Hotel"
+  },
+  "level": "intermediate",
+  "phrases": [
+    {
+      "id": "kho1",
+      "text": "I have a reservation under the name of Smith.",
+      "translations": {
+        "es": "Tengo una reserva a nombre de Smith.",
+        "ar": "لدي حجز باسم سميث.",
+        "pt": "Tenho uma reserva em nome de Smith.",
+        "fr": "J'ai une réservation au nom de Smith.",
+        "de": "Ich habe eine Reservierung auf den Namen Smith.",
+        "it": "Ho una prenotazione a nome Smith.",
+        "en": "I have a reservation under the name of Smith."
+      },
+      "keyword": "reservation",
+      "keywordTranslations": ["reserva", "reservación"]
+    },
+    {
+      "id": "kho2",
+      "text": "What time is check out tomorrow morning?",
+      "translations": {
+        "es": "¿A qué hora es la salida mañana por la mañana?",
+        "ar": "في أي وقت يتم تسجيل المغادرة غداً صباحاً؟",
+        "pt": "A que horas é o check-out amanhã de manhã?",
+        "fr": "À quelle heure se fait le départ demain matin ?",
+        "de": "Um wie viel Uhr ist morgen früh Check-out?",
+        "it": "A che ora è il check-out domani mattina?",
+        "en": "What time is check out tomorrow morning?"
+      },
+      "keyword": "check",
+      "keywordTranslations": ["salida", "check out"]
+    },
+    {
+      "id": "kho3",
+      "text": "Could I have an extra room key?",
+      "translations": {
+        "es": "¿Podría darme una llave de habitación extra?",
+        "ar": "هل يمكنني الحصول على مفتاح إضافي للغرفة؟",
+        "pt": "Poderia me dar uma chave extra do quarto?",
+        "fr": "Puis-je avoir une clé de chambre supplémentaire ?",
+        "de": "Könnte ich einen zusätzlichen Zimmerschlüssel haben?",
+        "it": "Potrei avere una chiave della camera in più?",
+        "en": "Could I have an extra room key?"
+      },
+      "keyword": "key",
+      "keywordTranslations": ["llave"]
+    },
+    {
+      "id": "kho4",
+      "text": "Is breakfast included in the room rate?",
+      "translations": {
+        "es": "¿El desayuno está incluido en la tarifa de la habitación?",
+        "ar": "هل الإفطار مشمول في سعر الغرفة؟",
+        "pt": "O café da manhã está incluído na diária do quarto?",
+        "fr": "Le petit-déjeuner est-il inclus dans le prix de la chambre ?",
+        "de": "Ist das Frühstück im Zimmerpreis inbegriffen?",
+        "it": "La colazione è inclusa nella tariffa della camera?",
+        "en": "Is breakfast included in the room rate?"
+      },
+      "keyword": "breakfast",
+      "keywordTranslations": ["desayuno"]
+    },
+    {
+      "id": "kho5",
+      "text": "The air conditioning in my room is not working.",
+      "translations": {
+        "es": "El aire acondicionado en mi habitación no funciona.",
+        "ar": "تكييف الهواء في غرفتي لا يعمل.",
+        "pt": "O ar condicionado do meu quarto não está funcionando.",
+        "fr": "La climatisation de ma chambre ne fonctionne pas.",
+        "de": "Die Klimaanlage in meinem Zimmer funktioniert nicht.",
+        "it": "L'aria condizionata nella mia camera no funziona.",
+        "en": "The air conditioning in my room is not working."
+      },
+      "keyword": "conditioning",
+      "keywordTranslations": ["acondicionado"]
+    },
+    {
+      "id": "kho6",
+      "text": "What is the wireless internet password?",
+      "translations": {
+        "es": "¿Cuál es la contraseña del internet inalámbrico?",
+        "ar": "ما هي كلمة مرور الإنترنت اللاسلكي؟",
+        "pt": "Qual é a senha da internet sem fio?",
+        "fr": "Quel est le mot de passe du réseau internet sans fil ?",
+        "de": "Wie lautet das Passwort für das drahtlose Internet?",
+        "it": "Qual è la password dell'internet wireless?",
+        "en": "What is the wireless internet password?"
+      },
+      "keyword": "password",
+      "keywordTranslations": ["contraseña"]
+    },
+    {
+      "id": "kho7",
+      "text": "Could you call a taxi cab for me?",
+      "translations": {
+        "es": "¿Podría llamar a un taxi para mí?",
+        "ar": "هل يمكنك الاتصال بسيارة أجرة من أجلي؟",
+        "pt": "Você poderia chamar um táxi para mim?",
+        "fr": "Pourriez-vous m'appeler un taxi ?",
+        "de": "Könnten Sie mir ein Taxi rufen?",
+        "it": "Potrebbe chiamarmi un taxi?",
+        "en": "Could you call a taxi cab for me?"
+      },
+      "keyword": "taxi",
+      "keywordTranslations": ["taxi"]
+    }
+  ]
+}

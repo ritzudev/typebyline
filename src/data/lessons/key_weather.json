@@ -1,0 +1,119 @@
+{
+  "title": {
+    "es": "Clima y Estaciones",
+    "ar": "الطقس والفصول",
+    "pt": "Clima e Estações",
+    "fr": "Météo et Saisons",
+    "de": "Wetter und Jahreszeiten",
+    "it": "Meteo e Stagioni",
+    "en": "Weather & Seasons"
+  },
+  "level": "beginner",
+  "phrases": [
+    {
+      "id": "kwe1",
+      "text": "What is the weather like outside?",
+      "translations": {
+        "es": "¿Cómo está el clima afuera?",
+        "ar": "كيف تبدو حالة الطقس بالخارج؟",
+        "pt": "Como está o tempo lá fora?",
+        "fr": "Quel temps fait-il dehors ?",
+        "de": "Wie ist das Wetter draußen?",
+        "it": "Com'è il tempo fuori?",
+        "en": "What is the weather like outside?"
+      },
+      "keyword": "weather",
+      "keywordTranslations": ["clima", "tiempo"]
+    },
+    {
+      "id": "kwe2",
+      "text": "It is raining, take your umbrella.",
+      "translations": {
+        "es": "Está lloviendo, lleva tu paraguas.",
+        "ar": "إنها تمطر، خذ مظلتك.",
+        "pt": "Está chovendo, leve seu guarda-chuva.",
+        "fr": "Il pleut, prends ton parapluie.",
+        "de": "Es regnet, nimm deinen Regenschirm mit.",
+        "it": "Sta piovendo, prendi l'ombrello.",
+        "en": "It is raining, take your umbrella."
+      },
+      "keyword": "umbrella",
+      "keywordTranslations": ["paraguas"]
+    },
+    {
+      "id": "kwe3",
+      "text": "I love the warm summer season.",
+      "translations": {
+        "es": "Amo la cálida estación del verano.",
+        "ar": "أنا أحب فصل الصيف الدافئ.",
+        "pt": "Eu amo a estação quente do verão.",
+        "fr": "J'adore la chaude saison estivale.",
+        "de": "Ich liebe die warme Sommerzeit.",
+        "it": "Adoro la calda stagione estiva.",
+        "en": "I love the warm summer season."
+      },
+      "keyword": "summer",
+      "keywordTranslations": ["verano"]
+    },
+    {
+      "id": "kwe4",
+      "text": "It is freezing cold this winter.",
+      "translations": {
+        "es": "Hace un frío helado este invierno.",
+        "ar": "الجو بارد جداً هذا الشتاء.",
+        "pt": "Está um frio congelante neste inverno.",
+        "fr": "Il fait un froid glacial cet hiver.",
+        "de": "Es ist eiskalt in diesem Winter.",
+        "it": "Fa un freddo gelido questo inverno.",
+        "en": "It is freezing cold this winter."
+      },
+      "keyword": "winter",
+      "keywordTranslations": ["invierno"]
+    },
+    {
+      "id": "kwe5",
+      "text": "The wind is blowing very hard.",
+      "translations": {
+        "es": "El viento está soplando muy fuerte.",
+        "ar": "الرياح تهب بقوة شديدة.",
+        "pt": "O vento está soprando muito forte.",
+        "fr": "Le vent souffle très fort.",
+        "de": "Der Wind weht sehr stark.",
+        "it": "Il vento soffia molto forte.",
+        "en": "The wind is blowing very hard."
+      },
+      "keyword": "wind",
+      "keywordTranslations": ["viento"]
+    },
+    {
+      "id": "kwe6",
+      "text": "The autumn leaves are falling down.",
+      "translations": {
+        "es": "Las hojas de otoño están cayendo.",
+        "ar": "أوراق الخريف تتساقط.",
+        "pt": "As folhas de outono estão caindo.",
+        "fr": "Les feuilles d'automne tombent.",
+        "de": "Die Herbstblätter fallen herunter.",
+        "it": "Le foglie autunnali stanno cadendo.",
+        "en": "The autumn leaves are falling down."
+      },
+      "keyword": "leaves",
+      "keywordTranslations": ["hojas"]
+    },
+    {
+      "id": "kwe7",
+      "text": "It will be sunny and hot tomorrow.",
+      "translations": {
+        "es": "Estará soleado y caluroso mañana.",
+        "ar": "سيكون الطقس مشمساً وحاراً غداً.",
+        "pt": "Amanhã estará ensolarado e quente.",
+        "fr": "Il fera beau et chaud demain.",
+        "de": "Morgen wird es sonnig und heiß sein.",
+        "it": "Domani sarà soleggiato e caldo.",
+        "en": "It will be sunny and hot tomorrow."
+      },
+      "keyword": "sunny",
+      "keywordTranslations": ["soleado"]
+    }
+  ]
+}

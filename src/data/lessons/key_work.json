@@ -1,0 +1,119 @@
+{
+  "title": {
+    "es": "En el Trabajo",
+    "ar": "في العمل",
+    "pt": "No Trabalho",
+    "fr": "Au Travail",
+    "de": "Bei der Arbeit",
+    "it": "Al Lavoro",
+    "en": "At Work"
+  },
+  "level": "intermediate",
+  "phrases": [
+    {
+      "id": "kw1",
+      "text": "Let's schedule a brief meeting.",
+      "translations": {
+        "es": "Programemos una breve reunión.",
+        "ar": "دعونا نحدد موعداً لاجتماع قصير.",
+        "pt": "Vamos agendar uma reunião breve.",
+        "fr": "Planifions une brève réunion.",
+        "de": "Lassen Sie uns ein kurzes Treffen vereinbaren.",
+        "it": "Pianifichiamo una breve riunione.",
+        "en": "Let's schedule a brief meeting."
+      },
+      "keyword": "meeting",
+      "keywordTranslations": ["reunión", "junta"]
+    },
+    {
+      "id": "kw2",
+      "text": "I will send you the report today.",
+      "translations": {
+        "es": "Te enviaré el reporte hoy.",
+        "ar": "سأرسل لك التقرير اليوم.",
+        "pt": "Eu lhe enviarei o relatório hoje.",
+        "fr": "Je vous enverrai le rapport aujourd'hui.",
+        "de": "Ich werde Ihnen den Bericht heute schicken.",
+        "it": "Ti invierò il rapporto oggi.",
+        "en": "I will send you the report today."
+      },
+      "keyword": "report",
+      "keywordTranslations": ["reporte", "informe"]
+    },
+    {
+      "id": "kw3",
+      "text": "We need to discuss this project details.",
+      "translations": {
+        "es": "Necesitamos discutir los detalles de este proyecto.",
+        "ar": "نحن بحاجة لمناقشة تفاصيل هذا المشروع.",
+        "pt": "Precisamos discutir os detalhes deste projeto.",
+        "fr": "Nous devons discuter des détails de ce projet.",
+        "de": "Wir müssen die Details dieses Projekts besprechen.",
+        "it": "Dobbiamo discutere i dettagli di questo progetto.",
+        "en": "We need to discuss this project details."
+      },
+      "keyword": "project",
+      "keywordTranslations": ["proyecto"]
+    },
+    {
+      "id": "kw4",
+      "text": "What is the deadline for this task?",
+      "translations": {
+        "es": "¿Cuál es la fecha límite para esta tarea?",
+        "ar": "ما هو الموعد النهائي لهذه المهمة؟",
+        "pt": "Qual é o prazo para esta tarefa?",
+        "fr": "Quel est le délai pour cette tâche ?",
+        "de": "Was ist die Frist für diese Aufgabe?",
+        "it": "Qual è la scadenza per questo compito?",
+        "en": "What is the deadline for this task?"
+      },
+      "keyword": "deadline",
+      "keywordTranslations": ["fecha límite", "plazo"]
+    },
+    {
+      "id": "kw5",
+      "text": "I am working on solving the problem.",
+      "translations": {
+        "es": "Estoy trabajando en resolver el problema.",
+        "ar": "أنا أعمل على حل المشكلة.",
+        "pt": "Estou trabalhando para resolver o problema.",
+        "fr": "Je travaille à la résolution du problème.",
+        "de": "Ich arbeite daran, das Problem zu lösen.",
+        "it": "Sto lavorando per risolvere il problema.",
+        "en": "I am working on solving the problem."
+      },
+      "keyword": "solving",
+      "keywordTranslations": ["resolver", "solucionar"]
+    },
+    {
+      "id": "kw6",
+      "text": "Please let me know your thoughts.",
+      "translations": {
+        "es": "Por favor déjame saber tus opiniones.",
+        "ar": "يرجى إعلامي بأفكارك.",
+        "pt": "Por favor, me diga o que você pensa.",
+        "fr": "S'il vous plaît faites-moi part de vos réflexions.",
+        "de": "Bitte lassen Sie mich Ihre Gedanken wissen.",
+        "it": "Per favore fatemi sapere i vostri pensieri.",
+        "en": "Please let me know your thoughts."
+      },
+      "keyword": "thoughts",
+      "keywordTranslations": ["opiniones", "pensamientos", "ideas"]
+    },
+    {
+      "id": "kw7",
+      "text": "Let's get started on the assignment.",
+      "translations": {
+        "es": "Comencemos con la asignación.",
+        "ar": "فلنبدأ بالواجب.",
+        "pt": "Vamos começar a tarefa.",
+        "fr": "Commençons le travail.",
+        "de": "Lassen Sie uns mit der Aufgabe beginnen.",
+        "it": "Cominciamo con il compito.",
+        "en": "Let's get started on the assignment."
+      },
+      "keyword": "started",
+      "keywordTranslations": ["comenzar", "empezar"]
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "title": {
+    "es": "Emergencias y Salud",
+    "ar": "الطوارئ والصحة",
+    "pt": "Emergências e Saúde",
+    "fr": "Urgences et Santé",
+    "de": "Notfälle und Gesundheit",
+    "it": "Emergenze e Salute",
+    "en": "Emergencies & Health"
+  },
+  "level": "intermediate",
+  "phrases": [
+    {
+      "id": "ke1",
+      "text": "I need help immediately, please.",
+      "translations": {
+        "es": "Necesito ayuda inmediatamente, por favor.",
+        "ar": "أحتاج إلى المساعدة فوراً، رجاءً.",
+        "pt": "Preciso de ajuda imediatamente, por favor.",
+        "fr": "J'ai besoin d'aide immédiatement, s'il vous plaît.",
+        "de": "Ich brauche bitte sofort Hilfe.",
+        "it": "Ho bisogno di aiuto immediatamente, per favore.",
+        "en": "I need help immediately, please."
+      },
+      "keyword": "immediately",
+      "keywordTranslations": ["inmediatamente", "de inmediato"]
+    },
+    {
+      "id": "ke2",
+      "text": "Please call an ambulance right now!",
+      "translations": {
+        "es": "¡Por favor, llama a una ambulancia ahora mismo!",
+        "ar": "الرجاء الاتصال بسيارة الإسعاف الآن!",
+        "pt": "Por favor, chame uma ambulância agora mesmo!",
+        "fr": "S'il vous plaît, appelez une ambulance tout de suite !",
+        "de": "Rufen Sie bitte sofort einen Krankenwagen!",
+        "it": "Per favore, chiama un'ambulanza proprio ora!",
+        "en": "Please call an ambulance right now!"
+      },
+      "keyword": "ambulance",
+      "keywordTranslations": ["ambulancia"]
+    },
+    {
+      "id": "ke3",
+      "text": "Where is the nearest public hospital?",
+      "translations": {
+        "es": "¿Dónde está el hospital público más cercano?",
+        "ar": "أين أقرب مستشفى حكومي؟",
+        "pt": "Onde fica o hospital público mais próximo?",
+        "fr": "Où se trouve l'hôpital public le plus proche ?",
+        "de": "Wo ist das nächste öffentliche Krankenhaus?",
+        "it": "Dov'è l'ospedale pubblico più vicino?",
+        "en": "Where is the nearest public hospital?"
+      },
+      "keyword": "hospital",
+      "keywordTranslations": ["hospital", "nosocomio"]
+    },
+    {
+      "id": "ke4",
+      "text": "I do not feel very well today.",
+      "translations": {
+        "es": "No me siento muy bien hoy.",
+        "ar": "لا أشعر أنني بخير اليوم.",
+        "pt": "Não estou me sentindo muito bem hoje.",
+        "fr": "Je ne me sens pas très bien aujourd'hui.",
+        "de": "Ich fühle mich heute nicht sehr wohl.",
+        "it": "Non mi sento molto bene oggi.",
+        "en": "I do not feel very well today."
+      },
+      "keyword": "feel",
+      "keywordTranslations": ["sentir", "siento"]
+    },
+    {
+      "id": "ke5",
+      "text": "I lost my passport and wallet.",
+      "translations": {
+        "es": "Perdieron mi pasaporte y mi billetera.",
+        "ar": "فقدت جواز سفري ومحفظتي.",
+        "pt": "Perdi meu passaporte e carteira.",
+        "fr": "J'ai perdu mon passeport et mon portefeuille.",
+        "de": "Ich habe meinen Reisepass und meine Brieftasche verloren.",
+        "it": "Ho perso il passaporto e il portafoglio.",
+        "en": "I lost my passport and wallet."
+      },
+      "keyword": "wallet",
+      "keywordTranslations": ["billetera", "cartera"]
+    },
+    {
+      "id": "ke6",
+      "text": "This is a serious medical emergency.",
+      "translations": {
+        "es": "Esta es una emergencia médica seria.",
+        "ar": "هذه حالة طوارئ طبية خطيرة.",
+        "pt": "Esta é uma emergência médica grave.",
+        "fr": "Il s'agit d'une urgence médicale grave.",
+        "de": "Dies ist ein schwerer medizinischer Notfall.",
+        "it": "Questa è una seria emergenza medica.",
+        "en": "This is a serious medical emergency."
+      },
+      "keyword": "medical",
+      "keywordTranslations": ["médica", "médico"]
+    },
+    {
+      "id": "ke7",
+      "text": "Watch out, there is danger ahead!",
+      "translations": {
+        "es": "¡Cuidado, hay peligro más adelante!",
+        "ar": "انتبه، هناك خطر في الأمام!",
+        "pt": "Cuidado, há perigo à frente!",
+        "fr": "Attention, il y a un danger devant !",
+        "de": "Achtung, da vorne droht Gefahr!",
+        "it": "Attenzione, c'è pericolo davanti!",
+        "en": "Watch out, there is danger ahead!"
+      },
+      "keyword": "danger",
+      "keywordTranslations": ["peligro"]
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "title": {
+    "es": "Estudios y Educación",
+    "ar": "الدراسات والتعليم",
+    "pt": "Estudos e Educação",
+    "fr": "Études et Éducation",
+    "de": "Studium und Bildung",
+    "it": "Studi e Istruzione",
+    "en": "Studies & Education"
+  },
+  "level": "intermediate",
+  "phrases": [
+    {
+      "id": "ked1",
+      "text": "I need to study for my exams.",
+      "translations": {
+        "es": "Necesito estudiar para mis exámenes.",
+        "ar": "أنا بحاجة للدراسة من أجل امتحاناتي.",
+        "pt": "Preciso estudar para os meus exames.",
+        "fr": "Je dois étudier pour mes examens.",
+        "de": "Ich muss für meine Prüfungen lernen.",
+        "it": "Devo studiare para i miei esami.",
+        "en": "I need to study for my exams."
+      },
+      "keyword": "exams",
+      "keywordTranslations": ["exámenes"]
+    },
+    {
+      "id": "ked2",
+      "text": "Where is the university library located?",
+      "translations": {
+        "es": "¿Dónde está ubicada la biblioteca universitaria?",
+        "ar": "أين تقع مكتبة الجامعة؟",
+        "pt": "Onde fica a biblioteca da universidade?",
+        "fr": "Où se trouve la bibliothèque de l'université ?",
+        "de": "Wo befindet sich die Universitätsbibliothek?",
+        "it": "Dove si trova la biblioteca dell'università?",
+        "en": "Where is the university library located?"
+      },
+      "keyword": "library",
+      "keywordTranslations": ["biblioteca"]
+    },
+    {
+      "id": "ked3",
+      "text": "This homework assignment is quite difficult.",
+      "translations": {
+        "es": "Esta tarea escolar es bastante difícil.",
+        "ar": "هذا الواجب المنزلي صعب للغاية.",
+        "pt": "Esta lição de casa é bastante difícil.",
+        "fr": "Ce devoir est assez difficile.",
+        "de": "Diese Hausaufgabe ist ziemlich schwierig.",
+        "it": "Questo compito a casa è piuttosto difficile.",
+        "en": "This homework assignment is quite difficult."
+      },
+      "keyword": "homework",
+      "keywordTranslations": ["tarea", "deberes"]
+    },
+    {
+      "id": "ked4",
+      "text": "She graduated with a degree in science.",
+      "translations": {
+        "es": "Ella se graduó con un título en ciencias.",
+        "ar": "تخرجت بدرجة في العلوم.",
+        "pt": "Ela se formou em ciências.",
+        "fr": "Elle a obtenu un diplôme en sciences.",
+        "de": "Sie hat ihr Studium in Naturwissenschaften abgeschlossen.",
+        "it": "Si è laureata in scienze.",
+        "en": "She graduated with a degree in science."
+      },
+      "keyword": "degree",
+      "keywordTranslations": ["título", "carrera", "grado"]
+    },
+    {
+      "id": "ked5",
+      "text": "The teacher explained the math formula.",
+      "translations": {
+        "es": "El profesor explicó la fórmula matemática.",
+        "ar": "شرح المعلم المعادلة الرياضية.",
+        "pt": "O professor explicou a fórmula matemática.",
+        "fr": "Le professeur a expliqué la formule mathématique.",
+        "de": "Der Lehrer erklärte die mathematische Formel.",
+        "it": "L'insegnante ha spiegato la formula matematica.",
+        "en": "The teacher explained the math formula."
+      },
+      "keyword": "teacher",
+      "keywordTranslations": ["profesor", "maestro"]
+    },
+    {
+      "id": "ked6",
+      "text": "I want to improve my English skills.",
+      "translations": {
+        "es": "Quiero mejorar mis habilidades en inglés.",
+        "ar": "أريد تحسين مهاراتي في اللغة الإنجليزية.",
+        "pt": "Quero melhorar minhas habilidades em inglês.",
+        "fr": "Je veux améliorer mes compétences en anglais.",
+        "de": "Ich möchte meine Englischkenntnisse verbessern.",
+        "it": "Voglio migliorare le mie competenze in inglese.",
+        "en": "I want to improve my English skills."
+      },
+      "keyword": "improve",
+      "keywordTranslations": ["mejorar"]
+    },
+    {
+      "id": "ked7",
+      "text": "We have a group project class today.",
+      "translations": {
+        "es": "Tenemos una clase de proyecto grupal hoy.",
+        "ar": "لدينا درس مشروع جماعي اليوم.",
+        "pt": "Temos uma aula de projeto em grupo hoje.",
+        "fr": "Nous avons un projet de groupe en classe aujourd'hui.",
+        "de": "Wir haben heute ein Gruppenprojekt im Unterricht.",
+        "it": "Oggi abbiamo una lezione di progetto di gruppo.",
+        "en": "We have a group project class today."
+      },
+      "keyword": "group",
+      "keywordTranslations": ["grupal", "grupo"]
+    }
+  ]
+}

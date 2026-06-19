@@ -1,0 +1,119 @@
+{
+  "title": {
+    "es": "Tecnología e Internet",
+    "ar": "التكنولوجيا والإنترنت",
+    "pt": "Tecnologia e Internet",
+    "fr": "Technologie et Internet",
+    "de": "Technologie und Internet",
+    "it": "Tecnologia e Internet",
+    "en": "Technology & Internet"
+  },
+  "level": "intermediate",
+  "phrases": [
+    {
+      "id": "kte1",
+      "text": "My internet connection is very slow.",
+      "translations": {
+        "es": "Mi conexión a internet es muy lenta.",
+        "ar": "اتصال الإنترنت لدي بطيء جداً.",
+        "pt": "Minha conexão de internet está muito lenta.",
+        "fr": "Ma connexion internet est très lente.",
+        "de": "Meine Internetverbindung ist sehr langsam.",
+        "it": "La mia connessione internet è molto lenta.",
+        "en": "My internet connection is very slow."
+      },
+      "keyword": "connection",
+      "keywordTranslations": ["conexión"]
+    },
+    {
+      "id": "kte2",
+      "text": "Please turn on your camera and microphone.",
+      "translations": {
+        "es": "Por favor enciende tu cámara y micrófono.",
+        "ar": "يرجى تشغيل الكاميرا والميكروفون.",
+        "pt": "Por favor ligue sua câmera e microfone.",
+        "fr": "S'il vous plaît allumez votre caméra et votre micro.",
+        "de": "Bitte schalten Sie Ihre Kamera und Ihr Mikrofon ein.",
+        "it": "Per favore accendi la videocamera e il microfono.",
+        "en": "Please turn on your camera and microphone."
+      },
+      "keyword": "microphone",
+      "keywordTranslations": ["micrófono"]
+    },
+    {
+      "id": "kte3",
+      "text": "I will share my screen with you.",
+      "translations": {
+        "es": "Compartiré mi pantalla contigo.",
+        "ar": "سأشارك شاشتي معك.",
+        "pt": "Eu vou compartilhar minha tela com você.",
+        "fr": "Je vais partager mon écran avec vous.",
+        "de": "Ich werde meinen Bildschirm mit Ihnen teilen.",
+        "it": "Condividerò il mio schermo con te.",
+        "en": "I will share my screen with you."
+      },
+      "keyword": "share",
+      "keywordTranslations": ["compartir", "compartiré"]
+    },
+    {
+      "id": "kte4",
+      "text": "Send me the link to join the meeting.",
+      "translations": {
+        "es": "Envíame el enlace para unirme a la reunión.",
+        "ar": "أرسل لي الرابط للانضمام إلى الاجتماع.",
+        "pt": "Envie-me o link para entrar na reunião.",
+        "fr": "Envoyez-moi le lien pour rejoindre la réunion.",
+        "de": "Schicken Sie mir den Link zum Treffen.",
+        "it": "Inviami il link per partecipare alla riunione.",
+        "en": "Send me the link to join the meeting."
+      },
+      "keyword": "link",
+      "keywordTranslations": ["enlace", "link"]
+    },
+    {
+      "id": "kte5",
+      "text": "I need to restart my computer now.",
+      "translations": {
+        "es": "Necesito reiniciar mi computadora ahora.",
+        "ar": "أنا بحاجة لإعادة تشغيل جهاز الكمبيوتر الخاص بي الآن.",
+        "pt": "Eu preciso reiniciar meu computador agora.",
+        "fr": "Je dois redémarrer mon ordinateur maintenant.",
+        "de": "Ich muss meinen Computer jetzt neu starten.",
+        "it": "Ho bisogno di riavviare il computer adesso.",
+        "en": "I need to restart my computer now."
+      },
+      "keyword": "restart",
+      "keywordTranslations": ["reiniciar"]
+    },
+    {
+      "id": "kte6",
+      "text": "The file size is too big to send.",
+      "translations": {
+        "es": "El tamaño del archivo es demasiado grande para enviar.",
+        "ar": "حجم الملف كبير جداً للإرسال.",
+        "pt": "O tamanho do arquivo é muito grande para enviar.",
+        "fr": "La taille du fichier est trop grande pour être envoyée.",
+        "de": "Die Dateigröße ist zu groß zum Senden.",
+        "it": "La dimensione del file è troppo grande per essere inviata.",
+        "en": "The file size is too big to send."
+      },
+      "keyword": "file",
+      "keywordTranslations": ["archivo"]
+    },
+    {
+      "id": "kte7",
+      "text": "Did you receive my email message?",
+      "translations": {
+        "es": "¿Recibiste mi mensaje de correo electrónico?",
+        "ar": "هل تلقيت رسالتي الإلكترونية؟",
+        "pt": "Você recebeu minha mensagem de e-mail?",
+        "fr": "Avez-vous reçu mon e-mail ?",
+        "de": "Haben Sie meine E-Mail erhalten?",
+        "it": "Hai ricevuto la mia email?",
+        "en": "Did you receive my email message?"
+      },
+      "keyword": "receive",
+      "keywordTranslations": ["recibir", "recibiste"]
+    }
+  ]
+}

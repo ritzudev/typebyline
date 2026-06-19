@@ -1,0 +1,119 @@
+{
+  "title": {
+    "es": "Compras y Comida",
+    "ar": "التسوق والطعام",
+    "pt": "Compras e Comida",
+    "fr": "Achats et Nourriture",
+    "de": "Einkaufen und Essen",
+    "it": "Acquisti e Cibo",
+    "en": "Shopping & Dining"
+  },
+  "level": "beginner",
+  "phrases": [
+    {
+      "id": "ks1",
+      "text": "Could we have the bill, please?",
+      "translations": {
+        "es": "¿Podríamos tener la cuenta, por favor?",
+        "ar": "هل يمكننا الحصول على الفاتورة من فضلك؟",
+        "pt": "Poderíamos ter a conta, por favor?",
+        "fr": "Pourrions-nous avoir l'addition, s'il vous plaît ?",
+        "de": "Könnten wir bitte die Rechnung haben?",
+        "it": "Potremmo avere il conto, per favore?",
+        "en": "Could we have the bill, please?"
+      },
+      "keyword": "bill",
+      "keywordTranslations": ["cuenta", "factura"]
+    },
+    {
+      "id": "ks2",
+      "text": "Do you accept credit cards here?",
+      "translations": {
+        "es": "¿Aceptan tarjetas de crédito aquí?",
+        "ar": "هل تقبلون بطاقات الائتمان هنا؟",
+        "pt": "Vocês aceitam cartões de crédito aqui?",
+        "fr": "Acceptez-vous les cartes de crédit ici ?",
+        "de": "Akzeptieren Sie hier Kreditkarten?",
+        "it": "Accettate carte di credito qui?",
+        "en": "Do you accept credit cards here?"
+      },
+      "keyword": "accept",
+      "keywordTranslations": ["aceptan", "aceptar"]
+    },
+    {
+      "id": "ks3",
+      "text": "I would like to order now.",
+      "translations": {
+        "es": "Me gustaría ordenar ahora.",
+        "ar": "أود الطلب الآن.",
+        "pt": "Eu gostaria de fazer o pedido agora.",
+        "fr": "Je voudrais commander maintenant.",
+        "de": "Ich möchte jetzt bestellen.",
+        "it": "Vorrei ordinare adesso.",
+        "en": "I would like to order now."
+      },
+      "keyword": "order",
+      "keywordTranslations": ["ordenar", "pedir"]
+    },
+    {
+      "id": "ks4",
+      "text": "Where can I find mineral water?",
+      "translations": {
+        "es": "¿Dónde puedo encontrar agua mineral?",
+        "ar": "أين يمكنني أن أجد مياه معدنية؟",
+        "pt": "Onde posso encontrar água mineral?",
+        "fr": "Où puis-je trouver de l'eau minérale ?",
+        "de": "Wo finde ich Mineralwasser?",
+        "it": "Dove posso trovare dell'acqua minerale?",
+        "en": "Where can I find mineral water?"
+      },
+      "keyword": "water",
+      "keywordTranslations": ["agua"]
+    },
+    {
+      "id": "ks5",
+      "text": "Is there a discount on this?",
+      "translations": {
+        "es": "¿Hay algún descuento en esto?",
+        "ar": "هل هناك خصم على هذا؟",
+        "pt": "Tem desconto nisso?",
+        "fr": "Y a-t-il une réduction sur cela ?",
+        "de": "Gibt es darauf einen Rabatt?",
+        "it": "C'è uno sconto su questo?",
+        "en": "Is there a discount on this?"
+      },
+      "keyword": "discount",
+      "keywordTranslations": ["descuento", "rebaja"]
+    },
+    {
+      "id": "ks6",
+      "text": "This jacket is too expensive for me.",
+      "translations": {
+        "es": "Esta chaqueta es demasiado cara para mí.",
+        "ar": "هذه السترة باهظة الثمن بالنسبة لي.",
+        "pt": "Esta jaqueta é muito cara para mim.",
+        "fr": "Cette veste est trop chère pour moi.",
+        "de": "Diese Jacke ist mir zu teuer.",
+        "it": "Questa giacca è troppo costosa per me.",
+        "en": "This jacket is too expensive for me."
+      },
+      "keyword": "expensive",
+      "keywordTranslations": ["caro", "costoso"]
+    },
+    {
+      "id": "ks7",
+      "text": "I am just looking around, thanks.",
+      "translations": {
+        "es": "Solo estoy mirando alrededor, gracias.",
+        "ar": "أنا فقط أنظر حولي، شكراً.",
+        "pt": "Estou só olhando, obrigado.",
+        "fr": "Je regarde juste, merci.",
+        "de": "Ich schaue mich nur um, danke.",
+        "it": "Sto solo dando un'occhiata, grazie.",
+        "en": "I am just looking around, thanks."
+      },
+      "keyword": "looking",
+      "keywordTranslations": ["mirando", "buscando"]
+    }
+  ]
+}

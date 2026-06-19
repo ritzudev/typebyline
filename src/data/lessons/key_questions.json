@@ -1,0 +1,119 @@
+{
+  "title": {
+    "es": "Preguntas Útiles",
+    "ar": "أسئلة مفيدة",
+    "pt": "Perguntas Úteis",
+    "fr": "Questions Utiles",
+    "de": "Nützliche Fragen",
+    "it": "Domande Utili",
+    "en": "Useful Questions"
+  },
+  "level": "beginner",
+  "phrases": [
+    {
+      "id": "kq1",
+      "text": "What time is it now?",
+      "translations": {
+        "es": "¿Qué hora es ahora?",
+        "ar": "كم الساعة الآن؟",
+        "pt": "Que horas são agora?",
+        "fr": "Quelle heure est-il maintenant ?",
+        "de": "Wie spät ist es jetzt?",
+        "it": "Che ora è adesso?",
+        "en": "What time is it now?"
+      },
+      "keyword": "time",
+      "keywordTranslations": ["hora", "tiempo"]
+    },
+    {
+      "id": "kq2",
+      "text": "Where is the nearest bathroom?",
+      "translations": {
+        "es": "¿Dónde está el baño más cercano?",
+        "ar": "أين أقرب مرحاض؟",
+        "pt": "Onde fica o banheiro mais próximo?",
+        "fr": "Où se trouvent les toilettes les plus proches ?",
+        "de": "Wo ist die nächste Toilette?",
+        "it": "Dov'è il bagno più vicino?",
+        "en": "Where is the nearest bathroom?"
+      },
+      "keyword": "bathroom",
+      "keywordTranslations": ["baño", "sanitario", "aseo"]
+    },
+    {
+      "id": "kq3",
+      "text": "How much does this item cost?",
+      "translations": {
+        "es": "¿Cuánto cuesta este artículo?",
+        "ar": "كم سعر هذا المنتج؟",
+        "pt": "Quanto custa este item?",
+        "fr": "Combien coûte cet article ?",
+        "de": "Wie viel kostet dieser Artikel?",
+        "it": "Quanto costa questo articolo?",
+        "en": "How much does this item cost?"
+      },
+      "keyword": "cost",
+      "keywordTranslations": ["costar", "precio", "cuesta"]
+    },
+    {
+      "id": "kq4",
+      "text": "Can you show me the way?",
+      "translations": {
+        "es": "¿Puedes mostrarme el camino?",
+        "ar": "هل يمكنك إرشادي إلى الطريق؟",
+        "pt": "Você pode me mostrar o caminho?",
+        "fr": "Pouvez-vous me montrer le chemin ?",
+        "de": "Können Sie mir den Weg zeigen?",
+        "it": "Puoi mostrarmi la strada?",
+        "en": "Can you show me the way?"
+      },
+      "keyword": "way",
+      "keywordTranslations": ["camino", "vía", "ruta"]
+    },
+    {
+      "id": "kq5",
+      "text": "Do you speak Spanish or English?",
+      "translations": {
+        "es": "¿Hablas español o inglés?",
+        "ar": "هل تتحدث الإسبانية أم الإنجليزية؟",
+        "pt": "Você fala espanhol ou inglês?",
+        "fr": "Parlez-vous espagnol ou anglais ?",
+        "de": "Sprechen Sie Spanisch oder Englisch?",
+        "it": "Parli spagnolo o inglese?",
+        "en": "Do you speak Spanish or English?"
+      },
+      "keyword": "speak",
+      "keywordTranslations": ["hablar", "hablas"]
+    },
+    {
+      "id": "kq6",
+      "text": "What do you mean by that?",
+      "translations": {
+        "es": "¿Qué quieres decir con eso?",
+        "ar": "ماذا تقصد بذلك؟",
+        "pt": "O que você quer dizer com isso?",
+        "fr": "Qu'entendez-vous par là ?",
+        "de": "Was meinen Sie damit?",
+        "it": "Cosa intendi con questo?",
+        "en": "What do you mean by that?"
+      },
+      "keyword": "mean",
+      "keywordTranslations": ["querer decir", "significar"]
+    },
+    {
+      "id": "kq7",
+      "text": "Could you please repeat that again?",
+      "translations": {
+        "es": "¿Podrías por favor repetir eso otra vez?",
+        "ar": "هل يمكنك تكرار ذلك مرة أخرى رجاءً؟",
+        "pt": "Você poderia por favor repetir isso de novo?",
+        "fr": "Pourriez-vous s'il vous plaît répéter cela ?",
+        "de": "Könnten Sie das bitte noch einmal wiederholen?",
+        "it": "Potresti per favore ripeterlo di nuovo?",
+        "en": "Could you please repeat that again?"
+      },
+      "keyword": "repeat",
+      "keywordTranslations": ["repetir"]
+    }
+  ]
+}

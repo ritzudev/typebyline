@@ -1,0 +1,119 @@
+{
+  "title": {
+    "es": "Direcciones y Mapa",
+    "ar": "الاتجاهات والخريطة",
+    "pt": "Direções e Mapa",
+    "fr": "Directions et Plan",
+    "de": "Wegbeschreibung und Karte",
+    "it": "Indicazioni e Mappa",
+    "en": "Directions & Map"
+  },
+  "level": "beginner",
+  "phrases": [
+    {
+      "id": "kdi1",
+      "text": "Go straight and turn left at the corner.",
+      "translations": {
+        "es": "Ve derecho y dobla a la izquierda en la esquina.",
+        "ar": "اذهب مباشرة ثم انعطف يساراً عند الزاوية.",
+        "pt": "Siga reto e vire à esquerda na esquina.",
+        "fr": "Allez tout droit et tournez à gauche au coin.",
+        "de": "Gehen Sie geradeaus und biegen Sie an der Ecke links ab.",
+        "it": "Vai dritto e gira a sinistra all'angolo.",
+        "en": "Go straight and turn left at the corner."
+      },
+      "keyword": "left",
+      "keywordTranslations": ["izquierda"]
+    },
+    {
+      "id": "kdi2",
+      "text": "Is the train station far from here?",
+      "translations": {
+        "es": "¿La estación de tren está lejos de aquí?",
+        "ar": "هل محطة القطار بعيدة عن هنا؟",
+        "pt": "A estação de trem fica longe daqui?",
+        "fr": "La gare est-elle loin d'ici ?",
+        "de": "Ist der Bahnhof weit von hier entfernt?",
+        "it": "La stazione ferroviaria è lontana da qui?",
+        "en": "Is the train station far from here?"
+      },
+      "keyword": "far",
+      "keywordTranslations": ["lejos"]
+    },
+    {
+      "id": "kdi3",
+      "text": "I am lost, can you help me find this street?",
+      "translations": {
+        "es": "Estoy perdido, ¿me puedes ayudar a encontrar esta calle?",
+        "ar": "أنا تائه، هل يمكنك مساعدتي في العثور على هذا الشارع؟",
+        "pt": "Estou perdido, você pode me ajudar a encontrar esta rua?",
+        "fr": "Je suis perdu, pouvez-vous m'aider à trouver cette rue ?",
+        "de": "Ich habe mich verlaufen. Können Sie mir helfen, diese Straße zu finden?",
+        "it": "Mi sono perso, puoi aiutarmi a trovare questa strada?",
+        "en": "I am lost, can you help me find this street?"
+      },
+      "keyword": "lost",
+      "keywordTranslations": ["perdido", "tائه"]
+    },
+    {
+      "id": "kdi4",
+      "text": "The museum is right across the park.",
+      "translations": {
+        "es": "El museo está justo cruzando el parque.",
+        "ar": "المتحف يقع مباشرة عبر الحديقة.",
+        "pt": "O museu fica logo do outro lado do parque.",
+        "fr": "Le musée se trouve juste en face du parc.",
+        "de": "Das Museum liegt direkt gegenüber dem Park.",
+        "it": "Il museo si trova proprio di fronte al parco.",
+        "en": "The museum is right across the park."
+      },
+      "keyword": "across",
+      "keywordTranslations": ["cruzando", "del otro lado", "enfrente"]
+    },
+    {
+      "id": "kdi5",
+      "text": "Should I take a bus or walk?",
+      "translations": {
+        "es": "¿Debería tomar un autobús o caminar?",
+        "ar": "هل يجب أن أستقل الحافلة أم أمشي؟",
+        "pt": "Devo pegar um ônibus ou caminhar?",
+        "fr": "Dois-je prendre un bus ou marcher ?",
+        "de": "Soll ich den Bus nehmen oder zu Fuß gehen?",
+        "it": "Dovrei prendere l'autobus o camminare?",
+        "en": "Should I take a bus or walk?"
+      },
+      "keyword": "walk",
+      "keywordTranslations": ["caminar"]
+    },
+    {
+      "id": "kdi6",
+      "text": "It is about a ten minute walk from here.",
+      "translations": {
+        "es": "Está a unos diez minutos a pie de aquí.",
+        "ar": "على بعد حوالي عشر دقائق سيراً على الأقدام من هنا.",
+        "pt": "Fica a cerca de dez minutos a pé daqui.",
+        "fr": "C'est à environ dix minutes à pied d'ici.",
+        "de": "Es ist etwa zehn Gehminuten von hier entfernt.",
+        "it": "Dista circa dieci minuti a piedi da qui.",
+        "en": "It is about a ten minute walk from here."
+      },
+      "keyword": "minute",
+      "keywordTranslations": ["minutos", "minuto"]
+    },
+    {
+      "id": "kdi7",
+      "text": "Is there a subway station nearby?",
+      "translations": {
+        "es": "¿Hay alguna estación de metro cerca?",
+        "ar": "هل توجد محطة مترو أنفاق قريبة؟",
+        "pt": "Tem uma estação de metrô aqui perto?",
+        "fr": "Y a-t-il une station de métro à proximité ?",
+        "de": "Gibt es eine U-Bahn-Station in der Nähe?",
+        "it": "C'è una stazione della metropolitana nelle vicinanze?",
+        "en": "Is there a subway station nearby?"
+      },
+      "keyword": "subway",
+      "keywordTranslations": ["metro", "subterráneo"]
+    }
+  ]
+}

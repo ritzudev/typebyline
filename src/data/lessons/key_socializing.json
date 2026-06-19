@@ -1,0 +1,119 @@
+{
+  "title": {
+    "es": "Socializar y Amigos",
+    "ar": "التواصل الاجتماعي والأصدقاء",
+    "pt": "Socializar e Amigos",
+    "fr": "Socialiser et Amis",
+    "de": "Sozialkontakte und Freunde",
+    "it": "Socializzare e Amici",
+    "en": "Socializing & Friends"
+  },
+  "level": "beginner",
+  "phrases": [
+    {
+      "id": "kso1",
+      "text": "What do you like to do in your free time?",
+      "translations": {
+        "es": "¿Qué te gusta hacer en tu tiempo libre?",
+        "ar": "ماذا تحب أن تفعل في وقت فراغك؟",
+        "pt": "O que você gosta de fazer no seu tempo livre?",
+        "fr": "Qu'aimez-vous faire pendant votre temps libre ?",
+        "de": "Was machst du gerne in deiner Freizeit?",
+        "it": "Cosa ti piace fare nel tuo tempo libero?",
+        "en": "What do you like to do in your free time?"
+      },
+      "keyword": "free",
+      "keywordTranslations": ["libre"]
+    },
+    {
+      "id": "kso2",
+      "text": "Would you like to hang out this weekend?",
+      "translations": {
+        "es": "¿Te gustaría salir a pasar el rato este fin de semana?",
+        "ar": "هل تود الخروج معاً نهاية هذا الأسبوع؟",
+        "pt": "Você gostaria de sair neste fim de semana?",
+        "fr": "Tu aimerais sortir ce week-end ?",
+        "de": "Möchtest du dieses Wochenende etwas unternehmen?",
+        "it": "Ti andrebbe di uscire questo fine settimana?",
+        "en": "Would you like to hang out this weekend?"
+      },
+      "keyword": "weekend",
+      "keywordTranslations": ["fin de semana"]
+    },
+    {
+      "id": "kso3",
+      "text": "Let's keep in touch and chat soon.",
+      "translations": {
+        "es": "Mantengamos el contacto y hablemos pronto.",
+        "ar": "لنكن على اتصال ونتحدث قريباً.",
+        "pt": "Vamos manter contato e conversar em breve.",
+        "fr": "Gardons le contact et discutons bientôt.",
+        "de": "Lassen Sie uns in Kontakt bleiben und bald sprechen.",
+        "it": "Teniamoci in contatto e sentiamoci presto.",
+        "en": "Let's keep in touch and chat soon."
+      },
+      "keyword": "touch",
+      "keywordTranslations": ["contacto"]
+    },
+    {
+      "id": "kso4",
+      "text": "I really enjoy spending time with you.",
+      "translations": {
+        "es": "Realmente disfruto pasar tiempo contigo.",
+        "ar": "أنا حقاً أستمتع بقضاء الوقت معك.",
+        "pt": "Eu realmente gosto de passar o tempo com você.",
+        "fr": "J'apprécie vraiment de passer du temps avec toi.",
+        "de": "Ich genieße es wirklich, Zeit mit dir zu verbringen.",
+        "it": "Mi piace davvero passare il tempo con te.",
+        "en": "I really enjoy spending time with you."
+      },
+      "keyword": "enjoy",
+      "keywordTranslations": ["disfrutar", "disfruto"]
+    },
+    {
+      "id": "kso5",
+      "text": "Tell me more about your hobbies.",
+      "translations": {
+        "es": "Cuéntame más sobre tus pasatiempos.",
+        "ar": "أخبرني المزيد عن هواياتك.",
+        "pt": "Conte-me mais sobre os seus hobbies.",
+        "fr": "Parle-moi un peu plus de tes loisirs.",
+        "de": "Erzählen Sie mir mehr über Ihre Hobbies.",
+        "it": "Raccontami di più sui tuoi hobby.",
+        "en": "Tell me more about your hobbies."
+      },
+      "keyword": "hobbies",
+      "keywordTranslations": ["pasatiempos", "hobbies"]
+    },
+    {
+      "id": "kso6",
+      "text": "That sounds like a great idea.",
+      "translations": {
+        "es": "Eso suena como una gran idea.",
+        "ar": "هذا يبدو كفكرة رائعة.",
+        "pt": "Isso parece uma ótima ideia.",
+        "fr": "Ça a l'air d'être une excellente idée.",
+        "de": "Das hört sich nach einer tollen Idee an.",
+        "it": "Sembra un'ottima idea.",
+        "en": "That sounds like a great idea."
+      },
+      "keyword": "sounds",
+      "keywordTranslations": ["suena"]
+    },
+    {
+      "id": "kso7",
+      "text": "It was great talking to you.",
+      "translations": {
+        "es": "Fue genial hablar contigo.",
+        "ar": "كان من الرائع التحدث إليك.",
+        "pt": "Foi ótimo conversar com você.",
+        "fr": "C'était super de discuter avec toi.",
+        "de": "Es war toll, mit dir zu sprechen.",
+        "it": "È stato bello parlare con te.",
+        "en": "It was great talking to you."
+      },
+      "keyword": "talking",
+      "keywordTranslations": ["hablar", "conversar"]
+    }
+  ]
+}

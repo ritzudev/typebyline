@@ -1,0 +1,119 @@
+{
+  "title": {
+    "es": "Saludos y Cortesía",
+    "ar": "التحيات واللطف",
+    "pt": "Saudações e Cortesia",
+    "fr": "Salutations et Politesse",
+    "de": "Grüße und Höflichkeit",
+    "it": "Saluti e Cortesia",
+    "en": "Greetings & Politeness"
+  },
+  "level": "beginner",
+  "phrases": [
+    {
+      "id": "kg1",
+      "text": "Hello, how are you today?",
+      "translations": {
+        "es": "Hola, ¿cómo estás hoy?",
+        "ar": "مرحباً، كيف حالك اليوم؟",
+        "pt": "Olá, como você está hoje?",
+        "fr": "Bonjour, comment allez-vous aujourd'hui ?",
+        "de": "Hallo, wie geht es dir heute?",
+        "it": "Ciao, come stai oggi?",
+        "en": "Hello, how are you today?"
+      },
+      "keyword": "today",
+      "keywordTranslations": ["hoy"]
+    },
+    {
+      "id": "kg2",
+      "text": "Good morning, have a nice day.",
+      "translations": {
+        "es": "Buenos días, que tengas un buen día.",
+        "ar": "صباح الخير، أتمنى لك يوماً سعيداً.",
+        "pt": "Bom dia, tenha un bom dia.",
+        "fr": "Bonjour, bonne journée.",
+        "de": "Guten Morgen, einen schönen Tag noch.",
+        "it": "Buongiorno, buona giornata.",
+        "en": "Good morning, have a nice day."
+      },
+      "keyword": "morning",
+      "keywordTranslations": ["mañana"]
+    },
+    {
+      "id": "kg3",
+      "text": "Thank you very much for your help.",
+      "translations": {
+        "es": "Muchas gracias por tu ayuda.",
+        "ar": "شكراً جزيلاً لك على مساعدتك.",
+        "pt": "Muito obrigado pela sua ajuda.",
+        "fr": "Merci beaucoup pour votre aide.",
+        "de": "Vielen Dank für deine Hilfe.",
+        "it": "Grazie mille per il tuo aiuto.",
+        "en": "Thank you very much for your help."
+      },
+      "keyword": "help",
+      "keywordTranslations": ["ayuda"]
+    },
+    {
+      "id": "kg4",
+      "text": "You are welcome, it is a pleasure.",
+      "translations": {
+        "es": "De nada, es un placer.",
+        "ar": "على الرحب والسعة، إنه من دواعي سروري.",
+        "pt": "De nada, é um prazer.",
+        "fr": "De rien, c'est un plaisir.",
+        "de": "Gern geschehen, es ist mir ein Vergnügen.",
+        "it": "Prego, è un piacere.",
+        "en": "You are welcome, it is a pleasure."
+      },
+      "keyword": "pleasure",
+      "keywordTranslations": ["placer", "gusto"]
+    },
+    {
+      "id": "kg5",
+      "text": "Excuse me, could you help me?",
+      "translations": {
+        "es": "Disculpe, ¿podría ayudarme?",
+        "ar": "معذرة، هل يمكنك مساعدتي؟",
+        "pt": "Com licença, você poderia me ajudar?",
+        "fr": "Excusez-moi, pourriez-vous m'aider ?",
+        "de": "Entschuldigung, könnten Sie mir helfen?",
+        "it": "Scusi, potrebbe aiutarmi?",
+        "en": "Excuse me, could you help me?"
+      },
+      "keyword": "excuse",
+      "keywordTranslations": ["disculpe", "perdón"]
+    },
+    {
+      "id": "kg6",
+      "text": "Nice to meet you, my name is Alex.",
+      "translations": {
+        "es": "Gusto en conocerte, mi nombre es Alex.",
+        "ar": "سعدت بلقائك، اسمي أليكس.",
+        "pt": "Prazer em conhecê-lo, meu nome é Alex.",
+        "fr": "Enchanté de vous rencontrer, je m'appelle Alex.",
+        "de": "Freut mich, Sie kennenzulernen, mein Name ist Alex.",
+        "it": "Piacere di conoscerti, mi chiamo Alex.",
+        "en": "Nice to meet you, my name is Alex."
+      },
+      "keyword": "meet",
+      "keywordTranslations": ["conocer", "encontrar"]
+    },
+    {
+      "id": "kg7",
+      "text": "See you later, take care.",
+      "translations": {
+        "es": "Nos vemos luego, cuídate.",
+        "ar": "أراك لاحقاً، اعتني بنفسك.",
+        "pt": "Até logo, cuide-se.",
+        "fr": "À plus tard, prends soin de toi.",
+        "de": "Bis später, pass auf dich auf.",
+        "it": "Ci vediamo dopo, prenditi cura di te.",
+        "en": "See you later, take care."
+      },
+      "keyword": "later",
+      "keywordTranslations": ["luego", "más tarde"]
+    }
+  ]
+}

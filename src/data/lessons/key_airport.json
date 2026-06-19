@@ -1,0 +1,119 @@
+{
+  "title": {
+    "es": "En el Aeropuerto",
+    "ar": "في المطار",
+    "pt": "No Aeroporto",
+    "fr": "À l'Aéroport",
+    "de": "Am Flughafen",
+    "it": "In Aeroporto",
+    "en": "At the Airport"
+  },
+  "level": "advanced",
+  "phrases": [
+    {
+      "id": "kap1",
+      "text": "Where is the check in desk for this airline?",
+      "translations": {
+        "es": "¿Dónde está el mostrador de facturación para esta aerolínea?",
+        "ar": "أين يقع مكتب تسجيل الوصول لشركة الطيران هذه؟",
+        "pt": "Onde fica o balcão de check-in desta companhia aérea?",
+        "fr": "Où se trouve le comptoir d'enregistrement de cette compagnie aérienne ?",
+        "de": "Wo ist der Check-in-Schalter für diese Fluggesellschaft?",
+        "it": "Dov'è il banco del check-in per questa compagnia aerea?",
+        "en": "Where is the check in desk for this airline?"
+      },
+      "keyword": "airline",
+      "keywordTranslations": ["aerolínea", "compañía aérea"]
+    },
+    {
+      "id": "kap2",
+      "text": "Here is my passport and boarding pass.",
+      "translations": {
+        "es": "Aquí está mi pasaporte y pase de abordar.",
+        "ar": "إليك جواز سفري وبطاقة صعود الطائرة.",
+        "pt": "Aqui está o meu passaporte e cartão de embarque.",
+        "fr": "Voici mon passeport et ma carte d'embarquement.",
+        "de": "Hier sind mein Reisepass und meine Bordkarte.",
+        "it": "Ecco il mio passaporto e la carta d'imbarco.",
+        "en": "Here is my passport and boarding pass."
+      },
+      "keyword": "boarding",
+      "keywordTranslations": ["abordar", "embarque"]
+    },
+    {
+      "id": "kap3",
+      "text": "Is this flight going to be delayed?",
+      "translations": {
+        "es": "¿Este vuelo se va a retrasar?",
+        "ar": "هل ستتأخر هذه الرحلة؟",
+        "pt": "Este voo vai atrasar?",
+        "fr": "Ce vol va-t-il être retardé ?",
+        "de": "Wird sich dieser Flug verspäten?",
+        "it": "Questo volo subirà ritardi?",
+        "en": "Is this flight going to be delayed?"
+      },
+      "keyword": "delayed",
+      "keywordTranslations": ["retrasado", "demorado"]
+    },
+    {
+      "id": "kap4",
+      "text": "Which gate does the plane depart from?",
+      "translations": {
+        "es": "¿De qué puerta sale el avión?",
+        "ar": "من أي بوابة تغادر الطائرة؟",
+        "pt": "De qual portão o avião decola?",
+        "fr": "De quelle porte part l'avion ?",
+        "de": "Von welchem Gate fliegt das Flugzeug ab?",
+        "it": "Da quale gate parte l'aereo?",
+        "en": "Which gate does the plane depart from?"
+      },
+      "keyword": "gate",
+      "keywordTranslations": ["puerta", "puerta de embarque"]
+    },
+    {
+      "id": "kap5",
+      "text": "How many bags are you checking today?",
+      "translations": {
+        "es": "¿Cuántas maletas va a documentar hoy?",
+        "ar": "كم عدد الحقائب التي ستقوم بتسجيلها اليوم؟",
+        "pt": "Quantas malas você vai despachar hoje?",
+        "fr": "Combien de bagages enregistrez-vous aujourd'hui ?",
+        "de": "Wie viele Koffer checken Sie heute ein?",
+        "it": "Quante valigie imbarchi oggi?",
+        "en": "How many bags are you checking today?"
+      },
+      "keyword": "checking",
+      "keywordTranslations": ["documentando", "facturando", "despachando"]
+    },
+    {
+      "id": "kap6",
+      "text": "I need to go through the security check.",
+      "translations": {
+        "es": "Necesito pasar por el control de seguridad.",
+        "ar": "أنا بحاجة للمرور عبر الفحص الأمني.",
+        "pt": "Preciso passar pelo controle de segurança.",
+        "fr": "Je dois passer le contrôle de sécurité.",
+        "de": "Ich muss durch die Sicherheitskontrolle gehen.",
+        "it": "Devo passare attraverso i controlli di sicurezza.",
+        "en": "I need to go through the security check."
+      },
+      "keyword": "security",
+      "keywordTranslations": ["seguridad"]
+    },
+    {
+      "id": "kap7",
+      "text": "Please fasten your seatbelt for takeoff.",
+      "translations": {
+        "es": "Por favor abroche su cinturón de seguridad para el despegue.",
+        "ar": "يرجى ربط حزام الأمان الخاص بك للإقلاع.",
+        "pt": "Por favor aperte o cinto para decolagem.",
+        "fr": "Veuillez attacher votre ceinture pour le décollage.",
+        "de": "Bitte schnallen Sie sich für den Start an.",
+        "it": "Per favore allaccia la cintura di sicurezza per il decollo.",
+        "en": "Please fasten your seatbelt for takeoff."
+      },
+      "keyword": "seatbelt",
+      "keywordTranslations": ["cinturón de seguridad", "cinturón"]
+    }
+  ]
+}
