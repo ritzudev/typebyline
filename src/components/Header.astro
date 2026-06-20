@@ -33,14 +33,12 @@ import FlagPT from "./flags/FlagPT.astro";
     </div>
     <div>
       <span
-        class="text-xl font-black font-display tracking-tight text-slate-800 dark:text-slate-100"
+        class="text-xl font-black font-display tracking-tight text-slate-800 dark:text-slate-100 hidden sm:block"
       >
         linebyline
       </span>
     </div>
   </div>
-
-
 
   <!-- Right Side Actions -->
   <div class="flex items-center gap-3 relative">
@@ -323,42 +321,39 @@ import FlagPT from "./flags/FlagPT.astro";
 <script>
   // Setup logic on DOM load
   function initHeader() {
-
     const mainThemeToggle = document.getElementById(
-      "main-theme-toggle",
+      "main-theme-toggle"
     ) as HTMLButtonElement | null;
     const mainThemeSun = document.getElementById(
-      "main-theme-sun",
+      "main-theme-sun"
     ) as SVGElement | null;
     const mainThemeMoon = document.getElementById(
-      "main-theme-moon",
+      "main-theme-moon"
     ) as SVGElement | null;
     const langMenuBtn = document.getElementById(
-      "lang-menu-btn",
+      "lang-menu-btn"
     ) as HTMLButtonElement | null;
     const langDropdown = document.getElementById(
-      "lang-dropdown",
+      "lang-dropdown"
     ) as HTMLDivElement | null;
     const profileMenuBtn = document.getElementById(
-      "profile-menu-btn",
+      "profile-menu-btn"
     ) as HTMLButtonElement | null;
     const profileDropdown = document.getElementById(
-      "profile-dropdown",
+      "profile-dropdown"
     ) as HTMLDivElement | null;
     const btnResetProfile = document.getElementById(
-      "btn-reset-profile",
+      "btn-reset-profile"
     ) as HTMLButtonElement | null;
     const currentLangFlag = document.getElementById(
-      "current-lang-flag",
+      "current-lang-flag"
     ) as HTMLSpanElement | null;
     const colorPaletteBtn = document.getElementById(
-      "color-palette-btn",
+      "color-palette-btn"
     ) as HTMLButtonElement | null;
     const colorPaletteDropdown = document.getElementById(
-      "color-palette-dropdown",
+      "color-palette-dropdown"
     ) as HTMLDivElement | null;
-
-
 
     // THEME TOGGLER
     function updateThemeIcons() {
@@ -377,8 +372,7 @@ import FlagPT from "./flags/FlagPT.astro";
     if (mainThemeToggle) {
       mainThemeToggle.addEventListener("click", (e) => {
         console.log(
-          "Dark mode is: " +
-            document.documentElement.classList.contains("dark"),
+          "Dark mode is: " + document.documentElement.classList.contains("dark")
         );
         e.stopPropagation();
         const willBeDark = !document.documentElement.classList.contains("dark");
@@ -451,7 +445,7 @@ import FlagPT from "./flags/FlagPT.astro";
           langDropdown.classList.add("hidden");
         }
         window.dispatchEvent(
-          new CustomEvent("native-lang-changed", { detail: { lang } }),
+          new CustomEvent("native-lang-changed", { detail: { lang } })
         );
       });
     });
@@ -502,7 +496,7 @@ import FlagPT from "./flags/FlagPT.astro";
       const p = e.detail;
       const profileInitial = document.getElementById("profile-initial");
       const profileNameDisplay = document.getElementById(
-        "profile-name-display",
+        "profile-name-display"
       );
       const profileLvlDisplay = document.getElementById("profile-lvl-display");
 

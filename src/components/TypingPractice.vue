@@ -4,6 +4,13 @@
     :class="'theme-' + selectedTheme"
     class="grow flex flex-col md:flex-row overflow-hidden relative transition-colors duration-300"
   >
+    <!-- BACKDROP FOR MOBILE SIDEBAR -->
+    <div
+      v-if="showSidebar"
+      class="fixed inset-0 bg-slate-900/40 dark:bg-slate-950/60 backdrop-blur-xs z-45 md:hidden"
+      @click="toggleSidebar"
+    ></div>
+
     <!-- LEFT SIDEBAR (COMPLETED LIST) -->
     <Transition name="sidebar">
       <aside
@@ -68,7 +75,8 @@
                 v-if="getLevelBadge(key as string)"
                 class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-md border"
                 :class="getLevelBadge(key as string)?.classes"
-              >{{ getLevelBadge(key as string)?.label }}</span>
+                >{{ getLevelBadge(key as string)?.label }}</span
+              >
             </button>
           </div>
 
@@ -162,7 +170,9 @@
               "
             >
               <span class="truncate pr-1">Frases Difíciles</span>
-              <span class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-200/60 dark:border-amber-800/30">
+              <span
+                class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-200/60 dark:border-amber-800/30"
+              >
                 {{ difficultPhrases.length }}
               </span>
             </button>
@@ -232,7 +242,8 @@
                 v-if="getLevelBadge(key as string)"
                 class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-md border"
                 :class="getLevelBadge(key as string)?.classes"
-              >{{ getLevelBadge(key as string)?.label }}</span>
+                >{{ getLevelBadge(key as string)?.label }}</span
+              >
             </button>
           </div>
 
@@ -261,7 +272,8 @@
                 v-if="getLevelBadge(key as string)"
                 class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-md border"
                 :class="getLevelBadge(key as string)?.classes"
-              >{{ getLevelBadge(key as string)?.label }}</span>
+                >{{ getLevelBadge(key as string)?.label }}</span
+              >
             </button>
           </div>
 
@@ -290,12 +302,11 @@
                 v-if="getLevelBadge(key as string)"
                 class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-md border"
                 :class="getLevelBadge(key as string)?.classes"
-              >{{ getLevelBadge(key as string)?.label }}</span>
+                >{{ getLevelBadge(key as string)?.label }}</span
+              >
             </button>
           </div>
         </div>
-
-
 
         <!-- Mobile-hidden bottom help -->
         <div
@@ -331,12 +342,12 @@
     >
       <!-- Lesson Info / Topic Selector -->
       <div
-        class="w-full max-w-6xl flex justify-between items-center gap-4 border-b border-slate-200/60 dark:border-slate-800/30 pb-4 mb-4"
+        class="w-full max-w-6xl flex flex-wrap justify-between items-center gap-y-3 gap-x-4 border-b border-slate-200/60 dark:border-slate-800/30 pb-4 mb-4 select-none"
       >
-        <!-- Toggle Sidebar Button integrated aesthetics -->
+        <!-- Toggle Sidebar Button (order-1) -->
         <button
           @click="toggleSidebar"
-          class="p-2 rounded-xl border transition-all flex items-center justify-center cursor-pointer select-none gap-1.5"
+          class="p-2 rounded-xl border transition-all flex items-center justify-center cursor-pointer select-none gap-1.5 order-1"
           :class="
             showSidebar
               ? 'bg-primary-50 border-primary-200/60 text-primary-650 dark:bg-primary-950/20 dark:border-primary-900/30 dark:text-primary-400'
@@ -370,20 +381,24 @@
           >
         </button>
 
-        <div class="flex items-center gap-2" id="lesson-select-wrapper">
+        <!-- Topic Selector (order-3 in mobile, order-2 in desktop) -->
+        <div
+          class="flex items-center gap-2 justify-center md:justify-start w-full md:w-auto order-3 md:order-2 py-1.5 md:py-0 border-t border-slate-100 dark:border-slate-850/40 md:border-t-0 mt-1 md:mt-0"
+          id="lesson-select-wrapper"
+        >
           <span
             class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider"
           >
             Tema:
           </span>
           <span
-            class="text-sm font-extrabold text-primary-650 dark:text-primary-400 select-text"
+            class="text-sm font-extrabold text-primary-650 dark:text-primary-400 text-center select-text"
           >
             {{ activeLessonLabel }}
           </span>
         </div>
 
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-1.5 order-2 md:order-3">
           <!-- Modo Escucha / Dictado Toggle -->
           <button
             id="btn-listening-mode"
@@ -454,7 +469,7 @@
             "
             title="Mostrar/Ocultar traducción de apoyo"
           >
-            <span>{{ showBlindHint ? '👁️' : '👁️‍🗨️' }}</span>
+            <span>{{ showBlindHint ? "👁️" : "👁️‍🗨️" }}</span>
             <span class="hidden sm:inline">Pista</span>
           </button>
 
@@ -474,7 +489,7 @@
                 : 'Activar sonidos de teclas'
             "
           >
-            <span>{{ selectedSoundTheme !== 'none' ? '🔊' : '🔇' }}</span>
+            <span>{{ selectedSoundTheme !== "none" ? "🔊" : "🔇" }}</span>
             <span class="hidden sm:inline">Sonido</span>
           </button>
 
@@ -720,9 +735,15 @@
                     v-model="selectedAiModel"
                     class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-3 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none cursor-pointer"
                   >
-                    <option value="gemini-2.5-flash">Gemini 2.5 Flash (Alta cuota, recomendado)</option>
-                    <option value="gemini-1.5-flash">Gemini 1.5 Flash (Estable, alta cuota)</option>
-                    <option value="gemini-3.5-flash">Gemini 3.5 Flash (Experimental, cuota limitada)</option>
+                    <option value="gemini-2.5-flash">
+                      Gemini 2.5 Flash (Alta cuota, recomendado)
+                    </option>
+                    <option value="gemini-1.5-flash">
+                      Gemini 1.5 Flash (Estable, alta cuota)
+                    </option>
+                    <option value="gemini-3.5-flash">
+                      Gemini 3.5 Flash (Experimental, cuota limitada)
+                    </option>
                   </select>
                 </div>
               </div>
@@ -730,21 +751,6 @@
           </div>
         </div>
       </div>
-      <!-- HIDDEN INPUT FOR DRIVING THE KEYBOARD ON MOBILE/DESKTOP -->
-      <input
-        id="typing-hidden-input"
-        type="text"
-        ref="inputRef"
-        v-model="typedText"
-        @input="processInput"
-        @focus="isFocused = true"
-        @blur="isFocused = false"
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="none"
-        spellcheck="false"
-        class="absolute opacity-0 -z-50 pointer-events-none"
-      />
 
       <div
         v-if="activeLessonId !== 'create_new_lesson'"
@@ -756,7 +762,7 @@
           <button
             @click="prevPhrase"
             :disabled="activePhraseIndex === 0"
-            class="p-3.5 rounded-full border border-slate-200/60 dark:border-slate-800/40 bg-white/70 dark:bg-slate-900/65 hover:bg-slate-100 dark:hover:bg-slate-850 text-slate-450 dark:text-slate-500 disabled:opacity-20 disabled:hover:bg-transparent dark:disabled:hover:bg-transparent transition-all cursor-pointer disabled:cursor-not-allowed select-none shrink-0"
+            class="hidden md:flex p-3.5 rounded-full border border-slate-200/60 dark:border-slate-800/40 bg-white/70 dark:bg-slate-900/65 hover:bg-slate-100 dark:hover:bg-slate-850 text-slate-450 dark:text-slate-500 disabled:opacity-20 disabled:hover:bg-transparent dark:disabled:hover:bg-transparent transition-all cursor-pointer disabled:cursor-not-allowed select-none shrink-0"
             title="Frase anterior"
           >
             <svg
@@ -774,6 +780,15 @@
               />
             </svg>
           </button>
+          <!-- Barra de progreso visual sutil -->
+          <div
+            class="absolute top-0 left-0 right-0 h-1 bg-slate-300 dark:bg-slate-600 rounded-full overflow-hidden"
+          >
+            <div
+              class="h-full bg-linear-to-r from-primary-500 to-primary-650 dark:from-primary-600 dark:to-primary-400 transition-all duration-300 ease-out"
+              :style="{ width: `${progressPercent}%` }"
+            ></div>
+          </div>
 
           <!-- TARGET TYPING TEXT CONTAINER -->
           <div
@@ -781,21 +796,22 @@
             @click="focusInput"
             class="grow flex flex-col justify-center items-left py-12 relative cursor-text min-h-[200px]"
           >
-            <!-- Barra de progreso visual sutil -->
-            <div class="absolute top-0 left-0 right-0 h-0.5 bg-slate-100 dark:bg-slate-900/50 rounded-full overflow-hidden">
-              <div
-                class="h-full bg-gradient-to-r from-primary-500 to-primary-650 dark:from-primary-600 dark:to-primary-400 transition-all duration-300 ease-out"
-                :style="{ width: `${progressPercent}%` }"
-              ></div>
-            </div>
-            <!-- Progress Counter in absolute corner -->
-            <div
-              v-if="activeLessonPhrases.length > 0"
-              class="absolute top-2 right-2 text-2xs font-bold font-mono px-2.5 py-1 rounded-xl bg-slate-50/50 dark:bg-slate-900/35 border border-slate-200/30 dark:border-slate-800/20 text-slate-400 dark:text-slate-500 select-none shadow-2xs backdrop-blur-xs"
-              title="Progreso de frases en la lección"
-            >
-              {{ activePhraseIndex + 1 }} / {{ activeLessonPhrases.length }}
-            </div>
+            <!-- HIDDEN INPUT FOR DRIVING THE KEYBOARD ON MOBILE/DESKTOP -->
+            <input
+              id="typing-hidden-input"
+              type="text"
+              ref="inputRef"
+              :value="typedText"
+              @input="handleInput"
+              @focus="isFocused = true"
+              @blur="isFocused = false"
+              autocomplete="off"
+              autocorrect="off"
+              autocapitalize="none"
+              spellcheck="false"
+              inputmode="search"
+              class="absolute top-0 left-0 w-full h-full opacity-0 -z-10 pointer-events-none"
+            />
             <!-- Keyword Highlight -->
             <div
               v-if="showKeywordHighlight"
@@ -827,7 +843,7 @@
             <!-- Text to type -->
             <div
               id="target-phrase-letters"
-              class="text-5xl md:text-6xl font-bold tracking-normal font-mono leading-relaxed mb-4 select-none flex flex-wrap justify-left gap-x-4 relative"
+              class="text-3xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-normal font-mono leading-relaxed mb-4 select-none flex flex-wrap justify-left relative"
             >
               <!-- Smooth Caret Element -->
               <div
@@ -847,6 +863,7 @@
                   v-for="(letterObj, lIdx) in wordObj.letters"
                   :key="lIdx"
                   :class="letterObj.class"
+                  class="whitespace-pre"
                 >
                   {{ letterObj.char }}
                 </span>
@@ -866,7 +883,7 @@
               <div
                 v-if="activeWordDefinition"
                 id="word-dictionary-card"
-                class="absolute bottom-4 z-35 w-full max-w-sm bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 shadow-xl rounded-2xl p-4 flex flex-col gap-1.5 backdrop-blur-md text-left select-text relative"
+                class="absolute bottom-4 z-35 w-[calc(100%-2rem)] left-4 right-4 sm:left-auto sm:right-auto sm:w-full sm:max-w-sm bg-white/95 dark:bg-slate-900/95 border border-slate-200 dark:border-slate-800 shadow-xl rounded-2xl p-4 flex flex-col gap-1.5 backdrop-blur-md text-left select-text relative"
               >
                 <!-- Botón de Cerrar (x) -->
                 <button
@@ -979,21 +996,30 @@
                 </p>
                 <!-- Syllable Pronunciation Guide -->
                 <div
-                  v-if="activeWordDefinition.syllables && activeWordDefinition.syllables.length > 0"
+                  v-if="
+                    activeWordDefinition.syllables &&
+                    activeWordDefinition.syllables.length > 0
+                  "
                   class="flex flex-wrap items-center gap-1.5 mt-1 pt-1.5 border-t border-slate-100/60 dark:border-slate-800/30"
                 >
-                  <span class="text-4xs font-extrabold uppercase tracking-widest text-slate-400 dark:text-slate-500 mr-0.5">Sílabas</span>
+                  <span
+                    class="text-4xs font-extrabold uppercase tracking-widest text-slate-400 dark:text-slate-500 mr-0.5"
+                    >Sílabas</span
+                  >
                   <button
                     v-for="(syl, sIdx) in activeWordDefinition.syllables"
                     :key="sIdx"
                     @click.stop="speakText(syl)"
                     class="px-2 py-0.5 rounded-lg text-3xs font-bold cursor-pointer select-none transition-all border hover:scale-105 active:scale-95"
-                    :class="sIdx === 0
-                      ? 'bg-primary-50 border-primary-200/60 text-primary-700 dark:bg-primary-950/40 dark:border-primary-800/30 dark:text-primary-400'
-                      : 'bg-slate-50 border-slate-200/50 text-slate-600 dark:bg-slate-900/50 dark:border-slate-800/30 dark:text-slate-400'
+                    :class="
+                      sIdx === 0
+                        ? 'bg-primary-50 border-primary-200/60 text-primary-700 dark:bg-primary-950/40 dark:border-primary-800/30 dark:text-primary-400'
+                        : 'bg-slate-50 border-slate-200/50 text-slate-600 dark:bg-slate-900/50 dark:border-slate-800/30 dark:text-slate-400'
                     "
                     :title="'Pronunciar: ' + syl"
-                  >{{ syl }}</button>
+                  >
+                    {{ syl }}
+                  </button>
                 </div>
               </div>
             </Transition>
@@ -1002,7 +1028,7 @@
           <!-- Botón frase siguiente (Omitir) -->
           <button
             @click="skipPhrase"
-            class="p-3.5 rounded-full border border-slate-200/60 dark:border-slate-800/40 bg-white/70 dark:bg-slate-900/65 hover:bg-slate-100 dark:hover:bg-slate-850 text-slate-450 dark:text-slate-500 transition-all cursor-pointer select-none shrink-0"
+            class="hidden md:flex p-3.5 rounded-full border border-slate-200/60 dark:border-slate-800/40 bg-white/70 dark:bg-slate-900/65 hover:bg-slate-100 dark:hover:bg-slate-850 text-slate-450 dark:text-slate-500 transition-all cursor-pointer select-none shrink-0"
             title="Siguiente frase (Omitir)"
           >
             <svg
@@ -1022,7 +1048,52 @@
           </button>
         </div>
 
-
+        <!-- Mobile phrase navigation controls (hidden on desktop) -->
+        <div
+          class="flex md:hidden items-center justify-center gap-6 mt-2 mb-6 select-none shrink-0 w-full"
+        >
+          <button
+            @click="prevPhrase"
+            :disabled="activePhraseIndex === 0"
+            class="flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-650 dark:text-slate-350 disabled:opacity-30 disabled:cursor-not-allowed transition-all text-xs font-bold cursor-pointer select-none active:scale-95 shadow-sm"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2.5"
+              stroke="currentColor"
+              class="w-3.5 h-3.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 19.5 8.25 12l7.5-7.5"
+              />
+            </svg>
+            <span>Anterior</span>
+          </button>
+          <button
+            @click="skipPhrase"
+            class="flex items-center justify-center gap-1.5 px-5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-650 dark:text-slate-350 transition-all text-xs font-bold cursor-pointer select-none active:scale-95 shadow-sm"
+          >
+            <span>Omitir</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2.5"
+              stroke="currentColor"
+              class="w-3.5 h-3.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="m8.25 4.5 7.5 7.5-7.5 7.5"
+              />
+            </svg>
+          </button>
+        </div>
 
         <!-- STATS BAR -->
         <div
@@ -1074,10 +1145,10 @@
         <div
           v-if="showCompleteOverlay"
           id="lesson-complete-overlay"
-          class="absolute inset-0 bg-slate-50/98 dark:bg-slate-950/98 z-40 flex flex-col items-center justify-center p-6 animate-fade-in"
+          class="absolute inset-0 bg-slate-50/98 dark:bg-slate-950/98 z-40 flex flex-col items-center justify-start sm:justify-center p-6 overflow-y-auto animate-fade-in"
         >
           <div
-            class="glass p-8 rounded-3xl border border-white/20 dark:border-white/5 shadow-2xl max-w-md w-full text-center flex flex-col items-center gap-6 relative overflow-hidden"
+            class="glass p-8 my-auto rounded-3xl border border-white/20 dark:border-white/5 shadow-2xl max-w-md w-full text-center flex flex-col items-center gap-6 relative overflow-hidden shrink-0"
           >
             <div
               class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-primary-500 via-primary-400 to-primary-300"
@@ -1152,7 +1223,9 @@
                 <span>🧠</span>
                 <span>Quiz de Vocabulario:</span>
               </div>
-              <span class="px-2 py-0.5 bg-indigo-100 dark:bg-indigo-900/60 rounded-lg text-indigo-850 dark:text-indigo-250 font-black">
+              <span
+                class="px-2 py-0.5 bg-indigo-100 dark:bg-indigo-900/60 rounded-lg text-indigo-850 dark:text-indigo-250 font-black"
+              >
                 {{ quizScore }} / {{ quizQuestions.length }} correctas
               </span>
             </div>
@@ -1166,7 +1239,9 @@
                 <span class="text-amber-500">🔄</span>
                 <span>Guardadas para repaso:</span>
               </div>
-              <span class="px-2 py-0.5 bg-amber-100 dark:bg-amber-900/60 rounded-lg text-amber-900 dark:text-amber-250 font-black">
+              <span
+                class="px-2 py-0.5 bg-amber-100 dark:bg-amber-900/60 rounded-lg text-amber-900 dark:text-amber-250 font-black"
+              >
                 {{ newDifficultCount }} frases
               </span>
             </div>
@@ -1195,30 +1270,42 @@
         <div
           v-if="showVocabQuiz && quizQuestions.length > 0"
           id="vocab-quiz-overlay"
-          class="absolute inset-0 bg-slate-50/98 dark:bg-slate-950/98 z-40 flex flex-col items-center justify-center p-6 animate-fade-in"
+          class="absolute inset-0 bg-slate-50/98 dark:bg-slate-950/98 z-40 flex flex-col items-center justify-start sm:justify-center p-6 overflow-y-auto animate-fade-in"
         >
           <div
-            class="glass p-8 rounded-3xl border border-white/20 dark:border-white/5 shadow-2xl max-w-md w-full text-center flex flex-col items-center gap-6 relative overflow-hidden"
+            class="glass p-8 my-auto rounded-3xl border border-white/20 dark:border-white/5 shadow-2xl max-w-md w-full text-center flex flex-col items-center gap-6 relative overflow-hidden shrink-0"
           >
             <div
               class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
             ></div>
 
             <!-- Quiz Header/Progress -->
-            <div class="w-full flex justify-between items-center text-xs font-bold text-slate-400 dark:text-slate-500">
-              <span class="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-650 dark:text-indigo-400 rounded-lg">
-                Pregunta {{ currentQuizIndex + 1 }} de {{ quizQuestions.length }}
+            <div
+              class="w-full flex justify-between items-center text-xs font-bold text-slate-400 dark:text-slate-500"
+            >
+              <span
+                class="px-2.5 py-1 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-650 dark:text-indigo-400 rounded-lg"
+              >
+                Pregunta {{ currentQuizIndex + 1 }} de
+                {{ quizQuestions.length }}
               </span>
               <span>Score: {{ quizScore }}</span>
             </div>
 
             <!-- Quiz Question -->
             <div class="my-2">
-              <span class="text-3xs uppercase tracking-widest font-black text-indigo-500">¿Qué significa esta palabra?</span>
-              <h3 class="text-3xl font-black text-slate-800 dark:text-white mt-1 select-none">
+              <span
+                class="text-3xs uppercase tracking-widest font-black text-indigo-500"
+                >¿Qué significa esta palabra?</span
+              >
+              <h3
+                class="text-3xl font-black text-slate-800 dark:text-white mt-1 select-none"
+              >
                 {{ quizQuestions[currentQuizIndex].keyword }}
               </h3>
-              <p class="text-3xs text-slate-450 dark:text-slate-505 mt-2 italic max-w-xs mx-auto border-t border-slate-100 dark:border-slate-850 pt-2">
+              <p
+                class="text-3xs text-slate-450 dark:text-slate-505 mt-2 italic max-w-xs mx-auto border-t border-slate-100 dark:border-slate-850 pt-2"
+              >
                 "{{ quizQuestions[currentQuizIndex].phraseText }}"
               </p>
             </div>
@@ -1238,12 +1325,27 @@
                       ? 'bg-emerald-500 border-emerald-500 text-white dark:bg-emerald-600 dark:border-emerald-600'
                       : option === quizSelectedOption
                         ? 'bg-rose-500 border-rose-500 text-white dark:bg-rose-600 dark:border-rose-600'
-                        : 'bg-white border-slate-200 text-slate-400 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-650 opacity-60'
+                        : 'bg-white border-slate-200 text-slate-400 dark:bg-slate-900 dark:border-slate-800 dark:text-slate-650 opacity-60',
                 ]"
               >
                 <span>{{ option }}</span>
-                <span v-if="quizAnswered && option === quizQuestions[currentQuizIndex].correctAnswer" class="text-sm">✓</span>
-                <span v-if="quizAnswered && option === quizSelectedOption && option !== quizQuestions[currentQuizIndex].correctAnswer" class="text-sm">✗</span>
+                <span
+                  v-if="
+                    quizAnswered &&
+                    option === quizQuestions[currentQuizIndex].correctAnswer
+                  "
+                  class="text-sm"
+                  >✓</span
+                >
+                <span
+                  v-if="
+                    quizAnswered &&
+                    option === quizSelectedOption &&
+                    option !== quizQuestions[currentQuizIndex].correctAnswer
+                  "
+                  class="text-sm"
+                  >✗</span
+                >
               </button>
             </div>
 
@@ -1297,7 +1399,9 @@
           </div>
 
           <!-- Selector de Modo de Creación -->
-          <div class="flex border-b border-slate-100 dark:border-slate-850 select-none shrink-0 mb-2">
+          <div
+            class="flex border-b border-slate-100 dark:border-slate-850 select-none shrink-0 mb-2"
+          >
             <button
               type="button"
               @click="creationTab = 'paste'"
@@ -1321,7 +1425,9 @@
               "
             >
               <span>Generar por Tema (IA)</span>
-              <span class="px-1.5 py-0.5 rounded-full text-[9px] bg-amber-100 dark:bg-amber-950/40 text-amber-650 dark:text-amber-450 font-bold uppercase tracking-wider">
+              <span
+                class="px-1.5 py-0.5 rounded-full text-[9px] bg-amber-100 dark:bg-amber-950/40 text-amber-650 dark:text-amber-450 font-bold uppercase tracking-wider"
+              >
                 Rápido
               </span>
             </button>
@@ -1341,7 +1447,7 @@
                 class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"
               />
             </div>
-            
+
             <!-- Selector de Tipo de Contenido -->
             <div class="flex flex-col gap-2">
               <label
@@ -1417,7 +1523,9 @@
           <!-- MODO: GENERAR POR TEMA (IA EXPRESS) -->
           <template v-else>
             <div class="flex flex-col gap-1.5">
-              <label class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider">
+              <label
+                class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider"
+              >
                 ¿De qué te gustaría hablar o practicar hoy? (Tema)
               </label>
               <input
@@ -1427,10 +1535,12 @@
                 class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-200 outline-none"
               />
             </div>
-            
+
             <!-- Selector de Tipo de Contenido para Generación -->
             <div class="flex flex-col gap-2">
-              <label class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider">
+              <label
+                class="text-3xs font-extrabold uppercase text-slate-400 dark:text-slate-500 tracking-wider"
+              >
                 Formato de la Lección
               </label>
               <div class="grid grid-cols-3 gap-2">
@@ -1604,11 +1714,7 @@
             <button
               v-else
               @click="generateLessonExpress"
-              :disabled="
-                isGenerating ||
-                !expressTopic ||
-                !geminiApiKey
-              "
+              :disabled="isGenerating || !expressTopic || !geminiApiKey"
               class="flex-1 py-3 px-4 bg-primary-650 hover:bg-primary-700 text-white disabled:bg-slate-200 disabled:text-slate-450 dark:disabled:bg-slate-800/50 dark:disabled:text-slate-650 font-bold text-xs rounded-xl shadow-lg transition-all cursor-pointer disabled:cursor-not-allowed select-none flex items-center justify-center gap-1.5"
             >
               <svg
@@ -1675,7 +1781,7 @@ interface PhraseTranslation {
 
 interface Lesson {
   title: Record<string, string>;
-  level?: 'beginner' | 'intermediate' | 'advanced';
+  level?: "beginner" | "intermediate" | "advanced";
   phrases: PhraseTranslation[];
 }
 
@@ -1830,18 +1936,38 @@ const keyLessonsByCategory = computed(() => {
       key_directions: keyLessonsData.key_directions,
       key_hotel: keyLessonsData.key_hotel,
       key_airport: keyLessonsData.key_airport,
-    }
+    },
   };
 });
 
 // --- FEATURE 4: NIVELES DE DIFICULTAD (Badges) ---
-function getLevelBadge(lessonId: string): { emoji: string; label: string; classes: string } | null {
+function getLevelBadge(
+  lessonId: string
+): { emoji: string; label: string; classes: string } | null {
   const lesson = lessonsData[lessonId] || keyLessonsData[lessonId];
   const level = lesson?.level;
   if (!level) return null;
-  if (level === 'beginner') return { emoji: '🟢', label: 'A1', classes: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border-emerald-200/60 dark:border-emerald-800/30' };
-  if (level === 'intermediate') return { emoji: '🟡', label: 'B1', classes: 'bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border-amber-200/60 dark:border-amber-800/30' };
-  if (level === 'advanced') return { emoji: '🔴', label: 'C1', classes: 'bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-400 border-rose-200/60 dark:border-rose-800/30' };
+  if (level === "beginner")
+    return {
+      emoji: "🟢",
+      label: "A1",
+      classes:
+        "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-400 border-emerald-200/60 dark:border-emerald-800/30",
+    };
+  if (level === "intermediate")
+    return {
+      emoji: "🟡",
+      label: "B1",
+      classes:
+        "bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border-amber-200/60 dark:border-amber-800/30",
+    };
+  if (level === "advanced")
+    return {
+      emoji: "🔴",
+      label: "C1",
+      classes:
+        "bg-rose-100 text-rose-700 dark:bg-rose-950/40 dark:text-rose-400 border-rose-200/60 dark:border-rose-800/30",
+    };
   return null;
 }
 
@@ -1859,7 +1985,7 @@ const newDifficultCount = ref(0); // Frases difíciles detectadas en la sesión 
 const currentPhraseErrors = ref(0); // Cuenta de errores de la frase actual
 
 function loadDifficultPhrases() {
-  const stored = localStorage.getItem('lbl_difficult_phrases');
+  const stored = localStorage.getItem("lbl_difficult_phrases");
   if (stored) {
     try {
       difficultPhrases.value = JSON.parse(stored);
@@ -1868,18 +1994,33 @@ function loadDifficultPhrases() {
 }
 
 function saveDifficultPhrases() {
-  localStorage.setItem('lbl_difficult_phrases', JSON.stringify(difficultPhrases.value));
+  localStorage.setItem(
+    "lbl_difficult_phrases",
+    JSON.stringify(difficultPhrases.value)
+  );
 }
 
-function addDifficultPhrase(phrase: PhraseTranslation, lessonId: string, accuracy: number) {
+function addDifficultPhrase(
+  phrase: PhraseTranslation,
+  lessonId: string,
+  accuracy: number
+) {
   // Evitar duplicados (misma frase del mismo lesson)
   const exists = difficultPhrases.value.some(
-    dp => dp.phrase.text.toLowerCase() === phrase.text.toLowerCase() && dp.lessonId === lessonId
+    (dp) =>
+      dp.phrase.text.toLowerCase() === phrase.text.toLowerCase() &&
+      dp.lessonId === lessonId
   );
   if (exists) return;
 
-  const lesson = lessonsData[lessonId] || keyLessonsData[lessonId] || customLessons.value[lessonId];
-  const lessonTitle = lesson?.title?.[profile.value.language] || lesson?.title?.['es'] || 'Lección';
+  const lesson =
+    lessonsData[lessonId] ||
+    keyLessonsData[lessonId] ||
+    customLessons.value[lessonId];
+  const lessonTitle =
+    lesson?.title?.[profile.value.language] ||
+    lesson?.title?.["es"] ||
+    "Lección";
 
   difficultPhrases.value.push({
     phrase: { ...phrase },
@@ -1921,7 +2062,10 @@ const quizFinished = ref(false);
 function generateQuizQuestions() {
   const phrases = activeLessonPhrases.value;
   // Recopilar frases con keywords
-  const withKeywords = phrases.filter(p => p.keyword && p.keywordTranslations && p.keywordTranslations.length > 0);
+  const withKeywords = phrases.filter(
+    (p) =>
+      p.keyword && p.keywordTranslations && p.keywordTranslations.length > 0
+  );
   if (withKeywords.length < 2) return false;
 
   // Seleccionar hasta 4 al azar
@@ -1930,21 +2074,30 @@ function generateQuizQuestions() {
 
   // Recopilar todas las traducciones disponibles para distractores
   const allTranslations = withKeywords
-    .filter(p => p.keywordTranslations)
-    .map(p => p.keywordTranslations![0])
+    .filter((p) => p.keywordTranslations)
+    .map((p) => p.keywordTranslations![0])
     .filter(Boolean);
 
-  quizQuestions.value = selected.map(phrase => {
+  quizQuestions.value = selected.map((phrase) => {
     const correctAnswer = phrase.keywordTranslations![0];
     // Generar 3 distractores (diferentes de la respuesta correcta)
     const distractors = allTranslations
-      .filter(t => t.toLowerCase() !== correctAnswer.toLowerCase())
+      .filter((t) => t.toLowerCase() !== correctAnswer.toLowerCase())
       .sort(() => Math.random() - 0.5)
       .slice(0, 3);
 
     // Si no hay suficientes distractores, rellenar con genéricos
     while (distractors.length < 3) {
-      const fallbacks = ['recordar', 'comprar', 'necesitar', 'trabajar', 'cocinar', 'viajar', 'estudiar', 'hablar'];
+      const fallbacks = [
+        "recordar",
+        "comprar",
+        "necesitar",
+        "trabajar",
+        "cocinar",
+        "viajar",
+        "estudiar",
+        "hablar",
+      ];
       const fallback = fallbacks[Math.floor(Math.random() * fallbacks.length)];
       if (!distractors.includes(fallback) && fallback !== correctAnswer) {
         distractors.push(fallback);
@@ -1952,7 +2105,9 @@ function generateQuizQuestions() {
     }
 
     // Mezclar opciones
-    const options = [correctAnswer, ...distractors].sort(() => Math.random() - 0.5);
+    const options = [correctAnswer, ...distractors].sort(
+      () => Math.random() - 0.5
+    );
 
     return {
       keyword: phrase.keyword!,
@@ -2007,8 +2162,6 @@ function skipQuiz() {
   showVocabQuiz.value = false;
   quizQuestions.value = [];
 }
-
-
 
 const isVoiceSettingsOpen = ref(false);
 const voices = ref<SpeechSynthesisVoice[]>([]);
@@ -2132,10 +2285,14 @@ const showBlindHint = ref(false);
 
 // Variables de Estética y Sonidos (inicializados desde LocalStorage)
 const selectedSoundTheme = ref(
-  (typeof window !== "undefined" && localStorage.getItem("lbl_sound_theme")) || "mechanical"
+  (typeof window !== "undefined" && localStorage.getItem("lbl_sound_theme")) ||
+    "mechanical"
 );
 const lastActiveSoundTheme = ref(
-  (typeof window !== "undefined" && localStorage.getItem("lbl_sound_theme") !== "none" && localStorage.getItem("lbl_sound_theme")) || "mechanical"
+  (typeof window !== "undefined" &&
+    localStorage.getItem("lbl_sound_theme") !== "none" &&
+    localStorage.getItem("lbl_sound_theme")) ||
+    "mechanical"
 );
 
 function toggleSoundMute() {
@@ -2148,10 +2305,12 @@ function toggleSoundMute() {
 }
 
 const selectedTheme = ref(
-  (typeof window !== "undefined" && localStorage.getItem("lbl_visual_theme")) || "default"
+  (typeof window !== "undefined" && localStorage.getItem("lbl_visual_theme")) ||
+    "default"
 );
 const selectedAiModel = ref(
-  (typeof window !== "undefined" && localStorage.getItem("lbl_ai_model")) || "gemini-2.5-flash"
+  (typeof window !== "undefined" && localStorage.getItem("lbl_ai_model")) ||
+    "gemini-2.5-flash"
 );
 
 // --- MEJORAS PREMIUM: CURSOR FLUIDO Y BARRA DE PROGRESO ---
@@ -2173,11 +2332,13 @@ function updateCaret() {
     const lettersContainer = document.getElementById("target-phrase-letters");
     if (!lettersContainer) return;
 
-    const activeChar = lettersContainer.querySelector(".typing-caret") as HTMLElement;
+    const activeChar = lettersContainer.querySelector(
+      ".typing-caret"
+    ) as HTMLElement;
     if (activeChar) {
       const containerRect = lettersContainer.getBoundingClientRect();
       const charRect = activeChar.getBoundingClientRect();
-      
+
       caretStyle.value = {
         left: `${charRect.left - containerRect.left}px`,
         top: `${charRect.bottom - containerRect.top - 2}px`,
@@ -2217,7 +2378,9 @@ watch(selectedAiModel, (newVal) => {
 let audioCtx: AudioContext | null = null;
 function getAudioContext() {
   if (!audioCtx) {
-    audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    audioCtx = new (
+      window.AudioContext || (window as any).webkitAudioContext
+    )();
   }
   if (audioCtx.state === "suspended") {
     audioCtx.resume();
@@ -2230,7 +2393,7 @@ function playKeyPressSound(type: "correct" | "incorrect" | "complete") {
   try {
     const ctx = getAudioContext();
     const now = ctx.currentTime;
-    
+
     if (type === "incorrect") {
       // Sonido de error: Onda de sierra de baja frecuencia
       const osc = ctx.createOscillator();
@@ -2246,10 +2409,10 @@ function playKeyPressSound(type: "correct" | "incorrect" | "complete") {
       osc.stop(now + 0.15);
       return;
     }
-    
+
     if (type === "complete") {
       // Arpegio ascendente triunfal al completar la frase
-      const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+      const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
       notes.forEach((freq, idx) => {
         const time = now + idx * 0.06;
         const osc = ctx.createOscillator();
@@ -2265,7 +2428,7 @@ function playKeyPressSound(type: "correct" | "incorrect" | "complete") {
       });
       return;
     }
-    
+
     if (selectedSoundTheme.value === "mechanical") {
       // Click de teclado mecánico: Mezcla de clic agudo y golpe de tecla
       const noise = ctx.createBufferSource();
@@ -2285,7 +2448,7 @@ function playKeyPressSound(type: "correct" | "incorrect" | "complete") {
       noise.connect(filter);
       filter.connect(noiseGain);
       noiseGain.connect(ctx.destination);
-      
+
       const osc = ctx.createOscillator();
       const oscGain = ctx.createGain();
       osc.type = "triangle";
@@ -2295,12 +2458,11 @@ function playKeyPressSound(type: "correct" | "incorrect" | "complete") {
       oscGain.gain.exponentialRampToValueAtTime(0.005, now + 0.04);
       osc.connect(oscGain);
       oscGain.connect(ctx.destination);
-      
+
       noise.start(now);
       noise.stop(now + 0.02);
       osc.start(now);
       osc.stop(now + 0.045);
-      
     } else if (selectedSoundTheme.value === "bubble") {
       // Tono de burbuja ascendente
       const osc = ctx.createOscillator();
@@ -2314,7 +2476,6 @@ function playKeyPressSound(type: "correct" | "incorrect" | "complete") {
       gain.connect(ctx.destination);
       osc.start(now);
       osc.stop(now + 0.035);
-      
     } else if (selectedSoundTheme.value === "retro") {
       // Beep retro de 8 bits
       const osc = ctx.createOscillator();
@@ -2921,7 +3082,8 @@ async function generateLessonExpress() {
   errorMessage.value = "";
   if (!expressTopic.value) return;
   if (!geminiApiKey.value) {
-    errorMessage.value = "Por favor, ingresa tu Gemini API Key en los ajustes de voz.";
+    errorMessage.value =
+      "Por favor, ingresa tu Gemini API Key en los ajustes de voz.";
     return;
   }
 
@@ -3008,7 +3170,9 @@ Reglas:
     finalPhrases = processAndCleanPhrases(finalPhrases);
 
     if (finalPhrases.length === 0) {
-      throw new Error("No se pudieron generar frases válidas tras el filtrado.");
+      throw new Error(
+        "No se pudieron generar frases válidas tras el filtrado."
+      );
     }
 
     const newLesson: Lesson = {
@@ -3177,7 +3341,7 @@ const activePhrase = computed<PhraseTranslation | null>(() => {
 const activeTranslation = computed(() => {
   const p = activePhrase.value;
   if (!p) return "";
-  
+
   if (isBlindMode.value && !showBlindHint.value) {
     return "";
   }
@@ -3517,7 +3681,11 @@ const showKeywordHighlight = computed(() => {
 // Lesson Completion overlay visibility
 const showCompleteOverlay = computed(() => {
   const phrases = activeLessonPhrases.value;
-  return phrases.length > 0 && activePhraseIndex.value >= phrases.length && !showVocabQuiz.value;
+  return (
+    phrases.length > 0 &&
+    activePhraseIndex.value >= phrases.length &&
+    !showVocabQuiz.value
+  );
 });
 
 // Computed final stats for overlay
@@ -3634,12 +3802,45 @@ function replayAudio() {
   }
 }
 
+// Scroll wrapper to center target typing box vertically in current viewport
+function scrollTypingBoxIntoView() {
+  nextTick(() => {
+    const container = document.getElementById("typing-box-container");
+    if (container) {
+      container.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  });
+}
+
+function handleVisualViewportResize() {
+  if (typeof window !== "undefined" && window.visualViewport) {
+    const isKeyboardOpen =
+      window.visualViewport.height < window.innerHeight * 0.85;
+    if (isKeyboardOpen && document.activeElement === inputRef.value) {
+      scrollTypingBoxIntoView();
+    }
+  }
+}
+
 // Input control
 function focusInput() {
   if (inputRef.value) {
     inputRef.value.focus();
   }
   updateCaret();
+
+  if (typeof window !== "undefined" && window.innerWidth < 768) {
+    setTimeout(scrollTypingBoxIntoView, 150);
+  }
+}
+
+function handleInput(e: Event) {
+  const target = e.target as HTMLInputElement;
+  typedText.value = target.value;
+  processInput();
 }
 
 // Stats & Typing loop processing
@@ -3654,13 +3855,17 @@ function processInput() {
   const current = normalizeText(rawInput, true);
 
   // Limitar los cálculos a la longitud máxima del target
-  const currentCapped = current.length > target.length ? current.slice(0, target.length) : current;
+  const currentCapped =
+    current.length > target.length ? current.slice(0, target.length) : current;
 
   // Disparar sonido de tecleo al añadir un nuevo carácter en base al texto limitado
   if (currentCapped.length > lastTypedLength) {
     const lastCharIndex = currentCapped.length - 1;
     const targetChar = target[lastCharIndex];
-    if (targetChar && currentCapped[lastCharIndex].toLowerCase() === targetChar.toLowerCase()) {
+    if (
+      targetChar &&
+      currentCapped[lastCharIndex].toLowerCase() === targetChar.toLowerCase()
+    ) {
       playKeyPressSound("correct");
     } else {
       playKeyPressSound("incorrect");
@@ -3739,14 +3944,19 @@ function processInput() {
     // Calcular accuracy real del tipeo de esta frase en base a los errores cometidos en el camino
     const phraseLength = target.length;
     const correctKeys = Math.max(0, phraseLength - currentPhraseErrors.value);
-    const phraseAccuracy = phraseLength > 0 ? (correctKeys / phraseLength) * 100 : 100;
-    if (phraseAccuracy < 85 && activeLessonId.value !== 'difficult_review') {
-      addDifficultPhrase(phrases[activePhraseIndex.value], activeLessonId.value, phraseAccuracy);
+    const phraseAccuracy =
+      phraseLength > 0 ? (correctKeys / phraseLength) * 100 : 100;
+    if (phraseAccuracy < 85 && activeLessonId.value !== "difficult_review") {
+      addDifficultPhrase(
+        phrases[activePhraseIndex.value],
+        activeLessonId.value,
+        phraseAccuracy
+      );
     }
     // Si la frase estaba en repaso y la accuracy fue buena, removerla
-    if (phraseAccuracy >= 85 && activeLessonId.value === 'difficult_review') {
+    if (phraseAccuracy >= 85 && activeLessonId.value === "difficult_review") {
       const dpIdx = difficultPhrases.value.findIndex(
-        dp => dp.phrase.text.toLowerCase() === target.toLowerCase()
+        (dp) => dp.phrase.text.toLowerCase() === target.toLowerCase()
       );
       if (dpIdx !== -1) {
         removeDifficultPhrase(dpIdx);
@@ -4055,6 +4265,12 @@ onMounted(() => {
     handleCustomPhrasesChange
   );
   window.addEventListener("resize", updateCaret);
+  if (typeof window !== "undefined" && window.visualViewport) {
+    window.visualViewport.addEventListener(
+      "resize",
+      handleVisualViewportResize
+    );
+  }
   setTimeout(updateCaret, 250);
 });
 
@@ -4075,6 +4291,12 @@ onUnmounted(() => {
     handleCustomPhrasesChange
   );
   window.removeEventListener("resize", updateCaret);
+  if (typeof window !== "undefined" && window.visualViewport) {
+    window.visualViewport.removeEventListener(
+      "resize",
+      handleVisualViewportResize
+    );
+  }
 });
 
 // Watch to speak initial phrase on load
@@ -4131,25 +4353,39 @@ watch(activePhrase, (newVal, oldVal) => {
 }
 
 @media (max-width: 767px) {
+  aside {
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 50;
+    height: 100vh;
+    max-height: 100vh !important;
+    width: 80vw !important;
+    max-width: 320px !important;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+    background-color: rgb(255, 255, 255) !important;
+  }
+
+  .dark aside {
+    background-color: rgb(15, 23, 42) !important;
+  }
+
   .sidebar-enter-active,
   .sidebar-leave-active {
     transition:
-      max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      padding 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    max-height: 200px;
-    opacity: 1;
-    overflow: hidden;
+      transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    max-height: 100vh !important;
   }
 
   .sidebar-enter-from,
   .sidebar-leave-to {
     opacity: 0;
-    max-height: 0px !important;
-    transform: translateY(-20px);
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
+    transform: translateX(-100%) !important;
+    max-height: 100vh !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 
@@ -4167,14 +4403,13 @@ watch(activePhrase, (newVal, oldVal) => {
   transform: translateY(-8px);
 }
 
-
 /* Estilo para los errores de espacio (bloque vertical translúcido) */
 .char-space-incorrect {
   background-color: rgba(239, 68, 68, 0.35) !important;
   display: inline-block;
   min-width: 0.6em;
-  height: 1.10em;
-  line-height: 1.10em;
+  height: 1.1em;
+  line-height: 1.1em;
   vertical-align: middle;
   border-radius: 3px;
 }
@@ -4196,7 +4431,7 @@ watch(activePhrase, (newVal, oldVal) => {
   --color-slate-800: #2d104d;
   --color-slate-900: #f5efff;
   --color-slate-950: #06020b;
-  
+
   --color-primary-50: #18032c;
   --color-primary-100: #320a56;
   --color-primary-200: #56168e;
@@ -4204,7 +4439,7 @@ watch(activePhrase, (newVal, oldVal) => {
   --color-primary-600: #00ffff;
   --color-primary-650: #00ffff;
   --color-primary-700: #00d5d5;
-  
+
   background-color: #07020d !important;
   color: #f5efff !important;
 }
@@ -4226,7 +4461,9 @@ watch(activePhrase, (newVal, oldVal) => {
 
 #view-typing.theme-cyberpunk .typing-caret::after {
   background-color: #ff007f !important;
-  box-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f !important;
+  box-shadow:
+    0 0 10px #ff007f,
+    0 0 20px #ff007f !important;
 }
 
 /* 2. TEMA MIDNIGHT FOREST (Sage & Mint) */
@@ -4242,7 +4479,7 @@ watch(activePhrase, (newVal, oldVal) => {
   --color-slate-800: #1a382a;
   --color-slate-900: #e6f5ee;
   --color-slate-950: #050c09;
-  
+
   --color-primary-50: #0c1f16;
   --color-primary-100: #143324;
   --color-primary-200: #1e4d37;
@@ -4287,7 +4524,7 @@ watch(activePhrase, (newVal, oldVal) => {
   --color-slate-800: #ffd1d8;
   --color-slate-900: #4a2b31;
   --color-slate-950: #fff5f6;
-  
+
   --color-primary-50: #fff0f2;
   --color-primary-100: #ffe3e7;
   --color-primary-200: #ffd1d8;
@@ -4332,7 +4569,7 @@ watch(activePhrase, (newVal, oldVal) => {
   --color-slate-800: #5b2f38;
   --color-slate-900: #ffeef0;
   --color-slate-950: #1b0d10;
-  
+
   --color-primary-50: #2d1318;
   --color-primary-100: #451b24;
   --color-primary-200: #692a37;
