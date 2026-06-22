@@ -1,0 +1,79 @@
+{
+  "title": {
+    "es": "Expresiones de Tiempo",
+    "en": "Time Expressions"
+  },
+  "level": "beginner",
+  "phrases": [
+    {
+      "id": "ktim1",
+      "text": "A few days ago, I went to the store.",
+      "translations": {
+        "es": "Hace unos días, fui a la tienda.",
+        "en": "A few days ago, I went to the store."
+      },
+      "keyword": "ago",
+      "keywordTranslations": ["hace"]
+    },
+    {
+      "id": "ktim2",
+      "text": "I will do it right now.",
+      "translations": {
+        "es": "Lo haré ahora mismo.",
+        "en": "I will do it right now."
+      },
+      "keyword": "now",
+      "keywordTranslations": ["ahora"]
+    },
+    {
+      "id": "ktim3",
+      "text": "See you the day after tomorrow.",
+      "translations": {
+        "es": "Nos vemos pasado mañana.",
+        "en": "See you the day after tomorrow."
+      },
+      "keyword": "tomorrow",
+      "keywordTranslations": ["mañana"]
+    },
+    {
+      "id": "ktim4",
+      "text": "I haven't seen him for a long time.",
+      "translations": {
+        "es": "No lo he visto en mucho tiempo.",
+        "en": "I haven't seen him for a long time."
+      },
+      "keyword": "long",
+      "keywordTranslations": ["mucho", "largo"]
+    },
+    {
+      "id": "ktim5",
+      "text": "We need to leave in ten minutes.",
+      "translations": {
+        "es": "Necesitamos irnos en diez minutos.",
+        "en": "We need to leave in ten minutes."
+      },
+      "keyword": "minutes",
+      "keywordTranslations": ["minutos"]
+    },
+    {
+      "id": "ktim6",
+      "text": "I have been busy all day long.",
+      "translations": {
+        "es": "He estado ocupado todo el día.",
+        "en": "I have been busy all day long."
+      },
+      "keyword": "all",
+      "keywordTranslations": ["todo"]
+    },
+    {
+      "id": "ktim7",
+      "text": "Call me when you are ready to go.",
+      "translations": {
+        "es": "Llámame cuando estés listo para ir.",
+        "en": "Call me when you are ready to go."
+      },
+      "keyword": "when",
+      "keywordTranslations": ["cuando"]
+    }
+  ]
+}

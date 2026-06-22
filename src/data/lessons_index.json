@@ -1,0 +1,294 @@
+[
+  {
+    "id": "job_interview",
+    "title": {
+      "es": "Job Interview • Entrevista de trabajo",
+      "ar": "Job Interview • مقابلة عمل",
+      "pt": "Job Interview • Entrevista de emprego",
+      "fr": "Job Interview • Entretien d'embauche",
+      "de": "Job Interview • Vorstellungsgespräch",
+      "it": "Job Interview • Colloquio de lavoro",
+      "en": "Job Interview • Job Interview"
+    },
+    "level": "intermediate",
+    "category": "work"
+  },
+  {
+    "id": "key_airport",
+    "title": {
+      "es": "En el Aeropuerto",
+      "ar": "في المطار",
+      "pt": "No Aeroporto",
+      "fr": "À l'Aéroport",
+      "de": "Am Flughafen",
+      "it": "In Aeroporto",
+      "en": "At the Airport"
+    },
+    "level": "advanced",
+    "category": "travel"
+  },
+  {
+    "id": "key_connectors",
+    "title": {
+      "es": "Conectores y Transiciones",
+      "en": "Connectors & Transitions"
+    },
+    "level": "beginner",
+    "category": "fluency"
+  },
+  {
+    "id": "key_contractions",
+    "title": {
+      "es": "Contracciones Comunes",
+      "en": "Common Contractions"
+    },
+    "level": "beginner",
+    "category": "fluency"
+  },
+  {
+    "id": "key_daily_routine",
+    "title": {
+      "es": "Rutina Diaria",
+      "en": "Daily Routine"
+    },
+    "level": "beginner",
+    "category": "fluency"
+  },
+  {
+    "id": "key_directions",
+    "title": {
+      "es": "Direcciones y Mapa",
+      "ar": "الاتجاهات والخريطة",
+      "pt": "Direções e Mapa",
+      "fr": "Directions et Plan",
+      "de": "Wegbeschreibung und Karte",
+      "it": "Indicazioni e Mappa",
+      "en": "Directions & Map"
+    },
+    "level": "beginner",
+    "category": "travel"
+  },
+  {
+    "id": "key_education",
+    "title": {
+      "es": "Estudios y Educación",
+      "ar": "الدراسات والتعليم",
+      "pt": "Estudos e Educação",
+      "fr": "Études et Éducation",
+      "de": "Studium und Bildung",
+      "it": "Studi e Istruzione",
+      "en": "Studies & Education"
+    },
+    "level": "intermediate",
+    "category": "work"
+  },
+  {
+    "id": "key_emergencies",
+    "title": {
+      "es": "Emergencias y Salud",
+      "ar": "الطوارئ والصحة",
+      "pt": "Emergências e Saúde",
+      "fr": "Urgences et Santé",
+      "de": "Notfälle und Gesundheit",
+      "it": "Emergenze e Salute",
+      "en": "Emergencies & Health"
+    },
+    "level": "intermediate",
+    "category": "travel"
+  },
+  {
+    "id": "key_feelings",
+    "title": {
+      "es": "Sentimientos y Emociones",
+      "ar": "المشاعر والعواطف",
+      "pt": "Sentimentos e Emoções",
+      "fr": "Sentiments et Émotions",
+      "de": "Gefühle und Emotionen",
+      "it": "Sentimenti ed Emozioni",
+      "en": "Feelings & Emotions"
+    },
+    "level": "intermediate",
+    "category": "social"
+  },
+  {
+    "id": "key_fillers",
+    "title": {
+      "es": "Rellenos Conversacionales",
+      "en": "Conversational Fillers"
+    },
+    "level": "beginner",
+    "category": "fluency"
+  },
+  {
+    "id": "key_greetings",
+    "title": {
+      "es": "Saludos y Cortesía",
+      "ar": "التحيات واللطف",
+      "pt": "Saudações e Cortesia",
+      "fr": "Salutations et Politesse",
+      "de": "Grüße und Höflichkeit",
+      "it": "Saluti e Cortesia",
+      "en": "Greetings & Politeness"
+    },
+    "level": "beginner",
+    "category": "social"
+  },
+  {
+    "id": "key_hotel",
+    "title": {
+      "es": "En el Hotel",
+      "ar": "في الفندق",
+      "pt": "No Hotel",
+      "fr": "À l'Hôtel",
+      "de": "Im Hotel",
+      "it": "In Hotel",
+      "en": "At the Hotel"
+    },
+    "level": "intermediate",
+    "category": "travel"
+  },
+  {
+    "id": "key_opinions",
+    "title": {
+      "es": "Dar y Pedir Opiniones",
+      "en": "Opinions & Thoughts"
+    },
+    "level": "beginner",
+    "category": "fluency"
+  },
+  {
+    "id": "key_questions",
+    "title": {
+      "es": "Preguntas Útiles",
+      "ar": "أسئلة مفيدة",
+      "pt": "Perguntas Úteis",
+      "fr": "Questions Utiles",
+      "de": "Nützliche Fragen",
+      "it": "Domande Utili",
+      "en": "Useful Questions"
+    },
+    "level": "beginner",
+    "category": "social"
+  },
+  {
+    "id": "key_shopping",
+    "title": {
+      "es": "Compras y Comida",
+      "ar": "التسوق والطعام",
+      "pt": "Compras e Comida",
+      "fr": "Achats et Nourriture",
+      "de": "Einkaufen und Essen",
+      "it": "Acquisti e Cibo",
+      "en": "Shopping & Dining"
+    },
+    "level": "beginner",
+    "category": "travel"
+  },
+  {
+    "id": "key_socializing",
+    "title": {
+      "es": "Socializar y Amigos",
+      "ar": "التواصل الاجتماعي والأصدقاء",
+      "pt": "Socializar e Amigos",
+      "fr": "Socialiser et Amis",
+      "de": "Sozialkontakte und Freunde",
+      "it": "Socializzare e Amici",
+      "en": "Socializing & Friends"
+    },
+    "level": "beginner",
+    "category": "social"
+  },
+  {
+    "id": "key_technology",
+    "title": {
+      "es": "Tecnología e Internet",
+      "ar": "التكنولوجيا والإنترنت",
+      "pt": "Tecnologia e Internet",
+      "fr": "Technologie et Internet",
+      "de": "Technologie und Internet",
+      "it": "Tecnologia e Internet",
+      "en": "Technology & Internet"
+    },
+    "level": "intermediate",
+    "category": "work"
+  },
+  {
+    "id": "key_time_expressions",
+    "title": {
+      "es": "Expresiones de Tiempo",
+      "en": "Time Expressions"
+    },
+    "level": "beginner",
+    "category": "fluency"
+  },
+  {
+    "id": "key_weather",
+    "title": {
+      "es": "Clima y Estaciones",
+      "ar": "الطقس والفصول",
+      "pt": "Clima e Estações",
+      "fr": "Météo et Saisons",
+      "de": "Wetter und Jahreszeiten",
+      "it": "Meteo e Stagioni",
+      "en": "Weather & Seasons"
+    },
+    "level": "beginner",
+    "category": "work"
+  },
+  {
+    "id": "key_work",
+    "title": {
+      "es": "En el Trabajo",
+      "ar": "في العمل",
+      "pt": "No Trabalho",
+      "fr": "Au Travail",
+      "de": "Bei der Arbeit",
+      "it": "Al Lavoro",
+      "en": "At Work"
+    },
+    "level": "intermediate",
+    "category": "work"
+  },
+  {
+    "id": "new_friend",
+    "title": {
+      "es": "New Friend • Nuevo amigo",
+      "ar": "New Friend • صديق جديد",
+      "pt": "New Friend • Novo amigo",
+      "fr": "New Friend • Nouvel ami",
+      "de": "New Friend • Neuer Freund",
+      "it": "New Friend • Nuovo amico",
+      "en": "New Friend • New Friend"
+    },
+    "level": "beginner",
+    "category": "social"
+  },
+  {
+    "id": "ordering_food",
+    "title": {
+      "es": "Ordering Food • Pedir comida",
+      "ar": "Ordering Food • طلب طعام",
+      "pt": "Ordering Food • Pedir comida",
+      "fr": "Ordering Food • Commander à manger",
+      "de": "Ordering Food • Essen bestellen",
+      "it": "Ordering Food • Ordinare cibo",
+      "en": "Ordering Food • Ordering Food"
+    },
+    "level": "beginner",
+    "category": "travel"
+  },
+  {
+    "id": "traveling",
+    "title": {
+      "es": "Traveling • Viajando",
+      "ar": "Traveling • السفر",
+      "pt": "Traveling • Viajando",
+      "fr": "Traveling • Voyager",
+      "de": "Traveling • Reisen",
+      "it": "Traveling • Viaggiare",
+      "en": "Traveling • Traveling"
+    },
+    "level": "intermediate",
+    "category": "travel"
+  }
+]

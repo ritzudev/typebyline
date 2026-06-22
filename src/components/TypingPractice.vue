@@ -22,72 +22,136 @@
           class="flex border-b border-slate-200/60 dark:border-slate-800/40 mb-4 select-none shrink-0"
         >
           <button
-            @click="activeSidebarTab = 'lessons'"
+            @click="activeSidebarTab = 'roadmap'"
             class="flex-1 pb-3 text-[11px] font-extrabold uppercase tracking-wider text-center cursor-pointer transition-all border-b-2"
             :class="
-              activeSidebarTab === 'lessons'
+              activeSidebarTab === 'roadmap'
                 ? 'border-primary-550 text-primary-650 dark:border-primary-500 dark:text-primary-400'
                 : 'border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-650 dark:hover:text-slate-400'
             "
           >
-            Temas
+            Ruta
           </button>
           <button
-            @click="activeSidebarTab = 'key_phrases'"
+            @click="activeSidebarTab = 'custom'"
             class="flex-1 pb-3 text-[11px] font-extrabold uppercase tracking-wider text-center cursor-pointer transition-all border-b-2"
             :class="
-              activeSidebarTab === 'key_phrases'
+              activeSidebarTab === 'custom'
                 ? 'border-primary-550 text-primary-650 dark:border-primary-500 dark:text-primary-400'
                 : 'border-transparent text-slate-400 dark:text-slate-500 hover:text-slate-650 dark:hover:text-slate-400'
             "
           >
-            Frases
+            Mis Lecciones
           </button>
         </div>
 
-        <!-- LESSONS LIST TAB -->
+        <!-- RUTA DE APRENDIZAJE TAB -->
         <div
-          v-if="activeSidebarTab === 'lessons'"
+          v-if="activeSidebarTab === 'roadmap'"
           class="flex flex-col gap-4 overflow-y-auto pr-1 grow select-none"
         >
-          <!-- Predeterminadas -->
-          <div class="flex flex-col gap-1.5">
-            <span
-              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1"
-            >
-              Temas Predeterminados
+          <!-- Principiante (A1) -->
+          <div class="flex flex-col gap-1.5" v-if="lessonsByLevel.beginner.length > 0">
+            <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1.5">
+              <span>🟢</span> Principiante (A1)
             </span>
             <button
-              v-for="(lesson, key) in lessonsData"
-              :key="key"
-              @click="selectLesson(key)"
+              v-for="lesson in lessonsByLevel.beginner"
+              :key="lesson.id"
+              @click="selectLesson(lesson.id)"
               class="w-full text-left px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
               :class="
-                key === activeLessonId
+                lesson.id === activeLessonId
                   ? 'bg-primary-50/70 border-primary-200 text-primary-650 dark:bg-primary-900 dark:border-primary-900/40 dark:text-primary-400'
                   : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
               "
             >
-              <span class="truncate pr-1">{{
-                lesson.title[profile.language] || lesson.title["es"]
-              }}</span>
-              <span
-                v-if="getLevelBadge(key as string)"
-                class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-md border"
-                :class="getLevelBadge(key as string)?.classes"
-                >{{ getLevelBadge(key as string)?.label }}</span
-              >
+              <span class="truncate pr-1 flex items-center gap-1.5">
+                <span v-if="completedLessons[lesson.id]" class="text-emerald-500 shrink-0">✅</span>
+                <span>{{ lesson.title[profile.language] || lesson.title["es"] }}</span>
+              </span>
             </button>
           </div>
 
-          <!-- Creadas por el usuario -->
-          <div
-            class="flex flex-col gap-1.5"
-            v-if="Object.keys(customLessons).length > 0"
-          >
-            <span
-              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1"
+          <!-- Intermedio (B1) -->
+          <div class="flex flex-col gap-1.5" v-if="lessonsByLevel.intermediate.length > 0">
+            <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1.5">
+              <span>🟡</span> Intermedio (B1)
+            </span>
+            <button
+              v-for="lesson in lessonsByLevel.intermediate"
+              :key="lesson.id"
+              @click="selectLesson(lesson.id)"
+              class="w-full text-left px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
+              :class="
+                lesson.id === activeLessonId
+                  ? 'bg-primary-50/70 border-primary-200 text-primary-650 dark:bg-primary-900 dark:border-primary-900/40 dark:text-primary-400'
+                  : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
+              "
             >
+              <span class="truncate pr-1 flex items-center gap-1.5">
+                <span v-if="completedLessons[lesson.id]" class="text-emerald-500 shrink-0">✅</span>
+                <span>{{ lesson.title[profile.language] || lesson.title["es"] }}</span>
+              </span>
+            </button>
+          </div>
+
+          <!-- Avanzado (C1) -->
+          <div class="flex flex-col gap-1.5" v-if="lessonsByLevel.advanced.length > 0">
+            <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1.5">
+              <span>🔴</span> Avanzado (C1)
+            </span>
+            <button
+              v-for="lesson in lessonsByLevel.advanced"
+              :key="lesson.id"
+              @click="selectLesson(lesson.id)"
+              class="w-full text-left px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
+              :class="
+                lesson.id === activeLessonId
+                  ? 'bg-primary-50/70 border-primary-200 text-primary-650 dark:bg-primary-900 dark:border-primary-900/40 dark:text-primary-400'
+                  : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
+              "
+            >
+              <span class="truncate pr-1 flex items-center gap-1.5">
+                <span v-if="completedLessons[lesson.id]" class="text-emerald-500 shrink-0">✅</span>
+                <span>{{ lesson.title[profile.language] || lesson.title["es"] }}</span>
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- MIS LECCIONES TAB -->
+        <div
+          v-if="activeSidebarTab === 'custom'"
+          class="flex flex-col gap-4 overflow-y-auto pr-1 grow select-none"
+        >
+          <!-- Botón Crear Nueva Lección -->
+          <button
+            @click="selectLesson('create_new_lesson')"
+            class="w-full py-2.5 px-4 bg-primary-650 hover:bg-primary-700 text-white rounded-xl font-bold text-xs shadow-lg shadow-primary-500/10 transition-all cursor-pointer text-center flex items-center justify-center gap-1.5 select-none shrink-0"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="3"
+              stroke="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 4.5v15m7.5-7.5h-15"
+              />
+            </svg>
+            <span>Crear Nueva Lección</span>
+          </button>
+
+          <div class="h-px bg-slate-200/50 dark:bg-slate-800/40 my-1 shrink-0"></div>
+
+          <!-- Creadas por el usuario -->
+          <div class="flex flex-col gap-1.5" v-if="Object.keys(customLessons).length > 0">
+            <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1">
               Tus Temas Creados
             </span>
             <div
@@ -104,9 +168,10 @@
                     : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
                 "
               >
-                <span class="truncate pr-1">{{
-                  lesson.title["es"] || lesson.title["en"]
-                }}</span>
+                <span class="truncate pr-1 flex items-center gap-1.5">
+                  <span v-if="completedLessons[key]" class="text-emerald-500 shrink-0">✅</span>
+                  <span>{{ lesson.title["es"] || lesson.title["en"] }}</span>
+                </span>
               </button>
 
               <!-- Botón borrar lección personalizada -->
@@ -135,9 +200,7 @@
 
           <!-- Práctica de voz -->
           <div class="flex flex-col gap-1.5">
-            <span
-              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1"
-            >
+            <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1">
               Práctica de Voz
             </span>
             <button
@@ -155,9 +218,7 @@
 
           <!-- Repaso de Frases Difíciles -->
           <div class="flex flex-col gap-1.5" v-if="difficultPhrases.length > 0">
-            <span
-              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1.5"
-            >
+            <span class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1.5">
               <span>🔄</span> Repaso Espaciado
             </span>
             <button
@@ -170,140 +231,15 @@
               "
             >
               <span class="truncate pr-1">Frases Difíciles</span>
-              <span
-                class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-200/60 dark:border-amber-800/30"
-              >
+              <span class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-full bg-amber-100 text-amber-700 dark:bg-amber-950/40 dark:text-amber-400 border border-amber-200/60 dark:border-amber-800/30">
                 {{ difficultPhrases.length }}
               </span>
             </button>
             <button
-              v-if="difficultPhrases.length > 0"
               @click="clearDifficultPhrases"
               class="w-full text-center py-1.5 text-[10px] font-semibold text-slate-400 dark:text-slate-500 hover:text-rose-500 dark:hover:text-rose-400 transition-colors cursor-pointer select-none"
             >
               Limpiar todas
-            </button>
-          </div>
-
-          <div
-            class="h-px bg-slate-200/50 dark:bg-slate-800/40 my-1 shrink-0"
-          ></div>
-
-          <!-- Botón Crear Nueva Lección -->
-          <button
-            @click="selectLesson('create_new_lesson')"
-            class="w-full py-2.5 px-4 bg-primary-650 hover:bg-primary-700 text-white rounded-xl font-bold text-xs shadow-lg shadow-primary-500/10 transition-all cursor-pointer text-center flex items-center justify-center gap-1.5 select-none shrink-0"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="3"
-              stroke="currentColor"
-              class="w-4 h-4"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M12 4.5v15m7.5-7.5h-15"
-              />
-            </svg>
-            <span>Crear Nueva Lección</span>
-          </button>
-        </div>
-
-        <!-- KEY PHRASES TAB -->
-        <div
-          v-if="activeSidebarTab === 'key_phrases'"
-          class="flex flex-col gap-4 overflow-y-auto pr-1 grow select-none"
-        >
-          <!-- Básico y Social -->
-          <div class="flex flex-col gap-1.5">
-            <span
-              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1.5"
-            >
-              <span>💬</span> Básico y Social
-            </span>
-            <button
-              v-for="(lesson, key) in keyLessonsByCategory.social"
-              :key="key"
-              @click="selectLesson(key)"
-              class="w-full text-left px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
-              :class="
-                key === activeLessonId
-                  ? 'bg-primary-50/70 border-primary-200 text-primary-650 dark:bg-primary-900 dark:border-primary-900/40 dark:text-primary-400'
-                  : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
-              "
-            >
-              <span class="truncate pr-1">{{
-                lesson.title[profile.language] || lesson.title["es"]
-              }}</span>
-              <span
-                v-if="getLevelBadge(key as string)"
-                class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-md border"
-                :class="getLevelBadge(key as string)?.classes"
-                >{{ getLevelBadge(key as string)?.label }}</span
-              >
-            </button>
-          </div>
-
-          <!-- Trabajo y Diario -->
-          <div class="flex flex-col gap-1.5">
-            <span
-              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1.5"
-            >
-              <span>💼</span> Trabajo y Diario
-            </span>
-            <button
-              v-for="(lesson, key) in keyLessonsByCategory.work"
-              :key="key"
-              @click="selectLesson(key)"
-              class="w-full text-left px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
-              :class="
-                key === activeLessonId
-                  ? 'bg-primary-50/70 border-primary-200 text-primary-650 dark:bg-primary-900 dark:border-primary-900/40 dark:text-primary-400'
-                  : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
-              "
-            >
-              <span class="truncate pr-1">{{
-                lesson.title[profile.language] || lesson.title["es"]
-              }}</span>
-              <span
-                v-if="getLevelBadge(key as string)"
-                class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-md border"
-                :class="getLevelBadge(key as string)?.classes"
-                >{{ getLevelBadge(key as string)?.label }}</span
-              >
-            </button>
-          </div>
-
-          <!-- Viajes y Servicios -->
-          <div class="flex flex-col gap-1.5">
-            <span
-              class="text-[9px] font-black uppercase tracking-widest text-slate-400 dark:text-slate-500 mb-1 flex items-center gap-1.5"
-            >
-              <span>✈️</span> Viajes y Servicios
-            </span>
-            <button
-              v-for="(lesson, key) in keyLessonsByCategory.travel"
-              :key="key"
-              @click="selectLesson(key)"
-              class="w-full text-left px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all flex items-center justify-between cursor-pointer"
-              :class="
-                key === activeLessonId
-                  ? 'bg-primary-50/70 border-primary-200 text-primary-650 dark:bg-primary-900 dark:border-primary-900/40 dark:text-primary-400'
-                  : 'bg-white border-slate-200/60 text-slate-700 dark:bg-slate-900 dark:border-slate-800/60 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
-              "
-            >
-              <span class="truncate pr-1">{{
-                lesson.title[profile.language] || lesson.title["es"]
-              }}</span>
-              <span
-                v-if="getLevelBadge(key as string)"
-                class="shrink-0 text-[9px] font-black px-1.5 py-0.5 rounded-md border"
-                :class="getLevelBadge(key as string)?.classes"
-                >{{ getLevelBadge(key as string)?.label }}</span
-              >
             </button>
           </div>
         </div>
@@ -1785,47 +1721,12 @@ interface Lesson {
   phrases: PhraseTranslation[];
 }
 
-import newFriendLesson from "../data/lessons/new_friend.json";
-import orderingFoodLesson from "../data/lessons/ordering_food.json";
-import travelingLesson from "../data/lessons/traveling.json";
-import jobInterviewLesson from "../data/lessons/job_interview.json";
-import keyGreetingsLesson from "../data/lessons/key_greetings.json";
-import keyQuestionsLesson from "../data/lessons/key_questions.json";
-import keyWorkLesson from "../data/lessons/key_work.json";
-import keyShoppingLesson from "../data/lessons/key_shopping.json";
-import keyEmergenciesLesson from "../data/lessons/key_emergencies.json";
-import keySocializingLesson from "../data/lessons/key_socializing.json";
-import keyFeelingsLesson from "../data/lessons/key_feelings.json";
-import keyTechnologyLesson from "../data/lessons/key_technology.json";
-import keyWeatherLesson from "../data/lessons/key_weather.json";
-import keyEducationLesson from "../data/lessons/key_education.json";
-import keyDirectionsLesson from "../data/lessons/key_directions.json";
-import keyHotelLesson from "../data/lessons/key_hotel.json";
-import keyAirportLesson from "../data/lessons/key_airport.json";
+import lessonsIndex from "../data/lessons_index.json";
 
-// Data sources
-const lessonsData: Record<string, Lesson> = {
-  new_friend: newFriendLesson as Lesson,
-  ordering_food: orderingFoodLesson as Lesson,
-  traveling: travelingLesson as Lesson,
-  job_interview: jobInterviewLesson as Lesson,
-};
-
-const keyLessonsData: Record<string, Lesson> = {
-  key_greetings: keyGreetingsLesson as Lesson,
-  key_questions: keyQuestionsLesson as Lesson,
-  key_work: keyWorkLesson as Lesson,
-  key_shopping: keyShoppingLesson as Lesson,
-  key_emergencies: keyEmergenciesLesson as Lesson,
-  key_socializing: keySocializingLesson as Lesson,
-  key_feelings: keyFeelingsLesson as Lesson,
-  key_technology: keyTechnologyLesson as Lesson,
-  key_weather: keyWeatherLesson as Lesson,
-  key_education: keyEducationLesson as Lesson,
-  key_directions: keyDirectionsLesson as Lesson,
-  key_hotel: keyHotelLesson as Lesson,
-  key_airport: keyAirportLesson as Lesson,
-};
+// Carga perezosa de lecciones usando import.meta.glob de Vite
+const lessonsModules = import.meta.glob("../data/lessons/*.json");
+const loadedLessonData = ref<Lesson | null>(null);
+const completedLessons = ref<Record<string, boolean>>({});
 
 const tLocalMap: Record<string, Record<string, string>> = {
   es: {
@@ -1873,7 +1774,7 @@ const tLocalMap: Record<string, Record<string, string>> = {
 };
 
 // Reactivity states
-const activeLessonId = ref("new_friend");
+const activeLessonId = ref("key_greetings");
 const isDropdownOpen = ref(false);
 const activePhraseIndex = ref(0);
 const typedText = ref("");
@@ -1914,38 +1815,22 @@ const liveAcc = ref(100);
 let lastTypedLength = 0;
 
 const showSidebar = ref(true);
-const activeSidebarTab = ref("lessons"); // 'lessons', 'key_phrases' o 'progress'
+const activeSidebarTab = ref("roadmap"); // 'roadmap' o 'custom'
 
-const keyLessonsByCategory = computed(() => {
-  return {
-    social: {
-      key_greetings: keyLessonsData.key_greetings,
-      key_questions: keyLessonsData.key_questions,
-      key_socializing: keyLessonsData.key_socializing,
-      key_feelings: keyLessonsData.key_feelings,
-    },
-    work: {
-      key_work: keyLessonsData.key_work,
-      key_technology: keyLessonsData.key_technology,
-      key_weather: keyLessonsData.key_weather,
-      key_education: keyLessonsData.key_education,
-    },
-    travel: {
-      key_shopping: keyLessonsData.key_shopping,
-      key_emergencies: keyLessonsData.key_emergencies,
-      key_directions: keyLessonsData.key_directions,
-      key_hotel: keyLessonsData.key_hotel,
-      key_airport: keyLessonsData.key_airport,
-    },
-  };
+// Agrupación de lecciones para la Ruta de Aprendizaje
+const lessonsByLevel = computed(() => {
+  const beginner = lessonsIndex.filter((l) => l.level === "beginner");
+  const intermediate = lessonsIndex.filter((l) => l.level === "intermediate");
+  const advanced = lessonsIndex.filter((l) => l.level === "advanced");
+  return { beginner, intermediate, advanced };
 });
 
 // --- FEATURE 4: NIVELES DE DIFICULTAD (Badges) ---
 function getLevelBadge(
   lessonId: string
 ): { emoji: string; label: string; classes: string } | null {
-  const lesson = lessonsData[lessonId] || keyLessonsData[lessonId];
-  const level = lesson?.level;
+  const meta = lessonsIndex.find((l) => l.id === lessonId);
+  const level = meta ? meta.level : customLessons.value[lessonId]?.level;
   if (!level) return null;
   if (level === "beginner")
     return {
@@ -2013,13 +1898,12 @@ function addDifficultPhrase(
   );
   if (exists) return;
 
-  const lesson =
-    lessonsData[lessonId] ||
-    keyLessonsData[lessonId] ||
-    customLessons.value[lessonId];
+  const meta = lessonsIndex.find((l) => l.id === lessonId);
   const lessonTitle =
-    lesson?.title?.[profile.value.language] ||
-    lesson?.title?.["es"] ||
+    meta?.title?.[profile.value.language] ||
+    meta?.title?.["es"] ||
+    customLessons.value[lessonId]?.title?.[profile.value.language] ||
+    customLessons.value[lessonId]?.title?.["es"] ||
     "Lección";
 
   difficultPhrases.value.push({
@@ -2691,6 +2575,23 @@ function saveCustomLessons() {
   );
 }
 
+function loadCompletedLessons() {
+  const stored = localStorage.getItem("lbl_completed_lessons");
+  if (stored) {
+    try {
+      completedLessons.value = JSON.parse(stored);
+    } catch (e) {}
+  }
+}
+
+function markLessonCompleted(id: string) {
+  completedLessons.value[id] = true;
+  localStorage.setItem(
+    "lbl_completed_lessons",
+    JSON.stringify(completedLessons.value)
+  );
+}
+
 function deleteCustomLesson(id: string) {
   if (
     confirm("¿Estás seguro de que deseas eliminar esta lección personalizada?")
@@ -2699,7 +2600,7 @@ function deleteCustomLesson(id: string) {
     saveCustomLessons();
     // Si la lección que se elimina es la que está activa, regresar a la lección inicial
     if (activeLessonId.value === id) {
-      activeLessonId.value = "new_friend";
+      activeLessonId.value = "key_greetings";
       handleLessonChange();
     }
   }
@@ -2708,18 +2609,10 @@ function deleteCustomLesson(id: string) {
 // Options for dropdown
 const lessonOptions = computed(() => {
   const lang = profile.value.language;
-  const list = Object.keys(lessonsData).map((key) => ({
-    value: key,
-    label: lessonsData[key].title[lang] || lessonsData[key].title["es"],
+  const list = lessonsIndex.map((lesson) => ({
+    value: lesson.id,
+    label: lesson.title[lang] || lesson.title["es"],
   }));
-
-  // Append key lessons
-  Object.keys(keyLessonsData).forEach((key) => {
-    list.push({
-      value: key,
-      label: keyLessonsData[key].title[lang] || keyLessonsData[key].title["es"],
-    });
-  });
 
   // Append user's custom lessons
   Object.keys(customLessons.value).forEach((key) => {
@@ -2764,7 +2657,7 @@ function selectLesson(value: string) {
 }
 
 function cancelCreateLesson() {
-  activeLessonId.value = "new_friend";
+  activeLessonId.value = "key_greetings";
   handleLessonChange();
 }
 
@@ -3270,12 +3163,10 @@ const activeLessonPhrases = computed(() => {
   let phrases: PhraseTranslation[] = [];
   const id = activeLessonId.value;
 
-  if (lessonsData[id]) {
-    phrases = [...lessonsData[id].phrases];
-  } else if (keyLessonsData[id]) {
-    phrases = [...keyLessonsData[id].phrases];
-  } else if (customLessons.value[id]) {
+  if (customLessons.value[id]) {
     phrases = [...customLessons.value[id].phrases];
+  } else if (loadedLessonData.value) {
+    phrases = [...loadedLessonData.value.phrases];
   } else if (id === "difficult_review") {
     // Cargar frases difíciles para repaso
     phrases = difficultPhrases.value.map((dp, idx) => ({
@@ -4002,6 +3893,10 @@ function processInput() {
       finalWpmComputed.value = finalWpm;
       finalAccComputed.value = finalAcc;
 
+      if (activeLessonId.value !== "difficult_review" && activeLessonId.value !== "custom_practice") {
+        markLessonCompleted(activeLessonId.value);
+      }
+
       // --- FEATURE 3: Lanzar Quiz de Vocabulario ---
       const hasQuiz = generateQuizQuestions();
       if (hasQuiz) {
@@ -4080,6 +3975,10 @@ function skipPhrase() {
 
       finalWpmComputed.value = finalWpm;
       finalAccComputed.value = finalAcc;
+
+      if (activeLessonId.value !== "difficult_review" && activeLessonId.value !== "custom_practice") {
+        markLessonCompleted(activeLessonId.value);
+      }
     } else {
       setTimeout(() => {
         const p = activePhrase.value;
@@ -4111,13 +4010,32 @@ function resetSession() {
   }
 }
 
-function loadLessonData(lessonId: string) {
+async function loadLessonData(lessonId: string) {
   activeLessonId.value = lessonId;
   activePhraseIndex.value = 0;
   completedPhrases.value = [];
   resetSession();
 
   if (lessonId === "create_new_lesson") return;
+
+  // Carga asíncrona si es una lección estándar del índice
+  const isStandard = lessonsIndex.some((l) => l.id === lessonId);
+  if (isStandard) {
+    const path = `../data/lessons/${lessonId}.json`;
+    const loadFn = lessonsModules[path];
+    if (loadFn) {
+      try {
+        const module = (await loadFn()) as any;
+        loadedLessonData.value = module.default;
+      } catch (err) {
+        console.error(`Error loading lesson ${lessonId}:`, err);
+        errorMessage.value = `Error al cargar la lección: ${err}`;
+      }
+    }
+  } else {
+    // Si no es estándar, vaciar la lección estática cargada
+    loadedLessonData.value = null;
+  }
 
   nextTick(() => {
     const p = activePhrase.value;
@@ -4137,10 +4055,8 @@ function restartLesson() {
 }
 
 function nextLesson() {
-  let ids = Object.keys(lessonsData);
-  if (keyLessonsData[activeLessonId.value]) {
-    ids = Object.keys(keyLessonsData);
-  } else if (customLessons.value[activeLessonId.value]) {
+  let ids = lessonsIndex.map((l) => l.id);
+  if (customLessons.value[activeLessonId.value]) {
     ids = Object.keys(customLessons.value);
   }
 
@@ -4221,7 +4137,7 @@ function handleGlobalClick(e: MouseEvent) {
 // Global Event Listeners
 function handleOnboardingComplete() {
   readLocalProfile();
-  loadLessonData("new_friend");
+  loadLessonData("key_greetings");
 }
 
 function handleLangChanged() {
@@ -4240,8 +4156,9 @@ function handleCustomPhrasesChange() {
 onMounted(() => {
   readLocalProfile();
   loadCustomLessons();
+  loadCompletedLessons();
   loadDifficultPhrases();
-  loadLessonData("new_friend");
+  loadLessonData("key_greetings");
   loadVoices();
 
   const storedSidebar = localStorage.getItem("lbl_show_sidebar");

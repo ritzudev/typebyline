@@ -1,0 +1,79 @@
+{
+  "title": {
+    "es": "Rellenos Conversacionales",
+    "en": "Conversational Fillers"
+  },
+  "level": "beginner",
+  "phrases": [
+    {
+      "id": "kfil1",
+      "text": "Well, let me think about it for a second.",
+      "translations": {
+        "es": "Bueno, déjame pensarlo un segundo.",
+        "en": "Well, let me think about it for a second."
+      },
+      "keyword": "well",
+      "keywordTranslations": ["bueno", "bien"]
+    },
+    {
+      "id": "kfil2",
+      "text": "To be honest, I don't really know.",
+      "translations": {
+        "es": "Para ser honesto, realmente no lo sé.",
+        "en": "To be honest, I don't really know."
+      },
+      "keyword": "honest",
+      "keywordTranslations": ["honesto"]
+    },
+    {
+      "id": "kfil3",
+      "text": "By the way, did you see that new movie?",
+      "translations": {
+        "es": "Por cierto, ¿viste esa película nueva?",
+        "en": "By the way, did you see that new movie?"
+      },
+      "keyword": "way",
+      "keywordTranslations": ["cierto", "camino"]
+    },
+    {
+      "id": "kfil4",
+      "text": "You know what I mean, right?",
+      "translations": {
+        "es": "Sabes a lo que me refiero, ¿verdad?",
+        "en": "You know what I mean, right?"
+      },
+      "keyword": "mean",
+      "keywordTranslations": ["refiero", "significa"]
+    },
+    {
+      "id": "kfil5",
+      "text": "I mean, it's not a bad idea actually.",
+      "translations": {
+        "es": "O sea, en realidad no es una mala idea.",
+        "en": "I mean, it's not a bad idea actually."
+      },
+      "keyword": "mean",
+      "keywordTranslations": ["o sea", "quiero decir"]
+    },
+    {
+      "id": "kfil6",
+      "text": "Basically, we just need to wait here.",
+      "translations": {
+        "es": "Básicamente, solo necesitamos esperar aquí.",
+        "en": "Basically, we just need to wait here."
+      },
+      "keyword": "basically",
+      "keywordTranslations": ["básicamente"]
+    },
+    {
+      "id": "kfil7",
+      "text": "At the end of the day, it's your choice.",
+      "translations": {
+        "es": "Al final del día, es tu decisión.",
+        "en": "At the end of the day, it's your choice."
+      },
+      "keyword": "end",
+      "keywordTranslations": ["final"]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "title": {
+    "es": "Conectores y Transiciones",
+    "en": "Connectors & Transitions"
+  },
+  "level": "beginner",
+  "phrases": [
+    {
+      "id": "kcon1",
+      "text": "First of all, I want to say thank you.",
+      "translations": {
+        "es": "Antes que nada, quiero decir gracias.",
+        "en": "First of all, I want to say thank you."
+      },
+      "keyword": "first",
+      "keywordTranslations": ["primero", "antes"]
+    },
+    {
+      "id": "kcon2",
+      "text": "On the other hand, it is too expensive.",
+      "translations": {
+        "es": "Por otro lado, es demasiado caro.",
+        "en": "On the other hand, it is too expensive."
+      },
+      "keyword": "hand",
+      "keywordTranslations": ["mano", "lado"]
+    },
+    {
+      "id": "kcon3",
+      "text": "Because of that, I can't go with you.",
+      "translations": {
+        "es": "Por eso, no puedo ir contigo.",
+        "en": "Because of that, I can't go with you."
+      },
+      "keyword": "because",
+      "keywordTranslations": ["porque", "por"]
+    },
+    {
+      "id": "kcon4",
+      "text": "In conclusion, it was a really good day.",
+      "translations": {
+        "es": "En conclusión, fue un día realmente bueno.",
+        "en": "In conclusion, it was a really good day."
+      },
+      "keyword": "conclusion",
+      "keywordTranslations": ["conclusión"]
+    },
+    {
+      "id": "kcon5",
+      "text": "However, I think we should wait a bit.",
+      "translations": {
+        "es": "Sin embargo, creo que deberíamos esperar un poco.",
+        "en": "However, I think we should wait a bit."
+      },
+      "keyword": "however",
+      "keywordTranslations": ["sin embargo"]
+    },
+    {
+      "id": "kcon6",
+      "text": "Furthermore, we need more time to finish.",
+      "translations": {
+        "es": "Además, necesitamos más tiempo para terminar.",
+        "en": "Furthermore, we need more time to finish."
+      },
+      "keyword": "furthermore",
+      "keywordTranslations": ["además"]
+    },
+    {
+      "id": "kcon7",
+      "text": "For example, you can take the bus.",
+      "translations": {
+        "es": "Por ejemplo, puedes tomar el autobús.",
+        "en": "For example, you can take the bus."
+      },
+      "keyword": "example",
+      "keywordTranslations": ["ejemplo"]
+    }
+  ]
+}

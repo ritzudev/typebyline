@@ -1,0 +1,79 @@
+{
+  "title": {
+    "es": "Rutina Diaria",
+    "en": "Daily Routine"
+  },
+  "level": "beginner",
+  "phrases": [
+    {
+      "id": "krou1",
+      "text": "I usually wake up early in the morning.",
+      "translations": {
+        "es": "Normalmente me despierto temprano en la mañana.",
+        "en": "I usually wake up early in the morning."
+      },
+      "keyword": "wake",
+      "keywordTranslations": ["despierto", "despertar"]
+    },
+    {
+      "id": "krou2",
+      "text": "Sometimes I go for a walk after lunch.",
+      "translations": {
+        "es": "A veces salgo a caminar después de almorzar.",
+        "en": "Sometimes I go for a walk after lunch."
+      },
+      "keyword": "walk",
+      "keywordTranslations": ["caminar", "paseo"]
+    },
+    {
+      "id": "krou3",
+      "text": "After work, I like to relax at home.",
+      "translations": {
+        "es": "Después del trabajo, me gusta relajarme en casa.",
+        "en": "After work, I like to relax at home."
+      },
+      "keyword": "relax",
+      "keywordTranslations": ["relajar", "relajarme"]
+    },
+    {
+      "id": "krou4",
+      "text": "I always have a cup of coffee first.",
+      "translations": {
+        "es": "Siempre tomo una taza de café primero.",
+        "en": "I always have a cup of coffee first."
+      },
+      "keyword": "always",
+      "keywordTranslations": ["siempre"]
+    },
+    {
+      "id": "krou5",
+      "text": "Then, I take a shower and get dressed.",
+      "translations": {
+        "es": "Luego, me doy una ducha y me visto.",
+        "en": "Then, I take a shower and get dressed."
+      },
+      "keyword": "shower",
+      "keywordTranslations": ["ducha", "baño"]
+    },
+    {
+      "id": "krou6",
+      "text": "I never go to bed late on weekdays.",
+      "translations": {
+        "es": "Nunca me acuesto tarde los días de semana.",
+        "en": "I never go to bed late on weekdays."
+      },
+      "keyword": "never",
+      "keywordTranslations": ["nunca"]
+    },
+    {
+      "id": "krou7",
+      "text": "We usually have dinner around eight o'clock.",
+      "translations": {
+        "es": "Normalmente cenamos alrededor de las ocho en punto.",
+        "en": "We usually have dinner around eight o'clock."
+      },
+      "keyword": "dinner",
+      "keywordTranslations": ["cenar", "cena"]
+    }
+  ]
+}

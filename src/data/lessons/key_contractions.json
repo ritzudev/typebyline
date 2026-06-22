@@ -1,0 +1,79 @@
+{
+  "title": {
+    "es": "Contracciones Comunes",
+    "en": "Common Contractions"
+  },
+  "level": "beginner",
+  "phrases": [
+    {
+      "id": "kcnt1",
+      "text": "I'd like to order a coffee, please.",
+      "translations": {
+        "es": "Me gustaría pedir un café, por favor.",
+        "en": "I'd like to order a coffee, please."
+      },
+      "keyword": "I'd",
+      "keywordTranslations": ["me gustaría", "yo"]
+    },
+    {
+      "id": "kcnt2",
+      "text": "I've been working here for two years.",
+      "translations": {
+        "es": "He estado trabajando aquí por dos años.",
+        "en": "I've been working here for two years."
+      },
+      "keyword": "I've",
+      "keywordTranslations": ["he", "yo he"]
+    },
+    {
+      "id": "kcnt3",
+      "text": "I'll call you back later tonight.",
+      "translations": {
+        "es": "Te llamaré de vuelta más tarde esta noche.",
+        "en": "I'll call you back later tonight."
+      },
+      "keyword": "I'll",
+      "keywordTranslations": ["llamaré", "yo"]
+    },
+    {
+      "id": "kcnt4",
+      "text": "You're doing a really great job today.",
+      "translations": {
+        "es": "Estás haciendo un gran trabajo hoy.",
+        "en": "You're doing a really great job today."
+      },
+      "keyword": "You're",
+      "keywordTranslations": ["estás", "tú eres"]
+    },
+    {
+      "id": "kcnt5",
+      "text": "They've already left the building.",
+      "translations": {
+        "es": "Ellos ya han dejado el edificio.",
+        "en": "They've already left the building."
+      },
+      "keyword": "They've",
+      "keywordTranslations": ["han", "ellos han"]
+    },
+    {
+      "id": "kcnt6",
+      "text": "We're going to the beach tomorrow.",
+      "translations": {
+        "es": "Nosotros vamos a la playa mañana.",
+        "en": "We're going to the beach tomorrow."
+      },
+      "keyword": "We're",
+      "keywordTranslations": ["vamos", "somos", "estamos"]
+    },
+    {
+      "id": "kcnt7",
+      "text": "He's reading a very interesting book.",
+      "translations": {
+        "es": "Él está leyendo un libro muy interesante.",
+        "en": "He's reading a very interesting book."
+      },
+      "keyword": "He's",
+      "keywordTranslations": ["él está", "él es"]
+    }
+  ]
+}

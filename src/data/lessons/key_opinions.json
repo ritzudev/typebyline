@@ -1,0 +1,79 @@
+{
+  "title": {
+    "es": "Dar y Pedir Opiniones",
+    "en": "Opinions & Thoughts"
+  },
+  "level": "beginner",
+  "phrases": [
+    {
+      "id": "kopi1",
+      "text": "In my opinion, this is the best option.",
+      "translations": {
+        "es": "En mi opinión, esta es la mejor opción.",
+        "en": "In my opinion, this is the best option."
+      },
+      "keyword": "opinion",
+      "keywordTranslations": ["opinión"]
+    },
+    {
+      "id": "kopi2",
+      "text": "What do you think about this new plan?",
+      "translations": {
+        "es": "¿Qué piensas sobre este nuevo plan?",
+        "en": "What do you think about this new plan?"
+      },
+      "keyword": "think",
+      "keywordTranslations": ["pensar", "piensas"]
+    },
+    {
+      "id": "kopi3",
+      "text": "I totally agree with you on that.",
+      "translations": {
+        "es": "Estoy totalmente de acuerdo contigo en eso.",
+        "en": "I totally agree with you on that."
+      },
+      "keyword": "agree",
+      "keywordTranslations": ["acuerdo", "de acuerdo"]
+    },
+    {
+      "id": "kopi4",
+      "text": "I'm not sure about that idea.",
+      "translations": {
+        "es": "No estoy seguro de esa idea.",
+        "en": "I'm not sure about that idea."
+      },
+      "keyword": "sure",
+      "keywordTranslations": ["seguro"]
+    },
+    {
+      "id": "kopi5",
+      "text": "From my point of view, it is fine.",
+      "translations": {
+        "es": "Desde mi punto de vista, está bien.",
+        "en": "From my point of view, it is fine."
+      },
+      "keyword": "point",
+      "keywordTranslations": ["punto"]
+    },
+    {
+      "id": "kopi6",
+      "text": "I don't think it's a good idea.",
+      "translations": {
+        "es": "No creo que sea una buena idea.",
+        "en": "I don't think it's a good idea."
+      },
+      "keyword": "idea",
+      "keywordTranslations": ["idea"]
+    },
+    {
+      "id": "kopi7",
+      "text": "That makes a lot of sense to me.",
+      "translations": {
+        "es": "Eso tiene mucho sentido para mí.",
+        "en": "That makes a lot of sense to me."
+      },
+      "keyword": "sense",
+      "keywordTranslations": ["sentido"]
+    }
+  ]
+}
