@@ -1,11 +1,6 @@
 ---
-import FlagAR from "./flags/FlagAR.astro";
-import FlagDE from "./flags/FlagDE.astro";
 import FlagEN from "./flags/FlagEN.astro";
 import FlagES from "./flags/FlagES.astro";
-import FlagFR from "./flags/FlagFR.astro";
-import FlagIT from "./flags/FlagIT.astro";
-import FlagPT from "./flags/FlagPT.astro";
 ---
 
 <header
@@ -54,21 +49,6 @@ import FlagPT from "./flags/FlagPT.astro";
         <span data-active-flag="es"><FlagES width={24} height={16} /></span>
         <span data-active-flag="en" class="hidden"
           ><FlagEN width={24} height={16} /></span
-        >
-        <span data-active-flag="ar" class="hidden"
-          ><FlagAR width={24} height={16} /></span
-        >
-        <span data-active-flag="pt" class="hidden"
-          ><FlagPT width={24} height={16} /></span
-        >
-        <span data-active-flag="fr" class="hidden"
-          ><FlagFR width={24} height={16} /></span
-        >
-        <span data-active-flag="de" class="hidden"
-          ><FlagDE width={24} height={16} /></span
-        >
-        <span data-active-flag="it" class="hidden"
-          ><FlagIT width={24} height={16} /></span
         >
       </span>
       <svg
@@ -222,31 +202,7 @@ import FlagPT from "./flags/FlagPT.astro";
         class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-3 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
         ><span><FlagEN width={24} height={16} /></span> English</button
       >
-      <button
-        data-switch-lang="ar"
-        class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-3 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
-        ><span><FlagAR width={24} height={16} /></span> العربية</button
-      >
-      <button
-        data-switch-lang="pt"
-        class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-3 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
-        ><span><FlagPT width={24} height={16} /></span> Português</button
-      >
-      <button
-        data-switch-lang="fr"
-        class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-3 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
-        ><span><FlagFR width={24} height={16} /></span> Français</button
-      >
-      <button
-        data-switch-lang="de"
-        class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-3 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
-        ><span><FlagDE width={24} height={16} /></span> Deutsch</button
-      >
-      <button
-        data-switch-lang="it"
-        class="w-full text-left px-4 py-2 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-xs font-semibold flex items-center gap-3 cursor-pointer text-slate-700 dark:text-slate-300 select-none"
-        ><span><FlagIT width={24} height={16} /></span> Italiano</button
-      >
+
     </div>
 
     <!-- Color Palette Dropdown Content -->
@@ -517,29 +473,14 @@ import FlagPT from "./flags/FlagPT.astro";
       const tLevelMap: { [key: string]: { [lang: string]: string } } = {
         beginner: {
           es: "Principiante",
-          ar: "مبتدئ",
-          pt: "Iniciante",
-          fr: "Débutant",
-          de: "Anfänger",
-          it: "Principiante",
           en: "Beginner",
         },
         intermediate: {
           es: "Intermedio",
-          ar: "متوسط",
-          pt: "Intermédio",
-          fr: "Intermédiaire",
-          de: "Mittelstufe",
-          it: "Intermedio",
           en: "Intermediate",
         },
         advanced: {
           es: "Avanzado",
-          ar: "متقدم",
-          pt: "Avançado",
-          fr: "Avancé",
-          de: "Fortgeschritten",
-          it: "Avanzato",
           en: "Advanced",
         },
       };
